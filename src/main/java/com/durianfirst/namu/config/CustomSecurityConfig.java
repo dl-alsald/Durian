@@ -1,4 +1,4 @@
-package config;
+package com.durianfirst.namu.config;
 
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,7 @@ public class CustomSecurityConfig {
         log.info("====================configure===========================");
 
         http.formLogin().loginPage("/member/login");
+        http.csrf().disable();
 
         return http.build();
     }

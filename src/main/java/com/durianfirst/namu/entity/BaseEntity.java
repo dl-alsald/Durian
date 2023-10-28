@@ -1,4 +1,4 @@
-package entity;
+package com.durianfirst.namu.entity;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

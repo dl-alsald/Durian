@@ -1,18 +1,14 @@
-package entity;
+package com.durianfirst.namu.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+@Getter
+@Setter
+@ToString
+public class MemberDto {
 
-@Entity
-@Table(name="member")
-@Data
-public class Member {
-
-    /* 회원 정보 */
-    @Id
     String mid; //아이디
 
     String mpassword; //비밀번호
@@ -36,8 +32,4 @@ public class Member {
     Boolean mdel; //회원탈퇴 여부
 
     String merecommend; //추천인 아이디
-
-
-
-
 }

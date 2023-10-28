@@ -1,4 +1,4 @@
-package entity;
+package com.durianfirst.namu.entity;
 
 import lombok.Data;
 
@@ -12,7 +12,6 @@ public class Point extends BaseEntity {
     @Id
     private Long pid; //포인트 아이디
 
-    @Column
     @ManyToOne
     private Member member; //회원정보
 
