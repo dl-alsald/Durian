@@ -13,7 +13,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseEntity {
 
     /* 회원 정보 */
     @Id
@@ -22,7 +22,7 @@ public class Member {
 
     String mid; //아이디
 
-    String mpassword; //비밀번호
+    String mpw; //비밀번호
 
     String mname; //이름
 
@@ -32,7 +32,7 @@ public class Member {
 
     String maddress; //주소
 
-    String mphonenum; //전화번호
+    String mphone; //전화번호
 
     Boolean mnational; //내,외국인 구분
 
@@ -44,12 +44,15 @@ public class Member {
 
     String merecommend; //추천인 아이디
 
+    @Enumerated(EnumType.STRING)
+    private MemberRole memberRole;
+
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
 
-    public void changePassword(String mpassword){
-        this.mpassword = mpassword;
+    public void changePassword(String mpw){
+        this.mpw = mpw;
     }
 
     public void changeEmail(String memail){

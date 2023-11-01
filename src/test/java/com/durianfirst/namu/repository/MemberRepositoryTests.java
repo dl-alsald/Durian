@@ -29,12 +29,12 @@ public class MemberRepositoryTests {
 
             Member member = Member.builder()
                     .mid("merber"+i)
-                    .mpassword(passwordEncoder.encode("1111"))
+                    .mpw(passwordEncoder.encode("1111"))
                     .memail("email"+i+"@aaa.aaa")
                     .mname("user"+i)
                     .maddress("address"+i)
                     .mbirthday("1990"+i)
-                    .mphonenum("null")
+                    .mphone("null")
                     .build();
             member.addRole(MemberRole.USER);
 

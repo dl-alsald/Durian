@@ -11,7 +11,7 @@ public class MemberDto {
 
     String mid; //아이디
 
-    String mpassword; //비밀번호
+    String mpw; //비밀번호
 
     String mname; //이름
 
@@ -21,7 +21,7 @@ public class MemberDto {
 
     String maddress; //주소
 
-    String mphonenum; //전화번호
+    String mphone; //전화번호
 
     Boolean mnational; //내,외국인 구분
 
