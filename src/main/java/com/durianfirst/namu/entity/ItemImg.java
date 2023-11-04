@@ -14,8 +14,9 @@ import javax.persistence.*;
 public class ItemImg extends BaseEntity{
 
     @Id
+    @Column(name="iimgno")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long iimgno;
+    private Long id;
 
     private String iimgnew; //이미지 파일명
 

@@ -2,6 +2,7 @@ package com.durianfirst.namu.entity;
 
 
 import com.durianfirst.namu.constant.ItemSellStatus;
+import com.durianfirst.namu.dto.ItemDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Entity //클래스를 엔티티로 선언
-@Table(name="item") //엔티티와 매핑할 테이블을 지정(테이블 명)
+@Table(name = "item") //엔티티와 매핑할 테이블을 지정(테이블 명)
 @Getter
 @Builder
 @AllArgsConstructor
@@ -34,9 +35,6 @@ public class Item extends BaseEntity {
     private String ilocation; //거래장소
 
     @Column(nullable = false)
-    private Integer istock;      // 재고
-
-    @Column(nullable = false)
     private String icate;  // 카테고리
 
     @Column(nullable = false)
@@ -48,11 +46,21 @@ public class Item extends BaseEntity {
     @Column(nullable = false, length = 5000)
     private String idesc; // 상품 상세 설명
 
-    @DateTimeFormat(pattern = "yyyy-mm-dd")
-    private LocalDate relaseyear; // 발매일
-
     @Enumerated(EnumType.STRING)  // enum 타입 매핑
     private ItemSellStatus istatus; //상품 판매 상태
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mid_seller")
+    private Member member;
+
+
+    public void changeIname(String iname){ this.iname = iname; }
+    public void changeIprice(int iprice){ this.iprice = iprice; }
+    public void changeIdealway(String idealway){ this.idealway = idealway; }
+    public void changeIlocateion(String ilocation) { this.ilocation = ilocation;}
+    public void changeIcate(String icate){ this.icate = icate; }
+    public void changeIcondition(String icondition){ this.icondition = icondition; }
+    public void changeIdesc(String idesc){ this.idesc = idesc; }
+    public void changeIstatus(ItemSellStatus istatus){ this.istatus = istatus; }
 
 }

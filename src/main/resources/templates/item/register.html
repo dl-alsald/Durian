@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/basic :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <h1 class="mt-4">Item Register Page</h1>
+
+        <form th:action="@{/item/register}" th:method="post">
+            <div class="form-group">
+                <label >Item Name</label>
+                <input type="text" class="form-control" name="iname" placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+                <label >Item Price</label>
+                <input type="text" class="form-control" name="iprice" placeholder="Enter Price">
+            </div>
+            <div class="form-group">
+                <label >Item Dealway</label>
+                <input type="text" class="form-control" name="idealway" placeholder="Enter dealway">
+            </div>
+            <div class="form-group">
+                <label >Item Location</label>
+                <input type="text" class="form-control" name="ilocation" placeholder="Enter Location">
+            </div>
+            <div class="form-group">
+                <label >Item Category</label>
+                <input type="text" class="form-control" name="icate" placeholder="Enter Category">
+            </div>
+            <div class="form-group">
+                <label >Item Condition</label>
+                <input type="text" class="form-control" name="icondition" placeholder="Enter Condition">
+            </div>
+            <div class="form-group">
+                <label >Item description</label>
+                <textarea class="form-control" rows="5" name="idesc"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </th:block>
+
+</th:block>
