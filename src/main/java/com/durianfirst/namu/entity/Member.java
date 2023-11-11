@@ -13,13 +13,15 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "roleset")
 public class Member extends BaseEntity {
 
     /* 회원 정보 */
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long mno;
 
+    @Id
     String mid; //아이디
 
     String mpw; //비밀번호
@@ -43,9 +45,6 @@ public class Member extends BaseEntity {
     Boolean mdel; //회원탈퇴 여부
 
     String merecommend; //추천인 아이디
-
-    @Enumerated(EnumType.STRING)
-    private MemberRole memberRole;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default

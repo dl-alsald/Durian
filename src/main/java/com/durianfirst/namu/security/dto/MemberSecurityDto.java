@@ -1,13 +1,20 @@
 package com.durianfirst.namu.security.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
+import java.util.Map;
 
-public class MemberSecurityDto extends User {
+@Getter
+@Setter
+@ToString
+public class MemberSecurityDto extends User implements OAuth2User {
 
-    private Long mno;
     private String mid; //아이디
     private String mpw; //비밀번호
     private String mname; //이름
@@ -22,14 +29,15 @@ public class MemberSecurityDto extends User {
     private Boolean mdel; //회원탈퇴 여부
     private String merecommend; //추천인 아이디
 
-    public MemberSecurityDto(Long mno, String username, String password, String mname, String memail,
+    private Map<String, Object> props;  //소셜 로그인 정보
+
+    public MemberSecurityDto(String mid, String mpassword, String mname, String memail,
                              String mbirthday, String maddress, String mphone, Boolean mnational,
                              Boolean msocial, Boolean mdel, String merecommend,
                              Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-        this.mno = mno;
-        this.mid = username;
-        this.mpw = password;
+        super(mid, mpassword, authorities);
+        this.mid = mid;
+        this.mpw = mpassword;
         this.mname = mname;
         this.memail = memail;
         this.mbirthday = mbirthday;
@@ -40,4 +48,15 @@ public class MemberSecurityDto extends User {
         this.mdel = mdel;
         this.merecommend = merecommend;
     }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return this.getProps();
+    }
+
+    @Override
+    public String getName() {
+        return this.mid;
+    }
+
 }

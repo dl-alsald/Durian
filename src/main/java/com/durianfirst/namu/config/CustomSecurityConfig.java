@@ -1,6 +1,9 @@
 package com.durianfirst.namu.config;
 
 
+import com.durianfirst.namu.security.handler.CustomSocialLoginSuccessHandler;
+import com.durianfirst.namu.security.handler.CustomUserDetailsService;
+import com.durianfirst.namu.security.handler.Custom403Handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -11,18 +14,47 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
 public class CustomSecurityConfig {
 
+    private final DataSource dataSource;
+    private final CustomUserDetailsService userDetailsService;
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         log.info("====================configure===========================");
 
+        //커스텀 로그인 페이지
         http.formLogin().loginPage("/member/login");
+        //CSRF 토큰 비활성화
         http.csrf().disable();
+
+        http.rememberMe()
+                .key("12345678")
+                .tokenRepository(persistentTokenRepository())
+                .userDetailsService(userDetailsService)
+                .tokenValiditySeconds(60*60*24*30);
+
+        http.oauth2Login().loginPage("/member/login");
+
+        http.oauth2Login()
+                .loginPage("/member/login")
+                .successHandler(authenticationSuccessHandler());;
+
 
         return http.build();
     }
@@ -31,11 +63,27 @@ public class CustomSecurityConfig {
     public WebSecurityCustomizer webSecurityCustomizer(){
         log.info("==========web configure=============");
 
-        return ((web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations()));
+        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+        return repo;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new Custom403Handler();
     }
+
+    // 시큐리티 설정에 소셜 로그인 성공 시 페이지 이동 핸들러 추가
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+
+        return new CustomSocialLoginSuccessHandler(passwordEncoder());
+    }
+
 }

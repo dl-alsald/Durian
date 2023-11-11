@@ -1,4 +1,4 @@
-package com.durianfirst.namu.security;
+package com.durianfirst.namu.security.handler;
 
 
 import com.durianfirst.namu.entity.Member;
@@ -58,7 +58,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         Member member = result.get();
 
         MemberSecurityDto memberSecurityDto = new MemberSecurityDto(
-                member.getMno(),
                 member.getMid(),
                 member.getMpw(),
                 member.getMname(),
@@ -70,8 +69,11 @@ public class CustomUserDetailsService implements UserDetailsService {
                 member.getMsocial(),
                 member.getMdel(),
                 member.getMerecommend(),
+
                 member.getRoleSet().stream().map(memberRole -> new SimpleGrantedAuthority("ROLE_"+memberRole.name()))
                         .collect(Collectors.toList())
+
+
         );
         log.info("memberSecurityDTO");
         log.info(memberSecurityDto);
