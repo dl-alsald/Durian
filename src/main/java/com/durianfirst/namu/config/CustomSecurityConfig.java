@@ -1,8 +1,8 @@
 package com.durianfirst.namu.config;
 
 
-import com.durianfirst.namu.security.handler.CustomSocialLoginSuccessHandler;
-import com.durianfirst.namu.security.handler.CustomUserDetailsService;
+import com.durianfirst.namu.security.CustomSocialLoginSuccessHandler;
+import com.durianfirst.namu.security.CustomUserDetailsService;
 import com.durianfirst.namu.security.handler.Custom403Handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

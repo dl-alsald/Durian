@@ -1,4 +1,4 @@
-package com.durianfirst.namu.security.handler;
+package com.durianfirst.namu.security;
 
 import com.durianfirst.namu.security.dto.MemberSecurityDto;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class CustomSocialLoginSuccessHandler implements AuthenticationSuccessHan
 
         //소셜 로그인이고 회원의 패스워드가 1111
 
-        if(memberSecurityDto.isEnabled() &&
+        if(memberSecurityDto.getMsocial() &&
                 (memberSecurityDto.getMpw().equals("1111") || passwordEncoder.matches("1111", memberSecurityDto.getMpw()))) {
 
             log.info("소설 로그인 회원 비밀번호 변경을 위한 페이지 이동");

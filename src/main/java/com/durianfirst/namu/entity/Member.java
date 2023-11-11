@@ -22,29 +22,29 @@ public class Member extends BaseEntity {
     Long mno;
 
     @Id
-    String mid; //아이디
+    private String mid; //아이디
 
-    String mpw; //비밀번호
+    private String mpw; //비밀번호
 
-    String mname; //이름
+    private String mname; //이름
 
-    String memail; //이메일
+    private String memail; //이메일
 
-    String mbirthday; //생년월일
+    private String mbirthday; //생년월일
 
-    String maddress; //주소
+    private String maddress; //주소
 
-    String mphone; //전화번호
+    private String mphone; //전화번호
 
-    Boolean mnational; //내,외국인 구분
+    private Boolean mnational; //내,외국인 구분
 
     /* 소셜 로그인 */
-    Boolean msocial; //소셜로그인 여부
+    private Boolean msocial; //소셜로그인 여부
 
     /* 그 외 */
-    Boolean mdel; //회원탈퇴 여부
+    private Boolean mdel; //회원탈퇴 여부
 
-    String merecommend; //추천인 아이디
+    private String merecommend; //추천인 아이디
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default

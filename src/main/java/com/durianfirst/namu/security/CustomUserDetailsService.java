@@ -1,4 +1,4 @@
-package com.durianfirst.namu.security.handler;
+package com.durianfirst.namu.security;
 
 
 import com.durianfirst.namu.entity.Member;
