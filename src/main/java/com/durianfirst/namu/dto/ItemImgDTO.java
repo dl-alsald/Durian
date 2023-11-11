@@ -16,21 +16,27 @@ import java.net.URLEncoder;
 @Builder
 public class ItemImgDTO {
 
-    private Long iimgno;
+   private String uuid;
 
-    private String iimgnew;
+   private String imgName;
 
-    private String iigori;
+   private String path;
 
-    private String iimgurl;
-
-    private String iimgrep;
-
-    private static ModelMapper modelMapper = new ModelMapper();
-
-    public static ItemImgDTO of(ItemImg itemImg) {
-        // ItemImg 객체로 받아 ItemImg 객체의 자료형과 멤버변수의 이름이 같을 때 ItemImgDto로 값을 복사해서 반환
-        return modelMapper.map(itemImg, ItemImgDTO.class);
-    }
+   public String gtImageURL(){
+       try{
+           return URLEncoder.encode(path + "/" + uuid + "_" + imgName, "UTF-8");
+       }catch (UnsupportedEncodingException e){
+           e.printStackTrace();
+       }
+       return "";
+   }
+   public String getThumbnailURL(){
+       try{
+           return URLEncoder.encode(path + "/" + uuid + "_" + imgName, "UTF-8");
+       }catch (UnsupportedEncodingException e){
+           e.printStackTrace();
+       }
+       return "";
+   }
 
 }

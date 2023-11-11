@@ -4,17 +4,21 @@ import com.durianfirst.namu.dto.ItemDTO;
 import com.durianfirst.namu.dto.PageRequestDTO;
 import com.durianfirst.namu.dto.PageResultDTO;
 import com.durianfirst.namu.entity.Item;
+import com.durianfirst.namu.entity.ItemImg;
+import com.durianfirst.namu.entity.QItem;
+import com.durianfirst.namu.repository.ItemImgRepository;
 import com.durianfirst.namu.repository.ItemRepository;
-import com.fasterxml.jackson.databind.util.ArrayBuilders;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import ognl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -25,17 +29,20 @@ public class ItemServiceImpl implements ItemService{
 
     private final ItemRepository itemRepository;
 
+    private final ItemImgRepository itemImgRepository;
+
     @Override
     public Long register(ItemDTO itemDTO){
 
-        log.info("DTO......");
-        log.info(itemDTO);
-
-        Item item = dtoToEntity(itemDTO);
-
-        log.info(item);
+        Map<String, Object> entityMap = dtoToEntity(itemDTO);
+        Item item = (Item) entityMap.get("item");
+        List<ItemImg> itemImgList = (List<ItemImg>) entityMap.get("imgList");
 
         itemRepository.save(item);
+
+        itemImgList.forEach(itemImg -> {
+            itemImgRepository.save(itemImg);
+        });
 
         return item.getIno();
     }

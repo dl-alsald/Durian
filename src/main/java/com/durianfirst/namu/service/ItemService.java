@@ -6,11 +6,15 @@ import com.durianfirst.namu.dto.ItemImgDTO;
 import com.durianfirst.namu.dto.PageRequestDTO;
 import com.durianfirst.namu.dto.PageResultDTO;
 import com.durianfirst.namu.entity.Item;
+import com.durianfirst.namu.entity.ItemImg;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public interface ItemService {
 
@@ -24,7 +28,10 @@ public interface ItemService {
 
     PageResultDTO<ItemDTO, Item> getList(PageRequestDTO requestDTO);
 
-    default Item dtoToEntity(ItemDTO itemDTO){
+    default Map<String, Object> dtoToEntity(ItemDTO itemDTO){
+
+        Map<String, Object> entityMap = new HashMap<>();
+
         Item item = Item.builder()
                 .ino(itemDTO.getIno())
                 .iname(itemDTO.getIname())
@@ -36,9 +43,27 @@ public interface ItemService {
                 .idesc(itemDTO.getIdesc())
                 .istatus(itemDTO.getIstatus())
                 .build();
-        return item;
-    }
 
+        entityMap.put("itme", item);
+
+        List<ItemImgDTO> imageDTOList = itemDTO.getImageDTOList();
+
+        if(imageDTOList != null && imageDTOList.size() > 0){
+            List<ItemImg> itemImageList = imageDTOList.stream().map(itemImgDTO -> {
+
+                ItemImg itemImg = ItemImg.builder()
+                        .path(itemImgDTO.getPath())
+                        .imgName(itemImgDTO.getImgName())
+                        .uuid(itemImgDTO.getUuid())
+                        .item(item)
+                        .build();
+                return itemImg;
+            }).collect(Collectors.toList());
+
+            entityMap.put("imgList", itemImageList);
+        }
+        return entityMap;
+    }
     default ItemDTO entityToDTO(Item item){
 
         ItemDTO itemDTO = ItemDTO.builder()

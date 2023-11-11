@@ -18,24 +18,17 @@ public class ItemImg extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String iimgnew; //이미지 파일명
+   private String uuid;
 
-    private String iimgori; //원본 이미지 파일명
+   private String imgName;
 
-    private String iimgurl; //이미지 조회 경로
-
-    private String iimgrep; //대표 이미지 여부
+   private String path;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pno")
     private Item item;
 
-    public void updateItemImg(String iimgori, String iimgnew, String iimgurl){
-        // 원본 이미지 파일명, 업데이트할 이미지 파일명, 이미지 경로를 파라미터로 입력받아 이미지 정보를 업데이트
-        this.iimgori = iimgori;
-        this.iimgnew = iimgnew;
-        this.iimgurl = iimgurl;
-    }
+
 
 }
