@@ -49,9 +49,27 @@
             <input type="text" class="form-control" name="modDate" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
         </div>
 
-<!--        <a th:href="@{/guestbook/modify(gno = ${dto.gno}, page=${requestDTO.page})}"><button type="button" class="btn btn-primary">Modify</button></a>-->
+        <div class="uploadResult">
+            <ul>
+                <li th:each="ItemImage : ${dto.imageDTOList}" th:data-file="${ItemImg.getThumbnailURL()}">
+                    <img th:if="${itemImg.pah != null}" th:src="|/display?fileName=${itemImg.getThumbnailUrl()}|">
+                </li>
+            </ul>
+        </div>
 
-<!--        <a th:href="@{/guestbook/list(page=${requestDTO.page})}"><button type="button" class="btn btn-info">List</button></a>-->
+        <script>
+            $(".uploadResult li").click(function() {
+                var file = $(this).data('file');
+
+                console.log(file);
+
+                $('.imageModal.modal-body').html("<img style='width:100%' src='/display?fileName="+file+"&size=1' >")
+
+                $(".imageModal").modal("show");
+            })
+
+        </script>
+
 
         <a th:href="@{/item/modify(ino = ${dto.ino}, page=${requestDTO.page}, type=${requestDTO.type}, keyword =${requestDTO.keyword})}">
             <button type="button" class="btn btn-primary">Modify</button>

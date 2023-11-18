@@ -64,9 +64,9 @@ public class UploadController {
 
                 File thumbnailFile = new File(thumbnailSaveName);
 
-                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile,100,100);
+               /* Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile,100,100);*/
 
-                resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath));
+                resultDTOList.add(new UploadResultDTO(fileName,uuid,folderPath));
 
             }catch (IOException e){
                 e.printStackTrace();
@@ -79,7 +79,7 @@ public class UploadController {
     }
 
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getFile(String fileName) {
+    public ResponseEntity<byte[]> getFile(String fileName, String size) {
 
         ResponseEntity<byte[]> result = null;
 
@@ -89,6 +89,10 @@ public class UploadController {
             log.info("fileName: " + srcFileName);
 
             File file = new File(uploadPath + File.separator + srcFileName);
+
+            if(size != null && size.equals("1")){
+                file = new File(file.getParent(), file.getName().substring(2));
+            }
 
             log.info("file: " + file);
 

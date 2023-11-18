@@ -14,5 +14,12 @@ import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item> {
 
+    @Query("select i, ii from Item i left outer join ItemImg ii on ii.item = i")
+    Page<Object[]> getListPage(Pageable pageable);
+
+    @Query("select i, ii" +
+            " from Item i left outer join ItemImg ii on ii.item = i " +
+            " where i.ino = :ino group by ii")
+    List<Object[]> getItemWithAll(Long mno);
 
 }

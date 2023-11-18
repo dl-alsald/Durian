@@ -16,10 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -31,6 +30,7 @@ public class ItemServiceImpl implements ItemService{
 
     private final ItemImgRepository itemImgRepository;
 
+    @Transactional
     @Override
     public Long register(ItemDTO itemDTO){
 
@@ -50,9 +50,19 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public ItemDTO read(Long ino) {
 
-        Optional<Item> result = itemRepository.findById(ino);
+        List<Object[]> result = itemRepository.getItemWithAll(ino);
 
-        return result.isPresent()? entityToDTO(result.get()): null;
+        Item item = (Item) result.get(0)[0];
+
+        List<ItemImg> itemImgList = new ArrayList<>();
+
+        result.forEach(arr -> {
+            ItemImg itemImg = (ItemImg)arr[1];
+            itemImgList.add(itemImg);
+        });
+
+        return entityToDTO(item, itemImgList);
+
     }
 
     @Override
@@ -86,15 +96,15 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public PageResultDTO<ItemDTO, Item> getList(PageRequestDTO requestDTO){
+    public PageResultDTO<ItemDTO, Object[]> getList(PageRequestDTO requestDTO){
 
         Pageable pageable = requestDTO.getPageable(Sort.by("ino").descending());
 
-        BooleanBuilder booleanBuilder = getSearch(requestDTO);
+        Page<Object[]> result  = itemRepository.getListPage(pageable);
 
-        Page<Item> result = itemRepository.findAll(booleanBuilder, pageable);
-
-        Function<Item, ItemDTO> fn = (entity -> entityToDTO(entity));
+        Function<Object[], ItemDTO> fn = (arr -> entityToDTO(
+                (Item)arr[0] ,
+                (List<ItemImg>)(Arrays.asList((ItemImg)arr[1]))));
 
         return new PageResultDTO<>(result, fn);
     }

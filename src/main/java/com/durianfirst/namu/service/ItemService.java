@@ -26,9 +26,9 @@ public interface ItemService {
 
     void modify(ItemDTO itemDTO);
 
-    PageResultDTO<ItemDTO, Item> getList(PageRequestDTO requestDTO);
+    PageResultDTO<ItemDTO, Object[]> getList(PageRequestDTO requestDTO);
 
-    default Map<String, Object> dtoToEntity(ItemDTO itemDTO){
+    default Map<String, Object> dtoToEntity(ItemDTO itemDTO) {
 
         Map<String, Object> entityMap = new HashMap<>();
 
@@ -48,7 +48,7 @@ public interface ItemService {
 
         List<ItemImgDTO> imageDTOList = itemDTO.getImageDTOList();
 
-        if(imageDTOList != null && imageDTOList.size() > 0){
+        if (imageDTOList != null && imageDTOList.size() > 0) {
             List<ItemImg> itemImageList = imageDTOList.stream().map(itemImgDTO -> {
 
                 ItemImg itemImg = ItemImg.builder()
@@ -64,7 +64,8 @@ public interface ItemService {
         }
         return entityMap;
     }
-    default ItemDTO entityToDTO(Item item){
+
+    default ItemDTO entityToDTO(Item item, List<ItemImg> itemImgList) {
 
         ItemDTO itemDTO = ItemDTO.builder()
                 .ino(item.getIno())
@@ -80,10 +81,17 @@ public interface ItemService {
                 .modDate(item.getUpdateTime())
                 .build();
 
+        List<ItemImgDTO> imageDTOList = itemImgList.stream().map(itemImg -> {
+            return ItemImgDTO.builder()
+                    .path(itemImg.getPath())
+                    .imgName(itemImg.getImgName())
+                    .uuid(itemImg.getUuid())
+                    .build();
+        }).collect(Collectors.toList());
+
+        itemDTO.setImageDTOList(imageDTOList);
+
         return itemDTO;
-
     }
-
-
-
 }
+
