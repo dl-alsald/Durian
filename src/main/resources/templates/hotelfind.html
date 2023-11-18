@@ -1,16 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
-<%@ page import="org.jsoup.Jsoup" %>
-<%@ page import="org.jsoup.nodes.Document" %>
-<%@ page import="org.jsoup.nodes.Element" %>
-<%@ page import="org.jsoup.select.Elements" %>
-<%@ page import="org.jsoup.Connection" %>
-<%@ page import="java.io.IOException" %>
-
-<%
-request.setCharacterEncoding("utf-8");
-%>
-
 <html>
 <head>
     <meta charset="UTF-8">
@@ -184,26 +171,22 @@ request.setCharacterEncoding("utf-8");
             <div class="col-lg-3 col-md-2"></div>
         </div>
     </div>
+    </div>
+<br>
+<div >
+    <table class= "table">
+        <tr>
+            <th>이미지</th>
+            <th>제목</th>
+        </tr>
+        <tr th:each="news : ${news} ">
+            <td><a th:href="${news.url}"><img th:src="${news.image}"></a></td>
+            <td><a th:href="${news.url}"><span th:text="${news.subject}"></span></a></td>
+            </a>
+        </tr>
+    </table>
+</div>
     <br>
 
-
-    <%
-    String var = request.getParameter("var");
-    out.println(var+"<br>");
-    if(var!=null) {
-    String link = "http://www.goodchoice.kr/product/result?keyword="+var;
-
-    Connection conn = Jsoup.connect(link);
-    Document document = conn.get();
-
-    Elements parsingdivs = document.getElementsByClass("list_wrap");
-    Element parsingdiv = parsingdivs.get(0);
-
-    for(int i=0; i<parsingdiv.getElementsByTag("a").size(); ++i) {
-    String title=parsingdiv.getElementsByTag("a").get(i).text();
-    out.println("숙소명 ▶ "+title+"<br><hr>");
-    }
-    }
-    %>
 </body>
 </html>
