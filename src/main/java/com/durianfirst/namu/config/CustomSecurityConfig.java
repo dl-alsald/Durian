@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,12 +19,15 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
 @RequiredArgsConstructor
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomSecurityConfig {
 
     private final DataSource dataSource;
@@ -36,12 +40,20 @@ public class CustomSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        log.info("====================configure===========================");
+        log.info("SecurityConfig.filterChain() 로그인 시 실행");
 
-        //커스텀 로그인 페이지
-        http.formLogin().loginPage("/member/login");
-        //CSRF 토큰 비활성화
+        // 커스텀 로그인 페이지
+        http.formLogin()
+                .loginPage("/member/login")                                                // Form 로그인 기능 작동, 커스텀 로그인 페이지
+                .defaultSuccessUrl("/admin/index")                                               // 로그인 성공시 index 페이지로 이동
+                .failureUrl("/member/login/error")                      // 로그인 실패 시 이동할 URL 설정
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
+                .logoutSuccessUrl("/admin/index");                                               // 로그아웃 성공시 이동할 URL
+
         http.csrf().disable();
+
 
         http.rememberMe()
                 .key("12345678")
@@ -49,7 +61,7 @@ public class CustomSecurityConfig {
                 .userDetailsService(userDetailsService)
                 .tokenValiditySeconds(60*60*24*30);
 
-        http.oauth2Login().loginPage("/member/login");
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 
         http.oauth2Login()
                 .loginPage("/member/login")
@@ -58,6 +70,8 @@ public class CustomSecurityConfig {
 
         return http.build();
     }
+
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){

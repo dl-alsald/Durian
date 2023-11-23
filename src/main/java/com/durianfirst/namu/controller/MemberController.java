@@ -2,13 +2,21 @@ package com.durianfirst.namu.controller;
 
 
 import com.durianfirst.namu.dto.MemberDto;
+import com.durianfirst.namu.security.CustomAuthentication;
+import com.durianfirst.namu.security.CustomUserDetailsService;
 import com.durianfirst.namu.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -18,6 +26,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @GetMapping("/login")
     public void loginGET(String error, String logout){
@@ -28,6 +38,8 @@ public class MemberController {
             log.info("user logout......");
         }
     }
+
+
 
     @GetMapping("/join")
     public void joinGET(){
@@ -46,6 +58,7 @@ public class MemberController {
             return "redirect:/member/join";
         }
         redirectAttributes.addFlashAttribute("result","success");
-        return "redirect:member/login";
+        return "redirect:/member/login";
     }
+
 }
