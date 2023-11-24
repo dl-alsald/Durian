@@ -1,11 +1,15 @@
 package com.durianfirst.namu.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class OrderItem extends BaseEntity {
 
     @Id

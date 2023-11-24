@@ -20,6 +20,6 @@ public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredi
     @Query("select i, ii" +
             " from Item i left outer join ItemImg ii on ii.item = i " +
             " where i.ino = :ino group by ii")
-    List<Object[]> getItemWithAll(Long mno);
+    List<Object[]> getItemWithAll(Long ino);
 
 }

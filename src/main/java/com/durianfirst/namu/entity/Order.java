@@ -1,9 +1,7 @@
 package com.durianfirst.namu.entity;
 
 import com.durianfirst.namu.constant.OrderStatus;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +12,9 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order extends BaseEntity {
 
     @Id
@@ -21,7 +22,7 @@ public class Order extends BaseEntity {
     private Long ono;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mno")
+    @JoinColumn(name = "mid")
     private Member member;
 
     private LocalDateTime odate; //주문일

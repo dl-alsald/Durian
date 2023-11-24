@@ -38,7 +38,7 @@ public class ItemServiceTests {
                 .size(10)
                 .build();
 
-        PageResultDTO<ItemDTO, Item> resultDTO = itemService.getList(pageRequestDTO);
+        PageResultDTO<ItemDTO, Object[]> resultDTO = itemService.getList(pageRequestDTO);
 
             System.out.println("PREV: " + resultDTO.isPrev());
             System.out.println("NEXT: " + resultDTO.isNext());

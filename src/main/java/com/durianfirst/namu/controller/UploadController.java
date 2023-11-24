@@ -29,7 +29,7 @@ import java.util.UUID;
 @Log4j2
 public class UploadController {
 
-    @Value("${itemImgLocation}")
+   /* @Value("${itemImgLocation}")*/
     private String uploadPath;
 
     List<UploadResultDTO> resultDTOList = new ArrayList<>();
