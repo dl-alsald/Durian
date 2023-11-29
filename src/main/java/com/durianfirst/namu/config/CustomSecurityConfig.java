@@ -46,7 +46,7 @@ public class CustomSecurityConfig {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
                 .logoutSuccessUrl("/member/login")                                                 // 로그아웃 성공시 이동할 URL
                 .invalidateHttpSession(true)                                                // 로그아웃 이후 세션 전체 삭제 여부
-                .deleteCookies("JSESSIONID");;
+                .deleteCookies("JSESSIONID");
         //로그인 진행한다는 설정
         //UserDetailsService : 실제로 인증을 처리 인터페이스
         //loadUserByUsername : 실제 인증을 처리할 때 호출 되는 부분
