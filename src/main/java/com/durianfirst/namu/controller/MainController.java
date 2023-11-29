@@ -1,13 +1,24 @@
 package com.durianfirst.namu.controller;
 
+import com.durianfirst.namu.entity.Member;
+import com.durianfirst.namu.repository.MemberRepository;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/admin")
+@Log4j2
 public class MainController {
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     /*
     * @PreAuthorize/@PostAuthorize 접근 제한 표현식
@@ -98,8 +109,23 @@ public class MainController {
     public void form_editor_layout(){}
 
     @GetMapping({"/index","/"})
-    public String index(){
+    public String index(Principal principal, Model model){
+        //principal로 로그인 정보 가져옴
+        // model로 index로 넘겨줌
+        if (principal != null) {
+
+        String mid = principal.getName();                   //mid에 로그인 정보를 받음
+        Member member = memberRepository.findBymid(mid);    //findbymid로 유저 정보 찾아서 member에 저장
+
+        log.info("유저 아이디 : " + principal.getName());
+
+        model.addAttribute("member",member);    //model로 member에 담긴 정보를 인덱스 프론트에 넘김
+
         return "/admin/index";
+        } else {
+        // 로그인이 안 된 경우 로그인 없는 뷰로 이동
+        return "/member/login";
+    }
     }
 
     @GetMapping("/layout-default")

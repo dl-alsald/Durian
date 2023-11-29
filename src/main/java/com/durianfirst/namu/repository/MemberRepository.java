@@ -16,4 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     //로그인 시에 MemberRole을 같이 로딩 할 수 있도록 하는 메소드
     /* 직접 로그인할 때는 소셜 서비스를 통해 회원 가입된 회원들이 같은 패스워드를 가지므로 일반 회원들만
     *  가져오도록 social 속성값이 false인 사용자들만을 대상으로 처리*/
+
+    @EntityGraph(attributePaths = "roleSet")
+    Member findBymid(String mid);
 }
