@@ -3,6 +3,7 @@ package com.durianfirst.durian.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="notice")
@@ -15,9 +16,9 @@ import javax.persistence.*;
 public class Notice extends BaseEntity{
 
     @Id
-    @Column(name="nno")
+    @Column(name = "nno")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long nid;
+    private Long nno;
 
     @Column(nullable = false)
     private String ntitle;
@@ -26,12 +27,17 @@ public class Notice extends BaseEntity{
     @Column(nullable = false, length = 5000)
     private String ncontent;
 
+    private LocalDateTime regDate, modDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member; //작성자
 
-/*    public void updateNotice(NoticeFormDto noticeFormDto){
-        this.ntitle = noticeFormDto.getNtitle();
-        this.ncontent = noticeFormDto.getNcontent();
-    }*/
+    public void changeTitle(String ntitle){
+        this.ntitle = ntitle;
+    }
+
+    public void changeContent(String ncontent){
+        this.ncontent = ncontent;
+    }
 
 }

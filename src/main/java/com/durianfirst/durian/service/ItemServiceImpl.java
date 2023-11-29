@@ -75,6 +75,24 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    public ItemDTO read(Long ino) {
+
+        List<Object[]> result = itemRepository.getItemWithAll(ino);
+
+        Item item = (Item) result.get(0)[0];
+
+        List<ItemImage> itemImgList = new ArrayList<>();
+
+        result.forEach(arr -> {
+            ItemImage itemImg = (ItemImage)arr[1];
+            itemImgList.add(itemImg);
+        });
+
+        return entitiesDTO(item, itemImgList);
+
+    }
+
+    @Override
     public ItemDTO getItem(Long ino) {
         List<Object[]> result = itemRepository.getItemWithAll(ino);
 

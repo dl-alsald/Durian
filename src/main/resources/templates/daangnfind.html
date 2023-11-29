@@ -269,6 +269,9 @@
                                                         <ul>
                                                         <li th:data-name="${news.image}" th:data-uuid="${news.image}">
                                                         <img th:src="${news.image}">
+                                                            <input type='hidden' name='imageDTOList[0].imgName' th:value="${news.title}">
+                                                            <input type='hidden' name='imageDTOList[0].path' th:value="${news.address}">
+                                                            <input type='hidden' name='imageDTOList[0].uuid' th:value="${news.content}">
                                                         </li>
                                                         </ul>
                                                     </div>

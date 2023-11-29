@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="answer")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,9 +21,14 @@ public class Answer extends BaseEntity{
     @Column(nullable = false, length = 5000)
     private String acontent; //답변내용
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member member; //작성자(작성자 한 사람이 답변 1개만 달 수 있음)
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Question aquestion; //질문(질문 하나당 답변 1개)
+
+    public void change(String qcontent) { //수정 가능한것
+        this.acontent = acontent;
+
+    }
 }

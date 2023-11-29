@@ -3,32 +3,51 @@ package com.durianfirst.durian.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @Entity
 @Table(name="question")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Question extends BaseEntity{
+public class Question extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에 위임
     private Long qno; //질문 번호(pk)
 
+    @NotEmpty(message = "제목은 필수항목입니다.") /*Null허용치않음*/
     @Column(nullable = false)
     private String qtitle; //질문제목
 
+    @NotEmpty(message = "질문내용은 필수항목입니다.")
     @Column(nullable = false, length = 5000)
     private String qcontent; //질문내용
 
+    @NotBlank(message = "카테고리선택은 필수항목입니다.")
     @Column(nullable = false)
     private String qcate; //카테고리
 
+    //여러개의질문이 한명의 사용자에게 작성될수 있으므로 ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member; //작성자
 
+    @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE)
+    private List<Answer> answerList;
 
-
+    public void change(String qtitle, String qcontent){ //수정가능한것 제목/내용
+        this.qtitle = qtitle;
+        this.qcontent = qcontent;
+    }
 }
+/*@NotNull : Null 값 체크
+
+@NotEmpty : Null, "" 체크
+
+@NotBlank : Null, "", 공백을 포함한 빈값 체크*/
+

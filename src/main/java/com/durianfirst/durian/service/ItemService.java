@@ -21,6 +21,8 @@ public interface ItemService {
 
     ItemDTO getItem(Long ino);
 
+    ItemDTO read(Long ino);
+
     void modify(ItemDTO itemDTO);
 
     void remove(Long ino);
