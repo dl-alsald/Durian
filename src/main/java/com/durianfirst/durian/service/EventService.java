@@ -36,7 +36,7 @@ public interface EventService {
         }).collect(Collectors.toList());
 
         eventDTO.setImageDTOList(eventImageDTOList);
-       
+
 
 
 

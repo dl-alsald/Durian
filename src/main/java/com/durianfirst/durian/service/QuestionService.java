@@ -23,6 +23,6 @@ public interface QuestionService {
     public List<Question> getList();
 
 
-    }
+}
 
 

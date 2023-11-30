@@ -43,7 +43,7 @@ public class EventController {
         log.info("pageRequestDTO: " + pageRequestDTO);
 
 
-        model.addAttribute("result", eventService.getList(pageRequestDTO));
+        model.addAttribute("eresult", eventService.getList(pageRequestDTO));
 
     }
     @GetMapping({"/event/read", "/event/modify"})
@@ -53,7 +53,7 @@ public class EventController {
 
         EventDTO eventDTO = eventService.getEvent(eno);
 
-        model.addAttribute("dto", eventDTO);
+        model.addAttribute("edto", eventDTO);
     }
 
 

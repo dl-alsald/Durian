@@ -17,8 +17,8 @@ public interface AnswerService {
 
     void modify(Answer answer, String acontent);
 
-/*    void delete(Answer answer);*/
+    /*    void delete(Answer answer);*/
 
     public void delete(Long ano);
 
-    }
+}

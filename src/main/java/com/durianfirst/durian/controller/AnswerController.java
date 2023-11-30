@@ -48,7 +48,7 @@ public class AnswerController {
     }
 
 
-        @PostMapping("/answer/createa/{qno}")
+    @PostMapping("/answer/createa/{qno}")
 
     public String createAnswer(Model model, @PathVariable("qno") Long qno,
                                @RequestParam String acontent) {

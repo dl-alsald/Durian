@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import java.util.List;
 
 public class QuestionSearchImpl extends QuerydslRepositorySupport implements
-QuestionSearch {
+        QuestionSearch {
 
     public QuestionSearchImpl(){
         super(Question.class);
@@ -58,7 +58,7 @@ QuestionSearch {
                 }
             }//end for
             query.where(booleanBuilder);
-            }//end if
+        }//end if
         //qno>0
         query.where(question.qno.gt(0L));
 

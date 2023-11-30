@@ -1,13 +1,20 @@
 package com.durianfirst.durian.controller;
 
+import com.durianfirst.durian.entity.Member;
+import com.durianfirst.durian.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
 public class MainController {
-
+    @Autowired
+    private MemberRepository memberRepository;
     @GetMapping("/application-chat")
     public void application_chat(){}
 
@@ -145,6 +152,24 @@ public class MainController {
 
     @GetMapping("/ui-widgets-todolist")
     public void ui_widgets_todolist(){}
+
+    @GetMapping({"/adindex","/"})
+    public String index(Principal principal, Model model){
+        //principal로 로그인 정보 가져옴
+        // model로 index로 넘겨줌
+        if (principal != null) {
+
+            String mid = principal.getName();                   //mid에 로그인 정보를 받음
+            Member member = memberRepository.findBymid(mid);    //findbymid로 유저 정보 찾아서 member에 저장
+
+            model.addAttribute("member",member);    //model로 member에 담긴 정보를 인덱스 프론트에 넘김
+
+            return "/admin/adindex";
+        } else {
+            // 로그인이 안 된 경우 로그인 없는 뷰로 이동
+            return "/member/login";
+        }
+    }
 
 
 }
