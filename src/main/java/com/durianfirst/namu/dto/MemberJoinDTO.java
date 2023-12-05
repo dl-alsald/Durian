@@ -7,15 +7,15 @@ public class MemberJoinDTO {
 
     private String mid;
     private String mpw;
-    private String email;
-    private boolean del;
-    private boolean social;
+    private String memail;
+    private boolean mdel;
+    private boolean msocial;
 
-    private String name;
-    private String birthday;
-    private String address;
-    private String phone;
-    private String national;
-    private String recommend;
+    private String mname;
+    private String mbirthday;
+    private String maddress;
+    private String mphone;
+    private String mnational;
+    private String mrecommend;
 
 }

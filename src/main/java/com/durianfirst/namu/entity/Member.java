@@ -11,6 +11,7 @@ import java.util.Set;
 @Table(name="member")
 @Getter
 @Builder
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "roleSet")
@@ -70,6 +71,14 @@ public class Member extends BaseEntity {
 
     public void changeSocial(boolean msocial){
         this.msocial = msocial;
+    }
+
+    public void update(String mname, String memail, String mbirthday, String mphone, String mpw){
+        this.mname = mname;
+        this.memail = memail;
+        this.mbirthday = mbirthday;
+        this.mphone = mphone;
+        this.mpw = mpw;
     }
 
 }
