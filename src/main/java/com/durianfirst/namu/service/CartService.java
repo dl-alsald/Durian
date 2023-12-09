@@ -2,6 +2,9 @@ package com.durianfirst.namu.service;
 
 import com.durianfirst.namu.dto.CartDetailDTO;
 import com.durianfirst.namu.dto.CartItemDTO;
+import com.durianfirst.namu.dto.CartOrderDTO;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,5 +22,5 @@ public interface CartService {
 
     void deleteCartItem(Long cartItemId);
 
-    Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String mid);
+    Long orderCartItem(List<CartOrderDTO> cartOrderDtoList, String mid);
 }

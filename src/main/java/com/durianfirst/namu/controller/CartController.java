@@ -1,8 +1,21 @@
 package com.durianfirst.namu.controller;
 
+import com.durianfirst.namu.dto.CartDetailDTO;
+import com.durianfirst.namu.dto.CartItemDTO;
+import com.durianfirst.namu.dto.CartOrderDTO;
+import com.durianfirst.namu.service.CartService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -12,7 +25,7 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping(value = "/cart")
-    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDto cartItemDto,
+    public @ResponseBody ResponseEntity order(@RequestBody @Valid CartItemDTO cartItemDto,
                                               BindingResult bindingResult, Principal principal){
         if(bindingResult.hasErrors()){  //장바구니에 담을 상품정보를 받는 cartitemdto 객체에 데이터 바인딩시 에러가 있는지 검사
             StringBuilder sb = new StringBuilder();
@@ -36,7 +49,7 @@ public class CartController {
 
     @GetMapping(value = "/cart")
     public String orderHist(Principal principal, Model model){
-        List<CartDetailDto> cartDetailList = cartService.getCartList(principal.getName());
+        List<CartDetailDTO> cartDetailList = cartService.getCartList(principal.getName());
         model.addAttribute("cartItems",cartDetailList);
         return "cart/cart";
     }
@@ -64,13 +77,13 @@ public class CartController {
     }
 
     @PostMapping(value = "/cart/orders")
-    public @ResponseBody ResponseEntity orderCartItem(@RequestBody CartOrderDto cartOrderDto, Principal principal){
-        List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderDtoList();
+    public @ResponseBody ResponseEntity orderCartItem(@RequestBody CartOrderDTO cartOrderDto, Principal principal){
+        List<CartOrderDTO> cartOrderDtoList = cartOrderDto.getCartOrderDtoList();
 
         if(cartOrderDtoList == null || cartOrderDtoList.size() == 0){
             return new ResponseEntity<String>("주문할 상품을 선택해주세요.",HttpStatus.FORBIDDEN);
         }
-        for(CartOrderDto cartOrder : cartOrderDtoList){
+        for(CartOrderDTO cartOrder : cartOrderDtoList){
             if(!cartService.validateCartItem(cartOrder.getCartItemId(), principal.getName())){
                 return new ResponseEntity<String>("주문 권한이 없습니다.",HttpStatus.FORBIDDEN);
             }
@@ -81,7 +94,7 @@ public class CartController {
 
 
     @PostMapping("/checkout")
-    public ResponseEntity<List<CartOrderDto>> checkout(@RequestBody List<CartOrderDto> cartOrderDtoList) {
+    public ResponseEntity<List<CartOrderDTO>> checkout(@RequestBody List<CartOrderDTO> cartOrderDtoList) {
         // 여기에서는 전달받은 카트 정보를 그대로 반환하도록 했습니다.
         return new ResponseEntity<>(cartOrderDtoList, HttpStatus.OK);
     }

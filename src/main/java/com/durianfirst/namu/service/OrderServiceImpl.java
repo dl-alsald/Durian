@@ -1,6 +1,5 @@
 package com.durianfirst.namu.service;
 
-import antlr.StringUtils;
 import com.durianfirst.namu.dto.OrderDTO;
 import com.durianfirst.namu.dto.OrderHistDTO;
 import com.durianfirst.namu.dto.OrderItemDTO;
@@ -13,11 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,8 +71,8 @@ public class OrderServiceImpl implements OrderService{
             List<OrderItem> orderItems = order.getOrderItems();
             for(OrderItem orderItem : orderItems){
                 //주문한 상품의 대표 이미지를 조회합니다.
-                ItemImg itemImg = itemImgRepository.findByIdAndIimgrep(orderItem.getItem().getId(),"Y");
-                OrderItemDTO orderItemDto = new OrderItemDTO(orderItem, itemImg.getIimgurl());
+                ItemImg itemImg = itemImgRepository.findByIdAndIimgrep(orderItem.getItem().getIno(),"Y");
+                OrderItemDTO orderItemDto = new OrderItemDTO(orderItem, itemImg.getPath());
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
             orderHistDtos.add(orderHistDto);
@@ -90,7 +90,7 @@ public class OrderServiceImpl implements OrderService{
 
         Member savedMember = order.getMember();
 
-        if(!StringUtils.equals(curMember.getMid(),savedMember.getMid())){
+        if(!StringUtils.equals(curMember.getMid(), savedMember.getMid())){
             return false;
         }
         return true;
@@ -130,8 +130,8 @@ public class OrderServiceImpl implements OrderService{
             OrderHistDTO orderHistDto = new OrderHistDTO(order);
             List<OrderItem> orderItems = order.getOrderItems();
             for(OrderItem orderItem : orderItems){
-                ItemImg itemImg = itemImgRepository.findByIdAndIimgrep(orderItem.getItem().getId(),"Y");
-                OrderItemDTO orderItemDto = new OrderItemDTO(orderItem, itemImg.getIimgurl());
+                ItemImg itemImg = itemImgRepository.findByIdAndIimgrep(orderItem.getItem().getIno(),"Y");
+                OrderItemDTO orderItemDto = new OrderItemDTO(orderItem, itemImg.getIimgrep());
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
             orderHistDtos.add(orderHistDto);

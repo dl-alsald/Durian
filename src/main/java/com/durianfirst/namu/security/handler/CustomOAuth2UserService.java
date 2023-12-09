@@ -1,7 +1,7 @@
 package com.durianfirst.namu.security.handler;
 
 import com.durianfirst.namu.entity.Member;
-import com.durianfirst.namu.refository.MemberRepository;
+import com.durianfirst.namu.repository.MemberRepository;
 import com.durianfirst.namu.role.MemberRole;
 import com.durianfirst.namu.security.dto.MemberSecurityDto;
 import lombok.RequiredArgsConstructor;

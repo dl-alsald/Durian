@@ -63,4 +63,7 @@ public class Item extends BaseEntity {
     public void changeIdesc(String idesc){ this.idesc = idesc; }
     public void changeIstatus(ItemSellStatus istatus){ this.istatus = istatus; }
 
+
+
+
 }

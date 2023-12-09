@@ -10,15 +10,16 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "cartitems")
 public class Cart extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long cid;
 
+
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="mid")
+    @JoinColumn(name="mno")
     private Member member;
 
     public static Cart createCart(Member member) {
@@ -28,3 +29,4 @@ public class Cart extends BaseEntity {
     } // 회원 하나당 하나의 장바구니를 가진다
 
 }
+

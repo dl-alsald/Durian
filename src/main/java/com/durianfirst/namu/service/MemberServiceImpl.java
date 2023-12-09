@@ -2,7 +2,7 @@ package com.durianfirst.namu.service;
 
 import com.durianfirst.namu.dto.MemberDto;
 import com.durianfirst.namu.entity.Member;
-import com.durianfirst.namu.refository.MemberRepository;
+import com.durianfirst.namu.repository.MemberRepository;
 import com.durianfirst.namu.role.MemberRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -31,7 +31,7 @@ public class MemberServiceImpl implements MemberService{
 
         String mid = memberDto.getMid();
 
-        boolean exist = memberRepository.existsById(mid);
+        boolean exist = memberRepository.existsById(Long.valueOf(mid));
 
         if(exist){
             throw new MidExistException();

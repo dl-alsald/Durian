@@ -1,5 +1,26 @@
 package com.durianfirst.namu.controller;
 
+import com.durianfirst.namu.dto.OrderDTO;
+import com.durianfirst.namu.dto.OrderHistDTO;
+import com.durianfirst.namu.service.OrderService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 @Log4j2
@@ -10,7 +31,7 @@ public class OrderController {
     @PostMapping(value = "/order")
     //RequestBody: HTTP요청의 본문 body에 담긴 내용을 자바 객체로 전달
     //ResponseBody : 자바 객체를 HTTP요청의 body로 전달
-    public @ResponseBody ResponseEntity order (@RequestBody @Valid OrderDto orderDto, BindingResult bindingResult, Principal principal){
+    public @ResponseBody ResponseEntity order (@RequestBody @Valid OrderDTO orderDto, BindingResult bindingResult, Principal principal){
 
         if(bindingResult.hasErrors()){//주문 정보를 받는 orderDTO 객체에 데이터 바인딩시 에러가 있는지 검사
             StringBuilder sb = new StringBuilder();
@@ -18,7 +39,7 @@ public class OrderController {
             for (FieldError fieldError : fieldErrors){
                 sb.append(fieldError.getDefaultMessage());
             }
-            return new ResponseEntity<String>(sb.toString(),HttpStatus.BAD_REQUEST);    // 에러장보를 담아서 반환
+            return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);    // 에러장보를 담아서 반환
         }
         String mid = principal.getName(); // principal객체에서 현재 로그인한 회원의 아이디 정보를 조회한다.
         Long ono;
@@ -36,7 +57,7 @@ public class OrderController {
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,4);
 
         //현재로그인한 회원은 이메일과 페이징 객체를 파라미터로 전달하여 화면에 전달한 주문 목록 데이터를 리터값으로 받습니다.
-        Page<OrderHistDto> orderHistDtoList = orderService.getOrderList(principal.getName(), pageable);
+        Page<OrderHistDTO> orderHistDtoList = orderService.getOrderList(principal.getName(), pageable);
 
         log.info("dto = " + orderHistDtoList);
 
@@ -68,7 +89,7 @@ public class OrderController {
 
 
         Pageable pageRequest = PageRequest.of(page, 10); // 적절한 페이지 정보 설정
-        Page<OrderHistDto> orderHistDtoList = orderService.getOrderListByOrderId(mid, ono, pageRequest);
+        Page<OrderHistDTO> orderHistDtoList = orderService.getOrderListByOrderId(mid, ono, pageRequest);
         model.addAttribute("orders", orderHistDtoList);
         model.addAttribute("order", ono);
         model.addAttribute("currentPage", page);

@@ -1,6 +1,5 @@
 package com.durianfirst.namu.service;
 
-import antlr.StringUtils;
 import com.durianfirst.namu.dto.CartDetailDTO;
 import com.durianfirst.namu.dto.CartItemDTO;
 import com.durianfirst.namu.dto.CartOrderDTO;
@@ -17,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -44,13 +44,14 @@ public class CartServiceImpl implements CartService {
 
         //현재 로그인한 회원의 장바구니 엔티티 조회
         Cart cart = cartRepository.findByMemberMno(member.getMno());
+
         //상품을 처음으로 장바구니에 담을 경우 해당 회원의 장바구니 엔티티 생성
         if(cart == null){
             cart = Cart.createCart(member);
             cartRepository.save(cart);
         }
         //현재 상품이 장바구니에 이미 들어가 있는지 조사
-        CartItem savedCartItem = cartItemRepository.findByCartCidAndItemId(cart.getCid(),item.getId());
+        CartItem savedCartItem = cartItemRepository.findByCartCidAndItemId(cart.getCid(),item.getIno());
 
         if(savedCartItem != null){
             //장바구니에 이미 있던 상품일 경우 기존수량에 현재 장바구니에 담을 수량 만큼 더해준다.
@@ -87,7 +88,7 @@ public class CartServiceImpl implements CartService {
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException :: new);
         Member saveMeber = cartItem.getCart().getMember();
 
-        if(!StringUtils.equals(curMember.getMid(),saveMeber.getMid())){
+        if(!StringUtils.equals(curMember.getMid(), saveMeber.getMid())){
             return  false;
         }
         return true;
@@ -115,7 +116,7 @@ public class CartServiceImpl implements CartService {
             CartItem cartItem = cartItemRepository.findById(cartOrderDto.getCartItemId()).orElseThrow(EntityNotFoundException::new);
 
             OrderDTO orderDto = new OrderDTO();
-            orderDto.setItemId(cartItem.getItem().getId());
+            orderDto.setItemId(cartItem.getItem().getIno());
             orderDto.setCount(cartItem.getCount());
             orderDtoList.add(orderDto);
         }

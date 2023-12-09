@@ -1,5 +1,9 @@
 package com.durianfirst.namu.dto;
 
+import com.durianfirst.namu.entity.OrderItem;
+import lombok.Getter;
+import lombok.Setter;
+
 @Getter
 @Setter
 public class OrderItemDTO {
@@ -11,8 +15,8 @@ public class OrderItemDTO {
     private int orderPrice; //주문 금액
     private String imgUrl;  //상품이미지 경로
 
-    public OrderItemDto(OrderItem orderItem, String imgUrl){
-        this.itemNm = orderItem.getItem().getPname();
+    public OrderItemDTO(OrderItem orderItem, String imgUrl){
+        this.itemNm = orderItem.getItem().getIname();
         this.count = orderItem.getOiquantity();
         this.orderPrice = orderItem.getOiprice();
         this.imgUrl = imgUrl;

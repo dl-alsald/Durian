@@ -2,7 +2,7 @@ package com.durianfirst.namu.security;
 
 
 import com.durianfirst.namu.entity.Member;
-import com.durianfirst.namu.refository.MemberRepository;
+import com.durianfirst.namu.repository.MemberRepository;
 import com.durianfirst.namu.security.dto.MemberSecurityDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
