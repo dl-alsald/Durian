@@ -16,7 +16,7 @@ public interface ItemImgRepository extends JpaRepository<ItemImg, Long>,
 
     /*ItemImg findByPnoAndIimgrep(Long pno, String iimgrep); // 상품의 대표 이미지를 찾음*/
 
-    List<ItemImg> findByItemIdOrderByIdAsc(Long ItemId);
+    /*List<ItemImg> findByItem_IdOrderByItemIdAsc(Long itemId);*/
 
     ItemImg findByIdAndIimgrep(Long ino, String iimgrep); // 상품의 대표 이미지를 찾음
 

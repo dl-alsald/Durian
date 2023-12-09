@@ -8,9 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
-    CartItem findByCartCidAndItemId(Long cid, Long id);
+    CartItem findByCartCidAndItemIno(Long cid, Long ino);
 
-    @Query("select  new com.durianfirst.namu.dto.CartDetailDTO(ci.cino, i.iname, i.iprice, ci.count, im.path)" +
+   /* @Query("select  CartDetailDTO(ci.cino, i.iname, i.iprice, ci.count, im.path)" +
             "from CartItem ci, ItemImg im join ci.item i where ci.cart.cid = :cid and im.item.ino = ci.item.ino and im.iimgrep = 'Y' order by ci.regTime desc ")
-    List<CartDetailDTO> findCartDetailDtoList(long cid);
+    List<CartDetailDTO> findCartDetailDtoList(long cartItemId);*/
+
+
+    @Query("SELECT new com.durianfirst.namu.dto.CartDetailDTO(ci.cino, i.iname, i.iprice, ci.count, im.path) " +
+            "FROM CartItem ci JOIN ci.item i JOIN ItemImg im ON im.item.ino = ci.item.ino " +
+            "WHERE ci.cart.cid = :cartItemId AND im.iimgrep = 'Y' ORDER BY ci.regTime DESC")
+    List<CartDetailDTO> findCartDetailDtoList(long cartItemId);
+
 }
