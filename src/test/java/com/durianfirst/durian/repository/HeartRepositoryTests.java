@@ -13,7 +13,7 @@ public class HeartRepositoryTests {
     @Autowired
     private HeartRepository heartRepository;
 
-    @Test
+    /*@Test
     public void insertDum() {
         IntStream.rangeClosed(1,100).forEach(i -> {
 
@@ -23,5 +23,5 @@ public class HeartRepositoryTests {
                     .build();
             System.out.println(heartRepository.save(heart));
         });
-    }
+    }*/
 }
