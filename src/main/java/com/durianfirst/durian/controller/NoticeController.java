@@ -23,10 +23,10 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    @GetMapping("/notice")
-    public String index() {
-        return "/notice/list";
-    }
+//    @GetMapping("/notice")
+//    public String index() {
+//        return "/notice/list";
+//    }
 
     @GetMapping("/notice/list")
     public void list(PageRequestDTO pageRequestDTO, Model model) {
@@ -62,7 +62,7 @@ public class NoticeController {
 
         NoticeDTO dto = noticeService.read(nno);
 
-        model.addAttribute("dto", dto);
+        model.addAttribute("ndto", dto);
     }
 
     @PostMapping("/notice/remove")

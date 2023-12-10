@@ -3,10 +3,7 @@ package com.durianfirst.durian.controller;
 
 import com.durianfirst.durian.dto.*;
 import com.durianfirst.durian.entity.Items;
-import com.durianfirst.durian.service.AnswerService;
-import com.durianfirst.durian.service.DaangnService;
-import com.durianfirst.durian.service.ItemService;
-import com.durianfirst.durian.service.QuestionService;
+import com.durianfirst.durian.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -31,6 +28,10 @@ public class IndexController {
     private final AnswerService answerService;
 
     private final DaangnService daangnService;
+
+    private final EventService eventService;
+
+    private final NoticeService noticeService;
 
 
     @GetMapping("/")
@@ -59,6 +60,43 @@ public class IndexController {
     @GetMapping("/about")
     public void about() {
 
+    }
+    @GetMapping("/event")
+    public void event(PageRequestDTO pageRequestDTO, Model model){
+
+        log.info("pageRequestDTO: " + pageRequestDTO);
+
+
+        model.addAttribute("eresult", eventService.getList(pageRequestDTO));
+
+    }
+    @GetMapping({"/eventread"})
+    public void eread(long eno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
+
+        log.info("eno : "+eno);
+
+        EventDTO eventDTO = eventService.getEvent(eno);
+
+        model.addAttribute("edto", eventDTO);
+    }
+
+    @GetMapping("/notice")
+    public void list(PageRequestDTO pageRequestDTO, Model model) {
+
+        log.info("list.............."+pageRequestDTO);
+
+        model.addAttribute("nresult", noticeService.getList(pageRequestDTO));
+
+    }
+
+    @GetMapping({"/noticeread"})
+    public void nread(long nno, @ModelAttribute("requestDTO") PageRequestDTO
+            requestDTO, Model model) {
+        log.info("nno: "+nno );
+
+        NoticeDTO dto = noticeService.read(nno);
+
+        model.addAttribute("ndto", dto);
     }
 
     @GetMapping("/contact")
