@@ -1,9 +1,9 @@
 package com.durianfirst.durian.service;
 
 import com.durianfirst.durian.constant.MemberRole;
+import com.durianfirst.durian.dto.MemberJoinDTO;
 import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.repository.MemberRepository;
-import com.durianfirst.namu.dto.MemberJoinDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;

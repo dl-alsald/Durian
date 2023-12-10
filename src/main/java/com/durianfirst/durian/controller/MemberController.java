@@ -1,8 +1,8 @@
 package com.durianfirst.durian.controller;
 
+import com.durianfirst.durian.dto.MemberJoinDTO;
 import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.repository.MemberRepository;
-import com.durianfirst.namu.dto.MemberJoinDTO;
 import com.durianfirst.durian.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

@@ -1,6 +1,6 @@
 package com.durianfirst.durian.service;
 
-import com.durianfirst.namu.dto.MemberJoinDTO;
+import com.durianfirst.durian.dto.MemberJoinDTO;
 
 public interface MemberService {
 

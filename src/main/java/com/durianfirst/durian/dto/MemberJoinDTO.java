@@ -1,4 +1,4 @@
-package com.durianfirst.namu.dto;
+package com.durianfirst.durian.dto;
 
 import lombok.Data;
 
