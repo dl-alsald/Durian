@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService{
             List<OrderItem> orderItems = order.getOrderItems();
             for(OrderItem orderItem : orderItems){
                 //주문한 상품의 대표 이미지를 조회합니다.
-                ItemImage itemImg = itemImgRepository.findByIdAndIimgrep(orderItem.getItem().getIno(),"Y");
+                ItemImage itemImg = itemImgRepository.findByInumAndIimgrep(orderItem.getItem().getIno(),"Y");
                 OrderItemDTO orderItemDto = new OrderItemDTO(orderItem, itemImg.getPath());
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
@@ -130,7 +130,7 @@ public class OrderServiceImpl implements OrderService{
             OrderHistDTO orderHistDto = new OrderHistDTO(order);
             List<OrderItem> orderItems = order.getOrderItems();
             for(OrderItem orderItem : orderItems){
-                ItemImage itemImg = itemImgRepository.findByIdAndIimgrep(orderItem.getItem().getIno(),"Y");
+                ItemImage itemImg = itemImgRepository.findByInumAndIimgrep(orderItem.getItem().getIno(),"Y");
                 OrderItemDTO orderItemDto = new OrderItemDTO(orderItem, itemImg.getIimgrep());
                 orderHistDto.addOrderItemDto(orderItemDto);
             }

@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface ItemImageRepository extends JpaRepository<ItemImage, Long>, QuerydslPredicateExecutor<Item> {
 
-    List<ItemImage> findByItemInoOrderByIdAsc(Long ItemId);
+    /*List<ItemImage> findByItemInoOrderByIdAsc(Long ItemId);*/
 
     /*ItemImg findByPnoAndIimgrep(Long pno, String iimgrep); // 상품의 대표 이미지를 찾음*/
 
-    List<ItemImage> findByItemIdOrderByIdAsc(Long ItemId);
+    /*List<ItemImage> findByItemIdOrderByIdAsc(Long ItemId);*/
 
-    ItemImage findByIdAndIimgrep(Long ino, String iimgrep); // 상품의 대표 이미지를 찾음
+    ItemImage findByInumAndIimgrep(Long inum, String iimgrep); // 상품의 대표 이미지를 찾음
 }

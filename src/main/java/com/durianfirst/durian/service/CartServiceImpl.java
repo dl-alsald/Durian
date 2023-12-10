@@ -51,7 +51,7 @@ public class CartServiceImpl implements CartService {
             cartRepository.save(cart);
         }
         //현재 상품이 장바구니에 이미 들어가 있는지 조사
-        CartItem savedCartItem = cartItemRepository.findByCartCidAndItemId(cart.getCid(),item.getIno());
+        CartItem savedCartItem = cartItemRepository.findByCartCidAndItemIno(cart.getCid(),item.getIno());
 
         if(savedCartItem != null){
             //장바구니에 이미 있던 상품일 경우 기존수량에 현재 장바구니에 담을 수량 만큼 더해준다.
