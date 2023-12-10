@@ -1,5 +1,5 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{/layout/header :: setContent(~{this::content} )}">
+<th:block th:replace="~{layout/header :: setContent(~{this::content} )}">
 
     <th:block th:fragment="content">
 
@@ -62,18 +62,18 @@
                     <div class="col-12">
                         <div class="property-slider-wrap" >
                             <div class="property-slider">
-                                <div class="property-item" th:each="dto : ${item.dtoList}">
-                                    <a th:href="@{/article(ino = ${dto.ino})}" class="img">
-                                        <img th:src="@{/images/img_1.jpg}" alt="Image" class="img-fluid"/>
+                                <div class="property-item" th:each="dto : ${news}">
+                                    <a th:href="@{/}" class="img">
+                                        <img th:src="${dto.image}" alt="Image" class="img-fluid"/>
                                     </a>
 
                                     <div class="property-content">
-                                        <div class="price mb-2"><span>[[${dto.iprice}]] 원</span></div>
+                                        <div class="price mb-2"><span>[[${dto.price}]]</span></div>
                                         <div>
                       <span class="d-block mb-2 text-black-50">
-                          5232 California Fake, Ave. 21BC
+                          [[${dto.address}]]
                       </span>
-                                            <span class="city d-block mb-3">[[${dto.iname}]]</span>
+                                            <span class="city d-block mb-3">[[${dto.title}]]</span>
 
                                             <div class="specs d-flex mb-4">
                         <span class="d-block d-flex align-items-center me-3">

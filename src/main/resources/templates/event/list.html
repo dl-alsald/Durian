@@ -38,7 +38,7 @@
                         <td><a th:href="@{/event/read(eno = ${dto.eno}, page= ${result.page})}">
                             <img th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0].path != null }"
                                  th:src="|/display?fileName=${dto.imageDTOList[0].getThumbnailURL()}|">
-                            [[${dto.eno}]]</a></td>
+                            [[${dto.etitle}]]</a></td>
                         <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
                     </tr>
 
