@@ -7281,6 +7281,12 @@ button.bg-dark:focus {
   align-items: center !important;
 }
 
+.align-items-center-chat {
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  margin-left: 30px;
+}
+
 .align-items-baseline {
   -ms-flex-align: baseline !important;
   align-items: baseline !important;

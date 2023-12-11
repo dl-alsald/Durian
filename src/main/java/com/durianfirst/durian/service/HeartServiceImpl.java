@@ -76,9 +76,9 @@ public class HeartServiceImpl implements HeartService {
 
         return entity.getHno();
 
-    }
+    }*/
 
-    @Override
+    /*@Override
     public HeartDTO read(Long hno) {
 
         Optional<Heart> result = heartRepository.findById(hno);

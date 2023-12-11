@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class HeartDTO {
 
     private Long hno;
-    private int pno;
+    private int ino;
     private String mid;
     private LocalDateTime regDate, modDate;
 }

@@ -15,9 +15,9 @@ public interface HeartService {
 
 
 
-/*    Long register(HeartDTO heartDTO);
+    /*Long register(HeartDTO heartDTO);*/
 
-    HeartDTO read(Long hno);
+    /*HeartDTO read(Long hno);
 
     void remove(Long hno);
 
@@ -26,7 +26,7 @@ public interface HeartService {
     default Heart dtoToEntity(HeartDTO heartDTO) {
         Heart entity = Heart.builder()
                 .hno(heartDTO.getHno())
-                .pno(heartDTO.getPno())
+                .item(heartDTO.getIno())
                 .mid(heartDTO.getMid())
                 .build();
         return entity;
