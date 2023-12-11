@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -35,6 +36,7 @@ public class ChatService {
         ChatRoom chatRoom = ChatRoom.builder()
                 .roomId(randomId)
                 .name(name)
+                .regDate(LocalDateTime.now())
                 .build();
         chatRooms.put(randomId, chatRoom);
         return chatRoom;

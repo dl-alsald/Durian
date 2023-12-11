@@ -1,6 +1,8 @@
 package com.durianfirst.durian.controller;
 
 import com.durianfirst.durian.entity.ChatRoom;
+import com.durianfirst.durian.entity.Member;
+import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,7 @@ import java.util.List;
 public class ChatController {
 
     private final ChatService chatService;
+    private final MemberRepository memberRepository;
 
 
     @RequestMapping("/chat/chatList")
@@ -29,10 +33,25 @@ public class ChatController {
     }
 
     @PostMapping("/chat/createRoom")  //방을 만들었으면 해당 방으로 가야지.
-    public String createRoom(Model model, @RequestParam String name, String username) {
+    public String createRoom(Model model, @RequestParam String name, String username, Principal principal) {
+
+        if(principal != null){
+
+            String mid = principal.getName();
+            Member member = memberRepository.findBymid(mid);
+
+            log.info("유저 아이디 : " + principal.getName());
+
+            model.addAttribute("member", member);
+        }else{
+            return "/member/login";
+        }
+
         ChatRoom room = chatService.createRoom(name);
+
         model.addAttribute("room",room);
         model.addAttribute("username",username);
+
         return "chat/chatRoom";  //만든사람이 채팅방 1빠로 들어가게 됩니다
     }
 

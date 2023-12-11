@@ -16,7 +16,8 @@
                     </a>
                 </header>
 
-                <div class="page-heading">
+                <!-- content header  -->
+                <div class="page-heading chatList-application">
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
@@ -35,74 +36,81 @@
                             </div>
                         </div>
                     </div>
+                    <!-- /content header  -->
 
-                    <!-- list group button & badge start-->
+                    <!-- content : list group button & badge start-->
                     <section class="list-group-button-badge">
                         <div class="row match-height">
                             <div class="col-md-12">
                                 <div class="card">
+
+                                    <!-- 채팅방 이름 & NEW 버튼 -->
                                     <div class="card-header">
-                                        <!--<h4 class="card-title">Button list Group</h4>-->
                                         <div class="buttons">
                                             <form action="/chat/createRoom" method="post">
                                                 <input type="text" class="form-select-chat" name="name"
-                                                       placeholder="채팅방 이름">
+                                                       placeholder="Set Room Name">
                                                 <button type="submit" class="btn btn-success rounded-pill">Neeeew
                                                 </button>
                                             </form>
                                         </div>
                                     </div>
+                                    <!-- /채팅방 이름 & NEW 버튼 -->
+
+                                    <!-- 채팅방 목록 -->
                                     <div class="card-content">
-                                        <div class="card-body">
+                                        <div class="card-body"><!-- padding -->
                                             <div class="list-group">
 
-                                                <!-- email -->
+                                                <!-- Email copy -->
                                                 <div class="content-right">
-                                                    <div class="content-overlay"></div>
+                                                    <!--<div class="content-overlay"></div>-->
                                                     <div class="content-wrapper">
-                                                        <div class="content-header row">
-                                                        </div>
+                                                        <!--<div class="content-header row"></div>-->
                                                         <div class="content-body">
-                                                            <!-- email app overlay -->
                                                             <div class="app-content-overlay"></div>
                                                             <div class="email-app-area">
-                                                                <!-- Email list Area -->
-                                                                <div class="email-app-list-wrapper">
-                                                                        <!--<div class="email-action">-->
-                                                                            <!-- action left start here -->
+
+                                                                <!--  Chat List Header : Chat list Area -->
+                                                                <div class="chatList-app-list-wrapper">
+                                                                    <div class="chatList-app-list">
+                                                                        <div class="chatList-action" style="margin-left: 7px;">
+                                                                            <!-- Chat List Header Up-->
                                                                             <div class="action-left d-flex align-items-center-chat">
                                                                                 <!-- select All checkbox -->
                                                                                 <div class="checkbox checkbox-shadow checkbox-sm selectAll me-3">
-                                                                                    <input type="checkbox" id="checkboxsmall" class='form-check-input'>
+                                                                                    <input type="checkbox"
+                                                                                           id="checkboxsmall"
+                                                                                           class='form-check-input'>
                                                                                     <label for="checkboxsmall"></label>
                                                                                 </div>
-                                                                                <!-- delete unread dropdown -->
+                                                                                <!-- Chat List Header Button : delete unread dropdown -->
                                                                                 <ul class="list-inline m-0 d-flex">
                                                                                     <li class="list-inline-item mail-delete">
                                                                                         <button type="button"
                                                                                                 class="btn btn-icon action-icon"
                                                                                                 data-toggle="tooltip">
-                                                                                            <span class="fonticon-wrap">
-                                                                                                <svg class="bi"
-                                                                                                     width="1.5em"
-                                                                                                     height="1.5em"
-                                                                                                     fill="currentColor">
-                                                                                                    <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash}"/>
-                                                                                                </svg>
-                                                                                             </span>
+                                                                                        <span class="fonticon-wrap">
+                                                                                            <svg class="bi"
+                                                                                                 width="1.5em"
+                                                                                                 height="1.5em"
+                                                                                                 fill="currentColor">
+                                                                                                <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash}"/>
+                                                                                            </svg>
+                                                                                        </span>
                                                                                         </button>
                                                                                     </li>
                                                                                     <li class="list-inline-item mail-unread">
                                                                                         <button type="button"
                                                                                                 class="btn btn-icon action-icon">
-                                                                                            <span class="fonticon-wrap d-inline">
-                                                                                                 <svg class="bi"
-                                                                                                      width="1.5em"
-                                                                                                      height="1.5em"
-                                                                                                      fill="currentColor">
+                                                                                       <span class="fonticon-wrap d-inline">
+                                                                                          <svg class="bi"
+                                                                                               width="1.5em"
+                                                                                               height="1.5em"
+                                                                                               fill="currentColor">
                                                                                                      <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope}"/>
-                                                                                                 </svg>
-                                                                                            </span>
+                                                                                          </svg>
+                                                                                       </span>
                                                                                         </button>
                                                                                     </li>
                                                                                     <li class="list-inline-item">
@@ -147,10 +155,11 @@
                                                                                                     aria-expanded="false">
                                                                                                     <span class="fonticon-wrap">
 
-                                                                                                        <svg class="bi" width="1.5em" height="1.5em"
+                                                                                                        <svg class="bi"
+                                                                                                             width="1.5em"
+                                                                                                             height="1.5em"
                                                                                                              fill="currentColor">
-                                                                                                            <use
-                                                                                                                    th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#tag}"/>
+                                                                                                            <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#tag}"/>
                                                                                                         </svg>
                                                                                                     </span>
                                                                                             </button>
@@ -185,12 +194,8 @@
                                                                                         </div>
                                                                                     </li>
                                                                                 </ul>
-                                                                            </div>
-                                                                            <!-- action left end here -->
+                                                                                <!-- /Chat List Header Button : delete unread dropdown -->
 
-                                                                            <!-- action right start here -->
-                                                                            <div
-                                                                                    class="action-right d-flex flex-grow-1 align-items-center justify-content-around">
                                                                                 <!-- search bar  -->
                                                                                 <div class="email-fixed-search flex-grow-1">
                                                                                     <div class="sidebar-toggle d-block d-lg-none">
@@ -200,44 +205,26 @@
                                                                                     <div class="form-group position-relative  mb-0 has-icon-left">
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               placeholder="Search email..">
+                                                                                               placeholder="Search">
                                                                                         <div class="form-control-icon">
                                                                                             <svg class="bi"
                                                                                                  width="1.5em"
                                                                                                  height="1.5em"
                                                                                                  fill="currentColor">
-                                                                                                <use
-                                                                                                        th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#search}"/>
+                                                                                                <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#search}"/>
                                                                                             </svg>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <!-- pagination and page count -->
-                                                                                <span class="d-none d-sm-block">1-10 of 653</span>
-                                                                                <button class="btn btn-icon email-pagination-prev d-none d-sm-block">
-                                                                                    <svg class="bi" width="1.5em"
-                                                                                         height="1.5em"
-                                                                                         fill="currentColor">
-                                                                                        <use
-                                                                                                th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-left}"/>
-                                                                                    </svg>
-                                                                                </button>
-                                                                                <button class="btn btn-icon email-pagination-next d-none d-sm-block">
-                                                                                    <svg class="bi" width="1.5em"
-                                                                                         height="1.5em"
-                                                                                         fill="currentColor">
-                                                                                        <use
-                                                                                                th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#chevron-right}"/>
-                                                                                    </svg>
-                                                                                </button>
+                                                                                <!-- /search bar  -->
                                                                             </div>
                                                                         </div>
-                                                                        <!-- / action right -->
 
-                                                                        <!-- email user list start -->
-                                                                        <div class="email-user-list list-group ps ps--active-y">
-                                                                            <ul class="users-list-wrapper media-list">
-                                                                                <li class="media mail-read">
+                                                                        <!-- chat list start -->
+                                                                        <div class="chatList-user-list list-group ps ps--active-y" th:each="room : ${roomList}">
+                                                                            <ul class="users-list-wrapper media-list" style="margin-top: 16px;">
+                                                                                <a th:href="@{chatRoom(roomId=${room.roomId})}">
+                                                                                <li class="media">
                                                                                     <div class="user-action">
                                                                                         <div class="checkbox-con me-3">
                                                                                             <div class="checkbox checkbox-shadow checkbox-sm">
@@ -248,7 +235,9 @@
                                                                                             </div>
                                                                                         </div>
                                                                                         <span class="favorite text-warning">
-                                                                                            <svg class="bi" width="1.5em" height="1.5em"
+                                                                                            <svg class="bi"
+                                                                                                 width="1.5em"
+                                                                                                 height="1.5em"
                                                                                                  fill="currentColor">
                                                                                                     <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#star-fill}"/>
                                                                                             </svg>
@@ -263,192 +252,25 @@
                                                                                     <div class="media-body">
                                                                                         <div class="user-details">
                                                                                             <div class="mail-items">
-                                                                        <span class="list-group-item-text text-truncate">Open source
-                                                                                project public release 👍</span>
+                                                                                                <span class="list-group-item-text text-truncate" th:text="${room.name}"></span>
                                                                                             </div>
                                                                                             <div class="mail-meta-item">
-                                                                        <span class="float-right">
-                                                                             <span class="mail-date">4:14 AM</span>
-                                                                        </span>
+                                                                                                 <span class="float-right">
+                                                                                                    <span class="chat-date" th:text="${room.regDate}"></span>
+                                                                                                 </span>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="mail-message">
-                                                                                            <p class="list-group-item-text truncate mb-0">
-                                                                                                Hey John, bah kivu
-                                                                                                decrete epanorthotic
-                                                                                                unnotched
-                                                                                                Argyroneta nonius
-                                                                                                veratrine preimaginary
-                                                                                            </p>
-                                                                                            <div class="mail-meta-item">
-                                                        <span class="float-right">
-                                                            <span class="bullet bullet-success bullet-sm"></span>
-                                                        </span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </li>
-                                                                                <li class="media">
-                                                                                    <div class="user-action">
-                                                                                        <div class="checkbox-con me-3">
-                                                                                            <div class="checkbox checkbox-shadow checkbox-sm">
-                                                                                                <input type="checkbox"
-                                                                                                       id="checkboxsmall10"
-                                                                                                       class='form-check-input'>
-                                                                                                <label for="checkboxsmall10"></label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <span class="favorite">
-
-                                                    <svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
-                                                        <use
-                                                                th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#star}"/>
-                                                    </svg>
-                                                    </span>
-                                                                                    </div>
-                                                                                    <div class="pr-50">
-                                                                                        <div class="avatar">
-                                                                                            <img class="rounded-circle"
-                                                                                                 th:src="@{/assets/images/faces/5.jpg}"
-                                                                                                 alt="Generic placeholder image">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="media-body">
-                                                                                        <div class="user-details">
-                                                                                            <div class="mail-items">
-                                                        <span class="list-group-item-text text-truncate mb-0">
-                                                            Invest a few hours contributing to the software
-                                                            you use and love. 🍕
-                                                        </span>
-                                                                                            </div>
-                                                                                            <div class="mail-meta-item">
-                                                        <span class="float-right">
-                                                            <span class="mail-date">29 May</span>
-                                                        </span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="mail-message">
-                                                                                            <p class="list-group-item-text mb-0 truncate">
-                                                                                                Hope your like it, or
-                                                                                                feel free to comment,
-                                                                                                feedback or
-                                                                                                rebound
-                                                                                                !
-                                                                                            </p>
-                                                                                            <div class="mail-meta-item">
-                                                        <span class="float-right">
-                                                            <span class="bullet bullet-info bullet-sm"></span>
-                                                        </span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </li>
-                                                                                <li class="media">
-                                                                                    <div class="user-action">
-                                                                                        <div class="checkbox-con me-3">
-                                                                                            <div class="checkbox checkbox-shadow checkbox-sm">
-                                                                                                <input type="checkbox"
-                                                                                                       id="checkboxsmall11"
-                                                                                                       class='form-check-input'>
-                                                                                                <label for="checkboxsmall11"></label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <span class="favorite">
-
-                                                    <svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
-                                                        <use
-                                                                th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#star}"/>
-                                                    </svg>
-                                                    </span>
-                                                                                    </div>
-                                                                                    <div class="pr-50">
-                                                                                        <div class="avatar">
-                                                                                            <img class="rounded-circle"
-                                                                                                 th:src="@{/assets/images/faces/1.jpg}"
-                                                                                                 alt="Generic placeholder image">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="media-body">
-                                                                                        <div class="user-details">
-                                                                                            <div class="mail-items">
-                                                        <span class="list-group-item-text text-truncate mb-0">Harness
-                                                            The Power Of Words In Your Life</span>
-                                                                                            </div>
-                                                                                            <div class="mail-meta-item">
-                                                        <span class="float-right">
-                                                            <span class="mail-date">17 May</span>
-                                                        </span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="mail-message">
-                                                                                            <p class="list-group-item-text mb-0 truncate">
-                                                                                                Hope your like it, or
-                                                                                                feel free to comment,
-                                                                                                feedback or
-                                                                                                rebound
-                                                                                                !.
-                                                                                            </p>
-                                                                                            <div class="mail-meta-item">
-                                                                                                    <span class="float-right">
-                                                                                                        <span class="bullet bullet-warning bullet-sm"></span>
-                                                                                                    </span>
-                                                                                                                                        </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </li>
-                                                                                <li class="media mail-read">
-                                                                                    <div class="user-action">
-                                                                                        <div class="checkbox-con me-3">
-                                                                                            <div class="checkbox checkbox-shadow checkbox-sm">
-                                                                                                <input type="checkbox"
-                                                                                                       id="checkboxsmall12"
-                                                                                                       class='form-check-input'>
-                                                                                                <label for="checkboxsmall12"></label>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <span class="favorite">
-
-                                                                                        <svg class="bi" width="1.5em" height="1.5em" fill="currentColor">
-                                                                                            <use
-                                                                                                    th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#star}"/>
-                                                                                        </svg>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                    <div class="pr-50">
-                                                                                        <div class="avatar">
-                                                                                            <img class="rounded-circle"
-                                                                                                 th:src="@{/assets/images/faces/3.jpg}"
-                                                                                                 alt="Generic placeholder image">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="media-body">
-                                                                                        <div class="user-details">
-                                                                                            <div class="mail-items">
-                                                                                            <span class="list-group-item-text text-truncate mb-0"> Know
-                                                                                                Yourself Your Inner Power </span>
-                                                                                                                                </div>
-                                                                                                                                <div class="mail-meta-item">
-                                                                                            <span class="float-right">
-                                                                                                <span class="mail-date">21 Mar</span>
-                                                                                            </span>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="mail-message">
-                                                                                            <p class="list-group-item-text mb-0 truncate">
-                                                                                                Hope your like it, or
-                                                                                                feel free to comment,
-                                                                                                feedback or
-                                                                                                rebound
-                                                                                                !
-                                                                                            </p>
+                                                                                            <p class="list-group-item-text truncate mb-0"></p>
                                                                                             <div class="mail-meta-item">
                                                                                                 <span class="float-right">
-                                                                                                    <span class="bullet bullet-warning bullet-sm"></span>
+                                                                                                    <span class="bullet bullet-success bullet-sm"></span>
                                                                                                 </span>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </li>
+                                                                                </a>
                                                                             </ul>
                                                                             <!-- email user list end -->
 
@@ -459,38 +281,31 @@
                                                                             </div>
                                                                             <div class="ps__rail-y"
                                                                                  style="top: 0px; height: 733px; right: 0px;">
+                                                                                <!-- 스크롤 관련인 것 같음 -->
                                                                                 <div class="ps__thumb-y" tabindex="0"
                                                                                      style="top: 0px; height: 567px;"></div>
                                                                             </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <!--/ Email list Area -->
                                                             </div>
+                                                            <!--/ Email list Area -->
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <!-- /email -->
-
-                                                <table>
-                                                    <tr th:each="room : ${roomList}">
-                                                        <td>
-                                                            <a th:href="@{chatRoom(roomId=${room.roomId})}"
-                                                               th:text="${room.name}"></a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
                                             </div>
+                                            <!-- /email -->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
-                    <!-- list group button & badge ends -->
                 </div>
+                <!-- list group button & badge ends -->
             </div>
+        </div>
         </div>
     </th:block>
 </th:block>

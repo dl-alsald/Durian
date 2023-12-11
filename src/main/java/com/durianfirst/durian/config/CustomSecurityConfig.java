@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -39,7 +40,13 @@ public class CustomSecurityConfig {
         log.info("==========================configure==============================");
 
         http.formLogin().loginPage("/member/login") //POST방식 처리 역시 같은 경로로 스프링 시큐리티 내부에서 처리됨 / security에서 post방식도 처리함
-                .defaultSuccessUrl("/admin/index");
+                .defaultSuccessUrl("/admin/index")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
+                .logoutSuccessUrl("/member/login")                                                 // 로그아웃 성공시 이동할 URL
+                .invalidateHttpSession(true)                                                // 로그아웃 이후 세션 전체 삭제 여부
+                .deleteCookies("JSESSIONID");
         //로그인 진행한다는 설정
         //UserDetailsService : 실제로 인증을 처리 인터페이스
         //loadUserByUsername : 실제 인증을 처리할 때 호출 되는 부분
