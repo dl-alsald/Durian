@@ -7,24 +7,6 @@
         <title>Login - Mazer Admin Dashboard</title>
     </head>
 
-    <script>
-        var compare_result = false;
-        function fn_compare_pwd(){
-            var pwd1 = $("#mpw_1").val();
-            var pwd2 = $("#mpw_2").val();
-            var $s_result = $("#s_result");
-
-            if(pwd1 == pwd2){
-                compare_result = true;
-                $s_result.text("비밀번호가 일치합니다.");
-                return;
-            }
-
-            compare_result = false;
-            $s_result.text("비밀번호가 일치하지 않습니다.");
-        }
-    </script>
-
     <th:block th:fragment="content">
         <div id="auth">
             <div class="row h-100">
@@ -110,6 +92,26 @@
                 </div>
             </div>
         </div>
+
+        <script th:inline="javascript">
+            var compare_result = false;
+            function fn_compare_pwd(){
+                var pwd1 = $("#mpw_1").val();
+                var pwd2 = $("#mpw_2").val();
+                var $s_result = $("#s_result");
+
+                if(pwd1 == pwd2){
+                    compare_result = true;
+                    $s_result.text("비밀번호가 일치합니다.");
+                    return;
+                }
+
+                compare_result = false;
+                $s_result.text("비밀번호가 일치하지 않습니다.");
+            }
+        </script>
+
+
     </th:block>
 </th:block>
 </html>

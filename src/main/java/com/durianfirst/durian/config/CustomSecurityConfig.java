@@ -40,7 +40,7 @@ public class CustomSecurityConfig {
         log.info("==========================configure==============================");
 
         http.formLogin().loginPage("/member/login") //POST방식 처리 역시 같은 경로로 스프링 시큐리티 내부에서 처리됨 / security에서 post방식도 처리함
-                .defaultSuccessUrl("/admin/index")
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
