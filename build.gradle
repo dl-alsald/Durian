@@ -5,16 +5,19 @@ buildscript {
 }
 
 plugins {
-    id 'org.springframework.boot' version '2.7.16'
-    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
     id 'war'
+    id 'org.springframework.boot' version '2.7.17'
+    id 'io.spring.dependency-management' version '1.1.4'
     id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10' //쿼리dsl 관련 설정 추가
 }
 
-group = 'org.zerock'
+group = 'com.durianfirst'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+
+java {
+    sourceCompatibility = '17'
+}
 
 configurations {
     compileOnly {
@@ -28,56 +31,26 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    compileOnly 'org.projectlombok:lombok:1.18.28'
-    annotationProcessor 'org.projectlombok:lombok:1.18.28'
-    testCompileOnly 'org.projectlombok:lombok:1.18.28'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    testImplementation 'org.springframework.security:spring-security-test'
 
-
-    //일단 제외 : 28행에 있는 것 사용 ->compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.4'
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
+
+    /* 쿼리 DSL */
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-    //쿼리dsl 관련 설정 추가
-    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.20'
-    implementation 'javax.servlet:jstl:1.2'
-    implementation 'org.jsoup:jsoup:1.16.1'
-    implementation 'org.springframework:spring-websocket:5.3.29'
-
-    //websocket
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    //sockjs
-    implementation 'org.webjars:sockjs-client:1.5.1'
-    //stomp
-    implementation 'org.webjars:stomp-websocket:2.3.4'
-    //gson
-    implementation 'com.google.code.gson:gson:2.9.0'
-
-    // json
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.2'
-
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
 
     /* 유효성 검사 */
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-
-    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
 
     /* test log4j2 사용*/
     testCompileOnly 'org.projectlombok:lombok'
@@ -92,15 +65,41 @@ dependencies {
     /* modelmapper */
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 
-    /* 로그인 시큐리티 */
-    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+    /* java8time */
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
+
+    /* thumbnailator */
+    implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.20'
+
+    /* websocket */
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework:spring-websocket:5.3.29'
+
+    /* sockjs */
+    implementation 'org.webjars:sockjs-client:1.5.1'
+
+    /* stomp */
+    implementation 'org.webjars:stomp-websocket:2.3.4'
+
+    /* gson */
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    /* json */
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.14.2'
+
+    implementation 'javax.servlet:jstl:1.2'
+    implementation 'org.jsoup:jsoup:1.16.1'
+}
+
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 
-//쿼리dsl 관련 설정 추가
+/* 쿼리dsl 관련 설정 추가 */
 def querydslDir = "$buildDir/generated/querydsl"
 
 querydsl {
@@ -112,10 +111,13 @@ sourceSets {
     main.java.srcDir querydslDir
 }
 
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-
 compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
 }
