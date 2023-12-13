@@ -1,16 +1,19 @@
 package com.durianfirst.durian.controller;
 
 import com.durianfirst.durian.config.CustomUserDetails;
+import com.durianfirst.durian.dto.MemberImageDTO;
 import com.durianfirst.durian.dto.MemberJoinDTO;
 import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.security.CustomUserDetailsService;
+import com.durianfirst.durian.service.MemberImgService;
 import com.durianfirst.durian.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final MemberImgService memberImgService;
 
     @GetMapping("/login")
     public void login(String errorCode, String logout){
@@ -106,5 +110,13 @@ public class MemberController {
         SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
 
         return true;
+    }
+
+    @PostMapping("/imgupload")
+    public  String upload(@ModelAttribute MemberImageDTO memberImageDTO, Authentication authentication){
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        memberImgService.upload(memberImageDTO,userDetails.getUsername());
+
+        return "redirect:/member/mypage";
     }
 }

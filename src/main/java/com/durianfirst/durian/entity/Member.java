@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -45,6 +46,9 @@ public class Member extends BaseEntity {
     private boolean mdel; //회원탈퇴 여부
 
     private String mrecommend; //추천인 아이디
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<MemberImg> memberImgs;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
