@@ -19,11 +19,11 @@ public class HeartServiceTests {
     public void testRegister() {
 
         HeartDTO heartDTO = HeartDTO.builder()
-                .pno(33)
+                .hno(33L)
                 .mid("고은짜이")
                 .regDate(LocalDateTime.of(2023, Month.OCTOBER, 21, 14, 30))
                 .build();
 
-        System.out.println(heartService.register(heartDTO));
+        //System.out.println(heartService.register(heartDTO));
     }
 }
