@@ -6,7 +6,11 @@
         <meta charset="UTF-8">
         <title>Chatbox - Mazer Admin Dashboard</title>
 
-
+        <style>
+            .hidden-content {
+                display: none;
+            }
+        </style>
 
     </head>
 
@@ -56,7 +60,7 @@
                                     </div>
 
                                     <!-- 채팅 부분 -->
-                                    <div id="chatArea">
+                                    <div id="chatArea" >
                                         <div class="msgArea" id="chatMessageArea"
                                              style="height: 700px; overflow:scroll"></div>
                                     </div>
@@ -85,15 +89,15 @@
         <!-- jQuery 추가 -->
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script th:inline="javascript">
+
+            let socket = new WebSocket("ws://localhost:80/ws/chat");
+
             function enterRoom(socket) {
                 var enterMsg = {"type": "ENTER", "roomId": [[${room.roomId}]], "sender": "chee", "msg": ""}; //sender는  글쓸때 수정하자.
 
                 socket.send(JSON.stringify(enterMsg));
 
             }
-
-
-            let socket = new WebSocket("ws://localhost:80/ws/chat");
 
             socket.onopen = function (e) {
                 console.log('open server!')
@@ -116,8 +120,14 @@
                 appendMessage(e.data);
 
                 let msgArea = document.querySelector('.msgArea');
+
+                //메세지 새로 생성 <div>
                 let newMsg = document.createElement('div');
                 newMsg.innerText = e.data;
+
+                //style="display:none"
+                newMsg.style.display = 'none';
+
                 msgArea.append(newMsg);
 
 
@@ -154,12 +164,7 @@
                     $("#chatMessageArea").append(
                         "<div class='card-body pt-4 bg-grey'>" +
                         "<div class='chat-content'>" +
-                        "<div class='chat' data-message-type='" + messageType + "'>" +
-                        "<div class='chat-body'>" +
-                        "<div class='chat-message'>" + message.msg + "</div>" +
-                        "</div>" +
-                        "</div>" +
-                        "<div class='" + (message.isSent ? 'chat' : 'chat chat-left') + "'>" +
+                        "<div class='chat " + (message.isSent ? '' : 'chat-left') +"' data-message-type='" + messageType + "'>" +
                         "<div class='chat-body'>" +
                         "<div class='chat-message'>" + message.msg + "</div>" +
                         "</div>" +
@@ -172,7 +177,6 @@
                     $("#chatArea").scrollTop(maxScroll);
                 }
             }
-
         </script>
     </th:block>
 </th:block>
