@@ -111,6 +111,8 @@
                 console.log(e);
             }
 
+
+
             //메세지 수신했을 때 이벤트.
             socket.onmessage = function (e) {
 
@@ -130,7 +132,12 @@
 
                 msgArea.append(newMsg);
 
+                clearMsgArea();
+            }
 
+            //보냈던 메세지는 지워짐
+            function clearMsgArea(){
+                $('div.card-footer input').val('');
             }
 
             //메세지 보내기 버튼 눌렀을 떄..
@@ -146,6 +153,15 @@
                 socket.send(JSON.stringify(talkMsg));
             }
 
+            // 엔터 키에 대한 이벤트 핸들러
+            function handleEnterKey(e) {
+                if (e.keyCode === 13 && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMsg(); // Enter 키가 눌리면 sendMsg 함수 호출
+                    clearMsgArea(); // 메세지 전송 후 입력창 비우기
+                }
+            }
+
             function quit() {
                 var quitMsg = {"type": "QUIT", "roomId": [[${room.roomId}]], "sender": "chee", "msg": ""};
                 socket.send(JSON.stringify(quitMsg));
@@ -153,6 +169,7 @@
                 location.href = "/chat/chatList";
             }
 
+            //말풍선 style
             function appendMessage(msg) {
 
                 if (msg == '') {
@@ -177,6 +194,9 @@
                     $("#chatArea").scrollTop(maxScroll);
                 }
             }
+
+            // 입력창에 대한 이벤트 핸들러 등록
+            document.querySelector('.form-control').addEventListener('keydown', handleEnterKey);
         </script>
     </th:block>
 </th:block>
