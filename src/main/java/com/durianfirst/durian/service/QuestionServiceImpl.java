@@ -75,11 +75,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageResponsedDTO<QuestionDTO> list(PageRequestedDTO pageRequestDTO) {
+    public PageResponsedDTO<QuestionDTO> list(PageRequestedDTO pageRequestedDTO) {
 
-        String[] types = pageRequestDTO.getTypes();
-        String keyword = pageRequestDTO.getKeyword();
-        Pageable pageable = pageRequestDTO.getPageable("qno");
+        String[] types = pageRequestedDTO.getTypes();
+        String keyword = pageRequestedDTO.getKeyword();
+        Pageable pageable = pageRequestedDTO.getPageable("qno");
 
         Page<Question> result = questionRepository.searchAll(types, keyword, pageable);
 
@@ -88,7 +88,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
         return PageResponsedDTO.<QuestionDTO>withAll()
-                .pageRequestDTO(pageRequestDTO)
+                .pageRequestedDTO(pageRequestedDTO)
                 .dtoList(dtoList)
                 .total((int) result.getTotalElements())
                 .build();

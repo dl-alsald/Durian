@@ -35,11 +35,8 @@ public class QuestionDTO {
 
     private String qmember;
 
-    /* private LocalDateTime regTime;
+     private LocalDateTime regDate;
 
-    private LocalDateTime updateTime;
-
-    =>BaseEntity
-    */
+    private LocalDateTime modDate;
     }
 

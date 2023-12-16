@@ -44,7 +44,7 @@ public class ChatController {
 
             model.addAttribute("member", member);
         }else{
-            return "/member/login";
+            return "member/login";
         }
 
         ChatRoom room = chatService.createRoom(name);

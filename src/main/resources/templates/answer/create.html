@@ -2,9 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/basic.html}">
-<head>
-  <title>1:1QnA(admin)</title>
-</head>
+
 <div layout:fragment="content">
   <div class="row mt-3">
     <div class="col">
@@ -24,7 +22,10 @@
             <div th:text="${question.qcontent}"></div>
             <div class="d-flex justify-content-end"> <!--시간위치(오른쪽정렬)-->
                 <div class="badge bg-light text-dark p-2 text-start"><!--시간테두리-->
-                    <div th:text="${#temporals.format(question.regTime, 'yyyy-MM-dd HH:mm')}"></div>
+                    <div class="mb-2"><!--작성자표시-->
+                        <span th:if="${dto.member != null}" th:text="${dto.member.mid}"></span>
+                    </div>
+                    <div th:text="${#temporals.format(question.regDate, 'yyyy-MM-dd HH:mm')}"></div>
                 </div><!--시간테두리 끝-->
             </div><!--시간위치(오른쪽정렬)-->
             <!-- 답변의 갯수 표시 -->
@@ -37,15 +38,18 @@
                     <div class="card-text" style="white-space: normal;" th:text="${answer.acontent}"></div>
                     <div class="d-flex justify-content-end">
                         <div class="badge bg-light text-dark p-2 text-start">
-                            <div th:text="${#temporals.format(answer.regTime, 'yyyy-MM-dd HH:mm')}"></div>
+                            <div th:text="${#temporals.format(answer.regDate, 'yyyy-MM-dd HH:mm')}"></div>
                             <div class="my-3">
                                 <!--답변 수정 버튼-->
-                                <div class="my-4">
+                                <a th:href="@{|/answer/modify/${answer.ano}|}" class="btn btn-sm btn-outline-success"
+                                   th:text="수정"></a>
+                            </div>
+                               <!-- <div class="my-4">
                                     <div class="float-end">
                                         <button type="button" class="btn btn-outline-success modifyBtn">수정</button>
                                         <button type="button" class="btn btn-outline-success deleteBtn">삭제</button>
                                     </div>
-                                </div>
+                                </div>-->
 
                         </div>
                         </div>
@@ -54,8 +58,8 @@
             </div><!--end card my-3-->
 
             <!-- 답변 반복 끝  -->
-            <!-- 답변 작성 -->
-            <form th:action="@{|/templates/answer/createa/${question.qno}|}" method="post" class="my-3">
+             <!--답변 작성-->
+            <form th:action="@{|/answer/createa/${question.qno}|}" method="post" class="my-3">
                 <textarea name="acontent" id="acontent" rows="10" class="form-control"></textarea>
                 <input type="submit" value="답변등록" class="btn btn-success">
             </form>
@@ -63,18 +67,17 @@
         </div><!--end card-body-->
           <!--목록,수정,답변버튼-->
           <div class="my-4">
-              <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
-                  <a th:href="|@{/templates/answer/list2}?${link}|" class="text-decoration-none">
+              <div class="float-end" th:with="link = ${pageRequestedDTO.getLink()}">
+                  <a th:href="|@{/answer/list2}?${link}|" class="text-decoration-none">
                       <button type="button" class="btn btn-outline-success">목록</button>
                   </a>
-              </div><!--end class="float-end" -->
+              </div><!--end class="float-end"-->
           </div><!--end class="my-4"-->
 
     </div><!--end card-->
 </div><!--end col-->
   </div><!--end row mt-3-->
 </div><!--end fragment="content"-->
-
 <script layout:fragment="script" th:inline="javascript">
 
         //수정버튼 누를 시 에러처리 부분
@@ -91,7 +94,7 @@
         alert(errorMsg)
     }
         //수정시이벤트처리(정상처리시 목록으로 이동)
-        const link = [[${pageRequestDTO.getLink()}]]
+        const link = [[${pageRequestedDTO.getLink()}]]
         const formObj = document.querySelector("#f1")
 
         document.querySelector(".modifyBtn").addEventListener("click", function (e){
@@ -129,5 +132,4 @@
         });
     });*/
 </script>
-
 </html>
