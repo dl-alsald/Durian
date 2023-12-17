@@ -24,7 +24,6 @@ public class ChatController {
     private final ChatService chatService;
     private final MemberRepository memberRepository;
 
-
     @RequestMapping("/chat/chatList")
     public String chatList(Model model){
         List<ChatRoom> roomList = chatService.findAllRoom();
@@ -32,27 +31,26 @@ public class ChatController {
         return "chat/chatList";
     }
 
-    @PostMapping("/chat/createRoom")  //방을 만들었으면 해당 방으로 가야지.
-    public String createRoom(Model model, @RequestParam String name, String username, Principal principal) {
+    @PostMapping("/chat/createRoom")
+    public String createRoom(Model model, String username, Principal principal) {
+        if (principal != null) {
+            String userId = principal.getName();
+            Member member = memberRepository.findBymid(userId);
 
-        if(principal != null){
-
-            String mid = principal.getName();
-            Member member = memberRepository.findBymid(mid);
-
-            log.info("유저 아이디 : " + principal.getName());
+            log.info("유저 아이디: " + userId);
 
             model.addAttribute("member", member);
-        }else{
+
+            // 사용자의 아이디를 사용하여 ChatService의 createRoom 메서드 호출
+            ChatRoom room = chatService.createRoom(userId);
+
+            model.addAttribute("room", room);
+            model.addAttribute("username", username);
+
+            return "chat/chatRoom";  // 만든 사람이 채팅방 1빠로 들어가게 됩니다
+        } else {
             return "member/login";
         }
-
-        ChatRoom room = chatService.createRoom(name);
-
-        model.addAttribute("room",room);
-        model.addAttribute("username",username);
-
-        return "chat/chatRoom";  //만든사람이 채팅방 1빠로 들어가게 됩니다
     }
 
     @GetMapping("/chat/chatRoom")
