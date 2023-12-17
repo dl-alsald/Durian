@@ -6,20 +6,20 @@
 <!--검색조건 선택화면-->
 <div layout:fragment="content">
     <div class="row mt-3">
-        <form action="/templates/answer/list2" method="get">
+        <form action="/answer/list2" method="get">
             <div class="col">
-                <input type="hidden" name="size" th:value="${pageRequestDTO.size}">
+                <input type="hidden" name="size" th:value="${pageRequestedDTO.size}">
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <select class="form-select" name="type">
                             <option value="">---</option>
-                            <option value="t" th:selected="${pageRequestDTO.type == 't'}">제목</option>
-                            <option value="c" th:selected="${pageRequestDTO.type == 'c'}">내용</option>
-                            <option value="tc" th:selected="${pageRequestDTO.type == 'tc'}">제목내용</option>
+                            <option value="t" th:selected="${pageRequestedDTO.type == 't'}">제목</option>
+                            <option value="c" th:selected="${pageRequestedDTO.type == 'c'}">내용</option>
+                            <option value="tc" th:selected="${pageRequestedDTO.type == 'tc'}">제목내용</option>
                         </select>
                     </div>
                     <input type="text" class="form-control" name="keyword"
-                           th:value="${pageRequestDTO.keyword}">
+                           th:value="${pageRequestedDTO.keyword}">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary searchBtn"
                                 type="submit">Search</button>
@@ -47,14 +47,14 @@
                     <th scope="col">등록시간</th>
                 </tr>
                 </thead>
-                <tbody th:with="link = ${pageRequestDTO.getLink()}"><!--화면에 보여질 내용물,반복문-->
+                <tbody th:with="link = ${pageRequestedDTO.getLink()}"><!--화면에 보여질 내용물,반복문-->
                 <tr th:each="dto:${responseDTO.dtoList}">
                     <th scope="row">[[${dto.qno}]]</th>
-                    <td>
-                        <a th:href="|@{/templates/answer/create(qno =${dto.qno})}&${link}|"> [[${dto.qtitle}]]</a>
+                    <td> <!--제목 클릭시 보여질 주소-->
+                        <a th:href="|@{/answer/create(qno =${dto.qno})}&${link}|"> [[${dto.qtitle}]]</a>
                     </td>
-                    <td>[[${dto.qmember}]]</td><!--보여질지모르겠음-->
-                    <td>[[${#temporals.format(dto.regTime, 'yyyy-MM-dd')}]]</td>
+                    <td><span th:if="${dto.member != null}" th:text="${dto.member.mid}"></span></td>
+                    <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
                 </tr>
                 </tbody>
             </table>
@@ -130,7 +130,7 @@
         e.preventDefault()
         e.stopPropagation()
 
-        self.location ='/question/list'
+        self.location ='/answer/list2'
 
     },false)
 

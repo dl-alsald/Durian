@@ -3,11 +3,15 @@ package com.durianfirst.durian.controller;
 import com.durianfirst.durian.dto.PageRequestedDTO;
 import com.durianfirst.durian.dto.PageResponsedDTO;
 import com.durianfirst.durian.dto.QuestionDTO;
+import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.entity.Question;
+import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.service.AnswerService;
 import com.durianfirst.durian.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,16 +19,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
-@RequestMapping("/")
+/*@RequestMapping("/")*/
 @Log4j2
 @RequiredArgsConstructor
 public class QuestionController {
 
     private final QuestionService questionService;
-
     private final AnswerService answerService;
+    private final MemberRepository memberRepository;
 
     @GetMapping("/question/list")
     public void list(PageRequestedDTO pageRequestDTO, Model model) {
@@ -49,8 +54,18 @@ public class QuestionController {
     }
 
     @GetMapping("/question/register") //등록처리
-    public void registerGET() {
+    public String registerGET(Principal principal) {
 
+        if(principal != null){
+
+            String mid = principal.getName();
+            Member member = memberRepository.findBymid(mid);
+
+            log.info("유저 아이디 : " + principal.getName());
+
+            return "member/login";
+        }
+        return "question/register";
     }
 
     @PostMapping("/question/register")
@@ -70,6 +85,7 @@ public class QuestionController {
 
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping({"/question/read", "/question/modify"})
     public void read(Long qno, PageRequestedDTO pageRequestDTO, Model model) {
 
@@ -80,6 +96,7 @@ public class QuestionController {
         model.addAttribute("dto", questionDTO);
     }
 
+    @PreAuthorize("principal.username == #questionDTO.member.mid")
     @PostMapping("/question/modify")
     public String modify(PageRequestedDTO pageRequestDTO,
                          @Valid QuestionDTO questionDTO,

@@ -22,6 +22,7 @@ public class Answer extends BaseEntity{
     private String acontent; //답변내용
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mid")
     private Member member; //작성자(작성자 한 사람이 답변 1개만 달 수 있음)
 
     @ManyToOne(fetch = FetchType.LAZY)

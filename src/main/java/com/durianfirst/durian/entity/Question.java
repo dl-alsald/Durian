@@ -35,7 +35,8 @@ public class Question extends BaseEntity {
 
     //여러개의질문이 한명의 사용자에게 작성될수 있으므로 ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member; //작성자
+    @JoinColumn(name = "mid")
+    private Member member;
 
     @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
