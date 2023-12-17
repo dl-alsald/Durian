@@ -35,6 +35,8 @@ public class QuestionDTO {
 
     private String qmember;
 
+    private boolean secret; //비밀글 여부
+
      private LocalDateTime regDate;
 
     private LocalDateTime modDate;
