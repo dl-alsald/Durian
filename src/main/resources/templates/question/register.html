@@ -38,6 +38,16 @@
               <span class="input-group-text">작성자</span>
               <input type="text" name="member" class="form-control" placeholder="작성자"
               th:value="${#authentication.principal.username}" readonly>
+              <div class="col-sm-6 mb-1">
+                <div class="input-group mb-3">
+                  <span class="input-group-text">비밀글</span>
+                    <input class="form-check-input" type="checkbox" value=""
+                           aria-label="Checkbox for following text input">
+                  </div>
+                  <input type="text" class="form-control"
+                         aria-label="Text input with checkbox">
+                </div>
+              </div>
             </div>
 
             <div class="my-4">
