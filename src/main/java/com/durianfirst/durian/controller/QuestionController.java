@@ -63,6 +63,7 @@ public class QuestionController {
 
             log.info("유저 아이디 : " + principal.getName());
 
+        }else {
             return "member/login";
         }
         return "question/register";
