@@ -11,7 +11,7 @@ import com.durianfirst.durian.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,6 +30,7 @@ public class QuestionController {
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/question/list")
     public void list(PageRequestedDTO pageRequestDTO, Model model) {
@@ -56,14 +57,14 @@ public class QuestionController {
     @GetMapping("/question/register") //등록처리
     public String registerGET(Principal principal) {
 
-        if(principal != null){
+        if (principal != null) {
 
             String mid = principal.getName();
             Member member = memberRepository.findBymid(mid);
 
             log.info("유저 아이디 : " + principal.getName());
 
-        }else {
+        } else {
             return "member/login";
         }
         return "question/register";
@@ -86,7 +87,7 @@ public class QuestionController {
 
     }
 
-    @PreAuthorize("isAuthenticated()")
+/*    @PreAuthorize("isAuthenticated()")
     @GetMapping({"/question/read", "/question/modify"})
     public void read(Long qno, PageRequestedDTO pageRequestDTO, Model model) {
 
@@ -95,7 +96,7 @@ public class QuestionController {
         log.info(questionDTO);
 
         model.addAttribute("dto", questionDTO);
-    }
+    }*/
 
     @PreAuthorize("principal.username == #questionDTO.member.mid")
     @PostMapping("/question/modify")
@@ -138,6 +139,7 @@ public class QuestionController {
 
         return "redirect:/question/list";
     }
+
     /*-----------------답변*/
     @GetMapping("/question/list3")
     public void list3(PageRequestedDTO pageRequestDTO, Model model) {
@@ -148,20 +150,30 @@ public class QuestionController {
 
         model.addAttribute("responseDTO", responseDTO);
     }
+
     @GetMapping("/question/answer")
-    public void answer(Long qno, PageRequestedDTO pageRequestDTO, Model model) {
+    public String answer(Long qno, @RequestParam(required = false) String password, Model model) {
 
         Question question = this.answerService.getQuestion(qno);
         model.addAttribute("question", question);
+        model.addAttribute("question", question);
 
         QuestionDTO questionDTO = answerService.create(qno);
-
-        log.info(questionDTO);
-
         model.addAttribute("dto", questionDTO);
 
+        //질문이 비밀글이고, 비밀번호가 설정되어 있으면
+        if (questionDTO.getSecret() && questionDTO.getPassword() != null) {
+            //비밀번호가 입력되지 않았거나, 입력된 비밀번호가 일치하지 않으면
+            if (password == null || !questionDTO.isPasswordValid(password, passwordEncoder)) {
+                //비밀번호 입력 폼으로 이동
+                return "question/passwordForm";
+            }
+        }
+        //일치하거나, 비밀번호가 없는경우에는 답변 페이지로 이동
+        return "question/answer";
     }
-    }
+
+}
 
 
 

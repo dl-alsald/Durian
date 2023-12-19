@@ -22,9 +22,11 @@
                            th:value="${pageRequestedDTO.keyword}">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary searchBtn"
-                                type="submit">Search</button>
+                                type="submit">Search
+                        </button>
                         <button class="btn btn-outline-secondary clearBtn"
-                                type="button">Clear</button>
+                                type="button">Clear
+                        </button>
                     </div>
                 </div>
             </div>
@@ -51,7 +53,18 @@
                 <tr th:each="dto:${responseDTO.dtoList}">
                     <th scope="row">[[${dto.qno}]]</th>
                     <td>
-                        <a th:href="|@{/question/answer(qno =${dto.qno})}&${link}|"> [[${dto.qtitle}]]</a>
+                        <a th:if="${dto.secret}" th:href="|@{/question/answer(qno =${dto.qno})}&${link}|">
+                            <span>[[${dto.qtitle}]]</span>
+                            <svg class="bi" width="1em" height="1em" fill="currentColor">
+                                <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#lock-fill}"/>
+                            </svg>
+                        </a>
+                        <a th:unless="${dto.secret }" th:href="|@{/question/answer(qno =${dto.qno})}&${link}|">
+                            <!--<svg class="bi" width="1em" height="1em" fill="currentColor">
+                                <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#patch-minus-fll}"/>
+                            </svg>-->
+                            <span>[[${dto.qtitle}]]</span>
+                        </a>
                     </td>
                     <td><span th:if="${dto.member != null}" th:text="${dto.member.mid}"></span></td>
                     <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
@@ -69,7 +82,7 @@
                     <th:block th:each="i: ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
                         <!--  #numbers.sequence() 특정한 범위의 연속된 숫자를 만듬-->
 
-                        <li th:class="${responseDTO.page == i}?'page-item active':'page-item'" >
+                        <li th:class="${responseDTO.page == i}?'page-item active':'page-item'">
                             <a class="page-link" th:data-num="${i}">[[${i}]]</a>
                             <!--data-num 이라는 속성으로 페이지번호를 처리-->
                         </li>
@@ -107,12 +120,12 @@
 
 <script layout:fragment="script" th:inline="javascript">
     //이벤트처리
-    document.querySelector(".pagination").addEventListener("click", function (e){
+    document.querySelector(".pagination").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
         const target = e.target
 
-        if(target.tagName !== 'A'){
+        if (target.tagName !== 'A') {
             return
         }
 
@@ -124,22 +137,22 @@
 
         formObj.submit();
 
-    },false)
+    }, false)
 
-    document.querySelector(".clearBtn").addEventListener("click",function (e){
+    document.querySelector(".clearBtn").addEventListener("click", function (e) {
         e.preventDefault()
         e.stopPropagation()
 
-        self.location ='/question/list'
+        self.location = '/question/list'
 
-    },false)
+    }, false)
 
     //show modal ..등록시 모달창이 떠야하는데 안뜸.
     const result = [[${result}]]
 
     const modal = new bootstrap.Modal(document.querySelector(".modal"))
 
-    if(result){
+    if (result) {
         modal.show()
     }
 
