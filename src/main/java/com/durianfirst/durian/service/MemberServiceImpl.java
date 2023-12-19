@@ -10,6 +10,7 @@ import com.durianfirst.durian.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,12 +53,12 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
-    @Transactional
+
     @Override
     public void userInfoUpdate(MemberJoinDTO dto) {
 
         /* 회원 찾기 */
-        Member member = memberRepository.findBymid(dto.getMid());
+        Member member = memberRepository.findByMid(dto.toEntity().getMid());
 
         log.info("member : " + member);
         if (member == null) {
@@ -80,6 +81,23 @@ public class MemberServiceImpl implements MemberService {
         log.info("회원 수정 성공");
 
         log.info("Updated Member: " + member);
+    }
+
+    /** 회원정보 수정 **/
+    public String updateMember(MemberJoinDTO joinDTO) {
+        Member member = memberRepository.findByMid(joinDTO.getMid());
+        member.changeName(joinDTO.getMname());
+        member.changeAddress(joinDTO.getMaddress());
+        member.changePassword(joinDTO.getMpw());
+
+        // 회원 비밀번호 수정을 위한 패스워드 암호화
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodePw = encoder.encode(joinDTO.getMpw());
+        member.changePassword(encodePw);
+
+        memberRepository.save(member);
+
+        return member.getMid();
     }
 
 

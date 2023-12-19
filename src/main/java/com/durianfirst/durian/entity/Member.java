@@ -54,6 +54,9 @@ public class Member extends BaseEntity {
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
 
+
+    public void changeName(String mname){ this.mname = mname; }
+
     public void changePassword(String mpw){
         this.mpw = mpw;
     }
@@ -62,8 +65,14 @@ public class Member extends BaseEntity {
         this.memail = memail;
     }
 
+    public void changeAddress(String maddress){this.maddress = maddress; }
+
     public void changeDel(boolean mdel){
         this.mdel = mdel;
+    }
+
+    public void changeSocial(boolean msocial){
+        this.msocial = msocial;
     }
 
     public void addRole(MemberRole memberRole){
@@ -74,9 +83,7 @@ public class Member extends BaseEntity {
         this.roleSet.clear();
     }
 
-    public void changeSocial(boolean msocial){
-        this.msocial = msocial;
-    }
+
 
     public void update(String mname, String memail, String mbirthday, String mphone, String mpw){
         this.mname = mname;

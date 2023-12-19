@@ -9,4 +9,6 @@ public interface MemberService {
     void register(MemberJoinDTO memberJoinDTO) throws MidExistException; //만일 같은 아이디가 존재하면 예외 발생
 
     void userInfoUpdate(MemberJoinDTO dto);
+
+    public String updateMember(MemberJoinDTO joinDTO);
 }

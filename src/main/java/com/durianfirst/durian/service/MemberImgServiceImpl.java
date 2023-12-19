@@ -26,7 +26,7 @@ public class MemberImgServiceImpl implements MemberImgService{
 
     @Override
     public void upload(MemberImageDTO memberImageDTO, String mid) {
-        Member member = memberRepository.findBymid(mid);
+        Member member = memberRepository.findByMid(mid);
 
         MultipartFile file = memberImageDTO.getOrimgname();
 
@@ -58,7 +58,7 @@ public class MemberImgServiceImpl implements MemberImgService{
 
     @Override
     public ImageResponseDTO findImage(String mid) {
-        Member member = memberRepository.findBymid(mid);
+        Member member = memberRepository.findByMid(mid);
         MemberImg memberImg = memberImgRepository.findByMember(member);
 
         String defaultImageUrl = "/upload/anonymous.png";

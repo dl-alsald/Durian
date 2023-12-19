@@ -47,12 +47,25 @@
                                                 <div class="form-body">
                                                     <div class="row">
                                                         <div class="col-md-4">
+                                                            <label>Id</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="form-group has-icon-left">
+                                                                <div class="position-relative">
+                                                                    <span type="text" class="form-control" th:text="${member.mid}" readonly></span>
+                                                                    <div class="form-control-icon">
+                                                                        <i class="bi bi-person"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
                                                             <label>Name</label>
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <span type="text" class="form-control" id="first-name-icon" th:text="${member.mname}" readonly></span>
+                                                                    <span type="text" class="form-control" th:text="${member.mname}" readonly></span>
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-person"></i>
                                                                     </div>
@@ -65,7 +78,7 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <span type="email" class="form-control" id="first-name-icon" th:text="${member.memail}" readonly></span>
+                                                                    <span type="email" class="form-control" th:text="${member.memail}" readonly></span>
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-envelope"></i>
                                                                     </div>

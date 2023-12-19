@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService{
                 .orElseThrow(() -> new EntityNotFoundException("Item not found"));
 
         //현재 로그인한 회원의 아이드를 ㅣ용하여 회원정보 조회
-        Member member = memberRepository.findBymid(mid);
+        Member member = memberRepository.findByMid(mid);
 
         List<OrderItem> orderItemList = new ArrayList<>();
         //주문할 상품 엔티티와 주문수량을 이용하여 주문 상품 엔티티 생성
@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService{
     public Boolean validateOrder(Long ono, String mid) {
 
         //현재 로그인한 사용자와 주문데이터를 생성한 사용자가 같은지 검사를 합니다. 같을때는 true를 반환하고 같지 않을 경우는 false를 반환
-        Member curMember = memberRepository.findBymid(mid);
+        Member curMember = memberRepository.findByMid(mid);
         Order order = orderRepository.findById(ono).orElseThrow(EntityNotFoundException :: new);
 
         Member savedMember = order.getMember();
@@ -106,7 +106,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Long orders(List<OrderDTO> orderDtoList, String mid) {
 
-        Member member = memberRepository.findBymid(mid);
+        Member member = memberRepository.findByMid(mid);
         List<OrderItem> orderItemList = new ArrayList<>();
 
         for(OrderDTO orderDto : orderDtoList){

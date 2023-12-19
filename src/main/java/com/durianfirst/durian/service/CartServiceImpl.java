@@ -40,7 +40,7 @@ public class CartServiceImpl implements CartService {
         //장바구니에 담을 상품 엔티티를 조회합니다.
         Item item = itemRepository.findById(cartItemDto.getItemId()).orElseThrow(EntityNotFoundException:: new);
         //현재 로그인한 회원 엔티티를 조회합니다.
-        Member member = memberRepository.findBymid(mid);
+        Member member = memberRepository.findByMid(mid);
 
         //현재 로그인한 회원의 장바구니 엔티티 조회
         Cart cart = cartRepository.findByMemberMno(member.getMno());
@@ -71,7 +71,7 @@ public class CartServiceImpl implements CartService {
 
         List<CartDetailDTO> cartDetailDtoList = new ArrayList<>();
 
-        Member member = memberRepository.findBymid(mid);
+        Member member = memberRepository.findByMid(mid);
         Cart cart = cartRepository.findByMemberMno(member.getMno());
         if(cart == null){
             return cartDetailDtoList;
@@ -84,7 +84,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional(readOnly = true)
     public boolean validateCartItem(Long cartItemId, String mid) {
-        Member curMember = memberRepository.findBymid(mid);
+        Member curMember = memberRepository.findByMid(mid);
         CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException :: new);
         Member saveMeber = cartItem.getCart().getMember();
 

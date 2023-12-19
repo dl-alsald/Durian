@@ -5,56 +5,7 @@
     <head>
         <meta charset="UTF-8">
     </head>
-    <script>
-        function memberUpdate() {
-            console.log("memberUpdate 실행");
 
-            let data = {
-                mname: $('#mname').val(),
-                memail: $('#memail').val(),
-                mphone: $('#mphone').val(),
-                mbirthday: $('#mbirthday').val(),
-                maddress: $('#maddress').val(),
-                mpw: null  // mpw에 null 값을 할당
-            };
-
-            if ($('#mpw').val().trim() !== "") {
-                // mpw 입력값이 비어있지 않은 경우에만 값을 할당
-                data.mpw = $('#mpw').val();
-            }
-
-
-            // 공백 및 빈 문자열 체크
-            if (!data.mname || data.mname.trim() === "" || !data.mphone || data.mphone.trim() === ""
-                || !data.mbirthday || data.mbirthday.trim() === "" || !data.memail || data.memail.trim() === "") {
-                alert("공백 또는 입력하지 않은 부분이 있습니다.");
-                return false;
-            }
-
-            const confirmCheck = confirm("수정하시겠습니까?");
-
-            if (confirmCheck == true) {
-                $.ajax({
-                    type: 'POST',
-                    url: '/member/modify',
-                    contentType: 'application/json; charset=utf-8',
-                    data: JSON.stringify(data)
-                }).done(function (result) {
-                    if (result) {
-                        alert("회원 수정이 완료되었습니다.");
-                        window.location.href = "/member/mypage";
-                    } else {
-                        alert("이미 등록된 이메일/전화번호입니다. 다시 입력해주세요.");
-                        $('#mphone').focus();
-                        $('#memail').focus();
-                    }
-                }).fail(function (error) {
-                    alert(JSON.stringify(error));
-                });
-            }
-        }
-
-    </script>
 
     <th:block th:fragment="content">
         <div id="app">
@@ -93,16 +44,29 @@
                                     </div>
                                     <div class="card-content">
                                         <div class="card-body">
-                                            <form class="form form-horizontal">
+                                            <form class="form form-horizontal" action="/member/modify" method="post">
                                                 <div class="form-body">
                                                     <div class="row">
+                                                        <div class="col-md-4">
+                                                            <label>Id</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="form-group has-icon-left">
+                                                                <div class="position-relative">
+                                                                    <span type="text" class="form-control" th:text="${member.mid}" readonly></span>
+                                                                    <div class="form-control-icon">
+                                                                        <i class="bi bi-person"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-md-4">
                                                             <label>Name</label>
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="form-control" id="first-name-icon" name="mname" th:id="mname"
+                                                                    <input type="text" class="form-control" name="mname" th:id="mname"
                                                                            th:value="${member.mname}">
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-person"></i>
@@ -116,7 +80,7 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="email" class="form-control" id="first-name-icon" name="memail" th:id="meamil"
+                                                                    <input type="email" class="form-control" name="memail" th:id="meamil"
                                                                            th:value="${member.memail}">
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-envelope"></i>
@@ -130,7 +94,7 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="number" class="form-control" id="first-name-icon" name="mphone" th:id="mphone"
+                                                                    <input type="text" class="form-control" name="mphone" th:id="mphone"
                                                                            th:value="${member.mphone}">
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-phone"></i>
@@ -158,7 +122,7 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="form-control" id="first-name-icon" name="mbirthday" th:id="mbirthday"
+                                                                    <input type="text" class="form-control" name="mbirthday" th:id="mbirthday"
                                                                            th:value="${member.mbirthday}">
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-phone"></i>
@@ -172,7 +136,7 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="form-control" id="first-name-icon" name="maddress" th:id="maddress"
+                                                                    <input type="text" class="form-control" name="maddress" th:id="maddress"
                                                                            th:value="${member.maddress}">
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-phone"></i>
@@ -181,12 +145,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-12 d-flex justify-content-end">
-                                                            <button type="button"
-                                                                    class="btn btn-primary me-1 mb-1" th:onclick="memberUpdate()" >수정완료
-                                                            </button>
-                                                            <button type="reset"
-                                                                    class="btn btn-light-secondary me-1 mb-1">Reset
-                                                            </button>
+                                                            <button type="sumit" class="btn btn-primary me-1 mb-1" th:onclick="memberUpdate()" >수정완료</button>
+                                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -201,6 +161,45 @@
                 </div>
             </div>
         </div>
+        <!--<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script th:inline="javascript">
+            function memberUpdate() {
+                console.log("memberUpdate 실행");
+
+                let data = {
+                    mname: $('#mname').val(),
+                    memail: $('#memail').val(),
+                    mphone: $('#mphone').val(),
+                    mbirthday: $('#mbirthday').val(),
+                    maddress: $('#maddress').val(),
+                    mpw: null  // mpw에 null 값을 할당
+                };
+
+
+                const confirmCheck = confirm("수정하시겠습니까?");
+
+                if (confirmCheck == true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/member/modify',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data)
+                    }).done(function (result) {
+                        if (result) {
+                            alert("회원 수정이 완료되었습니다.");
+                            window.location.href = "/member/mypage";
+                        } else {
+                            alert("이미 등록된 이메일/전화번호입니다. 다시 입력해주세요.");
+                            $('#mphone').focus();
+                            $('#memail').focus();
+                        }
+                    }).fail(function (error) {
+                        alert(JSON.stringify(error));
+                    });
+                }
+            }
+
+        </script>-->
     </th:block>
 </th:block>
 </html>
