@@ -50,19 +50,19 @@
                                 </div>
                             </div>
                             <!-- 생일 -->
-                            <!--<div class="form-group position-relative has-icon-left mb-4">
+                            <div class="form-group position-relative has-icon-left mb-4">
                                 <input type="text" class="form-control form-control-xl" name="mbirthday" placeholder="Birthday(only number)">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
-                            </div>-->
+                            </div>
                             <!-- 주소 -->
-                            <!--<div class="form-group position-relative has-icon-left mb-4">
+                            <div class="form-group position-relative has-icon-left mb-4">
                                 <input type="text" class="form-control form-control-xl" name="madress" placeholder="Adress">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
-                            </div>-->
+                            </div>
                             <!-- 상세주소 -->
                             <!--<div class="form-group position-relative has-icon-left mb-4">
                                 <input type="text" class="form-control form-control-xl" name="madress" placeholder="DetailAdress">
@@ -78,7 +78,7 @@
                                 </div>
                             </div>-->
 
-                            <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit">Sign Up</button>
+                            <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit" id="success" >Sign Up</button>
                         </form>
                         <div class="text-center mt-5 text-lg fs-4">
                             <p class='text-gray-600'>Already have an account?
@@ -92,8 +92,9 @@
                 </div>
             </div>
         </div>
-
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script th:inline="javascript">
+
             var compare_result = false;
             function fn_compare_pwd(){
                 var pwd1 = $("#mpw_1").val();
@@ -110,8 +111,6 @@
                 $s_result.text("비밀번호가 일치하지 않습니다.");
             }
         </script>
-
-
     </th:block>
 </th:block>
 </html>

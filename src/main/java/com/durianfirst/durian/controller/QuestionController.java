@@ -60,7 +60,7 @@ public class QuestionController {
         if (principal != null) {
 
             String mid = principal.getName();
-            Member member = memberRepository.findBymid(mid);
+            Member member = memberRepository.findByMid(mid);
 
             log.info("유저 아이디 : " + principal.getName());
 
@@ -171,6 +171,17 @@ public class QuestionController {
         }
         //일치하거나, 비밀번호가 없는경우에는 답변 페이지로 이동
         return "question/answer";
+    }
+
+    @GetMapping("/modify")
+    public String modify(Principal principal, Model model) {
+
+        String mid = principal.getName();
+        Member member = memberRepository.findByMid(mid);
+
+        model.addAttribute("member", member);
+
+        return "/member/modify";
     }
 
 }

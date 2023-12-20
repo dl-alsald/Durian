@@ -7,6 +7,7 @@ import com.durianfirst.durian.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +45,22 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    @Override
+    public String updateMember(MemberJoinDTO memberJoinDTO) {
+        Member member = memberRepository.findByMid(memberJoinDTO.getMid());
+        member.changeName(memberJoinDTO.getMname());
+        member.changeEmail(memberJoinDTO.getMemail());
+        member.changePhone(memberJoinDTO.getMphone());
+        member.changeAddress(memberJoinDTO.getMaddress());
+
+        // 회원 비밀번호 수정을 위한 패스워드 암호화
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodePw = encoder.encode(memberJoinDTO.getMpw());
+        member.changePassword(encodePw);
+
+        memberRepository.save(member);
+
+        return member.getMid();
+    }
 
 }

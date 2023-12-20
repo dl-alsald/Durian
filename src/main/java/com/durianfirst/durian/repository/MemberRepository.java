@@ -18,5 +18,5 @@ public interface MemberRepository extends JpaRepository<Member, String> {
      *  가져오도록 social 속성값이 false인 사용자들만을 대상으로 처리*/
 
     @EntityGraph(attributePaths = "roleSet")
-    Member findBymid(String mid);
+    Member findByMid(String mid);
 }

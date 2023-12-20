@@ -35,7 +35,7 @@ public class ChatController {
     public String createRoom(Model model, String username, Principal principal) {
         if (principal != null) {
             String userId = principal.getName();
-            Member member = memberRepository.findBymid(userId);
+            Member member = memberRepository.findByMid(userId);
 
             log.info("유저 아이디: " + userId);
 
@@ -59,7 +59,7 @@ public class ChatController {
         if(principal != null){
 
             String mid = principal.getName();
-            Member member = memberRepository.findBymid(mid);
+            Member member = memberRepository.findByMid(mid);
 
             log.info("유저 아이디 : " + principal.getName());
 
