@@ -129,4 +129,23 @@ public class MemberController {
 
         return "redirect:/member/mypage";
     }
+
+    //회원탈퇴
+
+    @GetMapping("/withdrawal")
+    public String memberWithdrawalForm() {
+        return "/member/withdrawal";
+    }
+    @PostMapping("/withdrawal")
+    public String memberWithdrawal(@RequestParam String password, Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        boolean result = memberService.withdrawal(userDetails.getUsername(), password);
+
+        if (result) {
+            return "redirect:/logout";
+        } else {
+            model.addAttribute("mpw", "비밀번호가 맞지 않습니다.");
+            return "/member/withdrawal";
+        }
+    }
 }

@@ -10,5 +10,7 @@ public interface MemberService {
 
     void userInfoUpdate(MemberJoinDTO dto);
 
+    boolean withdrawal(String mid, String mpw);
+
     public String updateMember(MemberJoinDTO joinDTO);
 }
