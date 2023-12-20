@@ -15,7 +15,7 @@ public class MemberJoinDTO {
     private String mbirthday;
     private String maddress;
     private String mphone;
-    private String mnational;
-    private String mrecommend;
+    /*private String mnational;
+    private String mrecommend;*/
 
 }

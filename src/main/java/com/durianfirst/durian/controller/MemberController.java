@@ -6,18 +6,17 @@ import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.modelmapper.internal.Errors;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Map;
 
 @Controller
 /*@RequestMapping("/member")*/
@@ -100,13 +99,29 @@ public class MemberController {
         return "/member/modify";
     }
 
-
     @PostMapping("/member/modify")
     public String updateMember(@Valid MemberJoinDTO joinDTO, Model model) {
 
         model.addAttribute("member", joinDTO);
         memberService.updateMember(joinDTO);
         return "redirect:/member/mypage";
+    }
+
+    @GetMapping("/member/checkPassword")
+    public String memberWithdrawalForm() {
+        return "/member/checkPassword";
+    }
+    @PostMapping("/member/checkPassword")
+    public String memberWithdrawal(@RequestParam String password, Model model, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        boolean result = memberService.deleteMember(userDetails.getUsername(), password);
+
+        if (result) {
+            return "redirect:/";
+        } else {
+            model.addAttribute("mpw", "비밀번호가 맞지 않습니다.");
+            return "/member/checkPassword";
+        }
     }
 
 

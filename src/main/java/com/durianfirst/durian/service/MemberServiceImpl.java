@@ -63,4 +63,16 @@ public class MemberServiceImpl implements MemberService {
         return member.getMid();
     }
 
+    @Override
+    public boolean deleteMember(String mid, String mpw) {
+        Member member = memberRepository.findByMid(mid);
+
+        if (passwordEncoder.matches(mpw, member.getMpw())) {
+            memberRepository.delete(member);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
