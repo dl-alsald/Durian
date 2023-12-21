@@ -22,6 +22,10 @@ public interface QuestionService {
 
     public List<Question> getList();
 
+    public boolean checkPassword(Long qno, String password);
+
+    public boolean existsById(Long qno);
+
 
 }
 

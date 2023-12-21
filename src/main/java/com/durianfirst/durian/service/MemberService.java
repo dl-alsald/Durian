@@ -1,5 +1,6 @@
 package com.durianfirst.durian.service;
 
+
 import com.durianfirst.durian.dto.MemberJoinDTO;
 
 public interface MemberService {
@@ -8,9 +9,7 @@ public interface MemberService {
 
     void register(MemberJoinDTO memberJoinDTO) throws MidExistException; //만일 같은 아이디가 존재하면 예외 발생
 
-    void userInfoUpdate(MemberJoinDTO dto);
+    String updateMember(MemberJoinDTO memberJoinDTO);
 
-    boolean withdrawal(String mid, String mpw);
-
-    public String updateMember(MemberJoinDTO joinDTO);
+    boolean deleteMember(String mid, String mpw);
 }

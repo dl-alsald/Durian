@@ -53,6 +53,35 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    @Override
+    public String updateMember(MemberJoinDTO memberJoinDTO) {
+        Member member = memberRepository.findByMid(memberJoinDTO.getMid());
+        member.changeName(memberJoinDTO.getMname());
+        member.changeEmail(memberJoinDTO.getMemail());
+        member.changePhone(memberJoinDTO.getMphone());
+        member.changeAddress(memberJoinDTO.getMaddress());
+
+        // 회원 비밀번호 수정을 위한 패스워드 암호화
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodePw = encoder.encode(memberJoinDTO.getMpw());
+        member.changePassword(encodePw);
+
+        memberRepository.save(member);
+
+        return member.getMid();
+    }
+
+    @Override
+    public boolean deleteMember(String mid, String mpw) {
+        Member member = memberRepository.findByMid(mid);
+
+        if (passwordEncoder.matches(mpw, member.getMpw())) {
+            memberRepository.delete(member);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @Override
     public void userInfoUpdate(MemberJoinDTO dto) {

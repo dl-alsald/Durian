@@ -31,11 +31,11 @@ public class ChatService {
         return chatRooms.get(roomId);
     }
 
-    public ChatRoom createRoom(String name) {
+    public ChatRoom createRoom(String userId) {
         String randomId = UUID.randomUUID().toString();
         ChatRoom chatRoom = ChatRoom.builder()
                 .roomId(randomId)
-                .name(name)
+                .mid(userId) //사용자 아이디를 이름으로 사용
                 .regDate(LocalDateTime.now())
                 .build();
         chatRooms.put(randomId, chatRoom);

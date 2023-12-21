@@ -22,7 +22,7 @@ public class AnswerController {
     private final QuestionService questionService;
 
     @GetMapping("/answer/create")
-    public void create(Long qno, PageRequestedDTO pageRequestDTO, Model model) {
+    public void create(Long qno, PageRequestedDTO pageRequestedDTO, Model model) {
 
         Question question = this.answerService.getQuestion(qno);
         model.addAttribute("question", question);
@@ -36,9 +36,9 @@ public class AnswerController {
     }
 
     @GetMapping("/answer/list2")
-    public void list2(PageRequestedDTO pageRequestDTO, Model model) {
+    public void list2(PageRequestedDTO pageRequestedDTO, Model model) {
 
-        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
+        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestedDTO);
 
         log.info(responseDTO);
 

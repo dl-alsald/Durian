@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.durianfirst.durian.entity.Question;
 
@@ -25,8 +26,8 @@ import java.util.stream.Collectors;
 public class QuestionServiceImpl implements QuestionService {
 
     private final ModelMapper modelMapper;
-
     private final QuestionRepository questionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<Question> getList() {
@@ -35,10 +36,22 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Long register(QuestionDTO questionDTO) {
+    public boolean checkPassword(Long qno, String password) {
+        Question question = questionRepository.findById(qno).orElse(null);
+        return question != null && question.getPassword().equals(password);
+    }
 
+    @Override
+    public Long register(QuestionDTO questionDTO) {
+        //DTO에서 엔티티로 변환
         Question question = modelMapper.map(questionDTO, Question.class);
 
+        //비밀번호 암호화
+        if(questionDTO.getPassword() != null){
+            question.encryptPassword(passwordEncoder);
+        }
+
+        //질문 저장
         Long qno = questionRepository.save(question).getQno();
 
         return qno;
@@ -75,11 +88,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageResponsedDTO<QuestionDTO> list(PageRequestedDTO pageRequestDTO) {
+    public PageResponsedDTO<QuestionDTO> list(PageRequestedDTO pageRequestedDTO) {
 
-        String[] types = pageRequestDTO.getTypes();
-        String keyword = pageRequestDTO.getKeyword();
-        Pageable pageable = pageRequestDTO.getPageable("qno");
+        String[] types = pageRequestedDTO.getTypes();
+        String keyword = pageRequestedDTO.getKeyword();
+        Pageable pageable = pageRequestedDTO.getPageable("qno");
 
         Page<Question> result = questionRepository.searchAll(types, keyword, pageable);
 
@@ -88,10 +101,15 @@ public class QuestionServiceImpl implements QuestionService {
 
 
         return PageResponsedDTO.<QuestionDTO>withAll()
-                .pageRequestDTO(pageRequestDTO)
+                .pageRequestedDTO(pageRequestedDTO)
                 .dtoList(dtoList)
                 .total((int) result.getTotalElements())
                 .build();
     }
 
-}
+    @Override
+    public boolean existsById(Long qno) {
+        return questionRepository.existsById(qno);
+    }
+
+    }

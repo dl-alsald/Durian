@@ -14,7 +14,7 @@
         </div><!--end card-header-->
         <div class="container my-3">
           <!-- 질문 제목-->
-          <h4 class="border-bottom py-2" th:text="${question.qtitle} "></h4>
+          <h4 class="py-2" th:text="${question.qtitle} "></h4>
           <div class="card my-3"><!--질문제목배경색(화이트)-->
           </div><!--end card my-3(질문제목배경색)-->
         </div><!-- end container my-3-->
@@ -24,7 +24,7 @@
           <div th:text="${question.qcontent}"></div>
           <div class="d-flex justify-content-end"> <!--시간위치(오른쪽정렬)-->
             <div class="badge bg-light text-dark p-2 text-start"><!--시간테두리-->
-              <div th:text="${#temporals.format(question.regTime, 'yyyy-MM-dd HH:mm')}"></div>
+              <div th:text="${#temporals.format(question.regDate, 'yyyy-MM-dd HH:mm')}"></div>
             </div><!--시간테두리 끝-->
           </div><!--시간위치(오른쪽정렬)-->
           <!-- 답변의 갯수 표시 -->
@@ -37,7 +37,7 @@
               <div class="card-text" style="white-space: normal;" th:text="${answer.acontent}"></div>
               <div class="d-flex justify-content-end">
                 <div class="badge bg-light text-dark p-2 text-start">
-                  <div th:text="${#temporals.format(answer.regTime, 'yyyy-MM-dd HH:mm')}"></div>
+                  <div th:text="${#temporals.format(answer.regDate, 'yyyy-MM-dd HH:mm')}"></div>
                   <div class="my-3">
 
 
@@ -50,8 +50,8 @@
         </div><!--end card-body-->
         <!--목록,수정,답변버튼-->
         <div class="my-4">
-          <div class="float-end" th:with="link = ${pageRequestDTO.getLink()}">
-            <a th:href="|@{/templates/question/list3}?${link}|" class="text-decoration-none">
+          <div class="float-end" th:with="link = ${pageRequestedDTO.getLink()}">
+            <a th:href="|@{/question/list3}?${link}|" class="text-decoration-none">
               <button type="button" class="btn btn-outline-success">목록</button>
             </a>
           </div><!--end class="float-end" -->
@@ -78,7 +78,7 @@
     alert(errorMsg)
   }
   //수정시이벤트처리(정상처리시 목록으로 이동)
-  const link = [[${pageRequestDTO.getLink()}]]
+  const link = [[${pageRequestedDTO.getLink()}]]
   const formObj = document.querySelector("#f1")
 
   document.querySelector(".modBtn").addEventListener("click", function (e){

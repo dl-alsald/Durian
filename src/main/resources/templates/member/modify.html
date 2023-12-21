@@ -4,8 +4,8 @@
 
     <head>
         <meta charset="UTF-8">
+        <title>Form Layout - Mazer Admin Dashboard</title>
     </head>
-
 
     <th:block th:fragment="content">
         <div id="app">
@@ -20,7 +20,7 @@
                     <div class="page-title">
                         <div class="row">
                             <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3> 내 정보 </h3>
+                                <h3>내 정보</h3>
                                 <p class="text-subtitle text-muted">Multiple form layout you can use</p>
                             </div>
                             <div class="col-12 col-md-6 order-md-2 order-first">
@@ -40,11 +40,11 @@
                             <div class="col-md-6 col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4 class="card-title"> 내정보</h4>
+                                        <h4 class="card-title">수정하기</h4>
                                     </div>
                                     <div class="card-content">
                                         <div class="card-body">
-                                            <form class="form form-horizontal" action="/member/modify" method="post">
+                                            <form action="/member/modify" method="post">
                                                 <div class="form-body">
                                                     <div class="row">
                                                         <div class="col-md-4">
@@ -53,9 +53,24 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <span type="text" class="form-control" th:text="${member.mid}" readonly></span>
+                                                                    <input type="text" class="form-control" name="mid"
+                                                                           th:value="${member.mid}" readonly>
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-person"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label>Password</label>
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="form-group has-icon-left">
+                                                                <div class="position-relative">
+                                                                    <input type="password" class="form-control" name="mpw"
+                                                                           placeholder="Password">
+                                                                    <div class="form-control-icon">
+                                                                        <i class="bi bi-lock"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -66,10 +81,10 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="form-control" name="mname" th:id="mname"
+                                                                    <input type="text" class="form-control" name="mname"
                                                                            th:value="${member.mname}">
                                                                     <div class="form-control-icon">
-                                                                        <i class="bi bi-person"></i>
+                                                                        <i class="bi bi-file-person"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -80,8 +95,8 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="email" class="form-control" name="memail" th:id="meamil"
-                                                                           th:value="${member.memail}">
+                                                                    <input type="email" class="form-control" name="memail"
+                                                                          th:value="${member.memail}">
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-envelope"></i>
                                                                     </div>
@@ -94,7 +109,7 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="form-control" name="mphone" th:id="mphone"
+                                                                    <input type="text" class="form-control" name="mphone"
                                                                            th:value="${member.mphone}">
                                                                     <div class="form-control-icon">
                                                                         <i class="bi bi-phone"></i>
@@ -103,15 +118,15 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <label>Password</label>
+                                                            <label>Address</label>
                                                         </div>
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="password" class="form-control"
-                                                                           placeholder="Password">
+                                                                    <input type="text" class="form-control"
+                                                                           th:value="${member.maddress}">
                                                                     <div class="form-control-icon">
-                                                                        <i class="bi bi-lock"></i>
+                                                                        <i class="bi bi-house-door"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -122,31 +137,24 @@
                                                         <div class="col-md-8">
                                                             <div class="form-group has-icon-left">
                                                                 <div class="position-relative">
-                                                                    <input type="text" class="form-control" name="mbirthday" th:id="mbirthday"
-                                                                           th:value="${member.mbirthday}">
+                                                                    <input type="text" class="form-control" name="mbirthday"
+                                                                           th:value="${member.mbirthday}" readonly>
                                                                     <div class="form-control-icon">
-                                                                        <i class="bi bi-phone"></i>
+                                                                        <i class="bi bi-bell"></i>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <label>Adress</label>
-                                                        </div>
-                                                        <div class="col-md-8">
-                                                            <div class="form-group has-icon-left">
-                                                                <div class="position-relative">
-                                                                    <input type="text" class="form-control" name="maddress" th:id="maddress"
-                                                                           th:value="${member.maddress}">
-                                                                    <div class="form-control-icon">
-                                                                        <i class="bi bi-phone"></i>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+
                                                         <div class="col-12 d-flex justify-content-end">
-                                                            <button type="sumit" class="btn btn-primary me-1 mb-1" th:onclick="memberUpdate()" >수정완료</button>
-                                                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                                                            <button type="submit"
+                                                                    class="btn btn-primary me-1 mb-1">DONE
+                                                            </button>
+                                                            <a th:href="@{/member/mypage}">
+                                                            <button type="button"
+                                                                    class="btn btn-light-secondary me-1 mb-1">BACK
+                                                            </button>
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -161,45 +169,6 @@
                 </div>
             </div>
         </div>
-        <!--<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script th:inline="javascript">
-            function memberUpdate() {
-                console.log("memberUpdate 실행");
-
-                let data = {
-                    mname: $('#mname').val(),
-                    memail: $('#memail').val(),
-                    mphone: $('#mphone').val(),
-                    mbirthday: $('#mbirthday').val(),
-                    maddress: $('#maddress').val(),
-                    mpw: null  // mpw에 null 값을 할당
-                };
-
-
-                const confirmCheck = confirm("수정하시겠습니까?");
-
-                if (confirmCheck == true) {
-                    $.ajax({
-                        type: 'POST',
-                        url: '/member/modify',
-                        contentType: 'application/json; charset=utf-8',
-                        data: JSON.stringify(data)
-                    }).done(function (result) {
-                        if (result) {
-                            alert("회원 수정이 완료되었습니다.");
-                            window.location.href = "/member/mypage";
-                        } else {
-                            alert("이미 등록된 이메일/전화번호입니다. 다시 입력해주세요.");
-                            $('#mphone').focus();
-                            $('#memail').focus();
-                        }
-                    }).fail(function (error) {
-                        alert(JSON.stringify(error));
-                    });
-                }
-            }
-
-        </script>-->
     </th:block>
 </th:block>
 </html>

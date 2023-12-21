@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -22,12 +24,15 @@ import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomSecurityConfig {
 
     private final DataSource dataSource;
     private final CustomUserDetailsService userDetailsService;
+    /* 로그인 실패 핸들러 의존성 주입 */
+    private final AuthenticationFailureHandler failureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){ //CustomUserDetailsService가 정상적으로 동작하려면 CustomSecurityConfig에 주입해야함
@@ -36,17 +41,19 @@ public class CustomSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ //로그인하지 않아도 볼 수 있도록 설정 (admin/adindex에 바로 접근 가능)
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ //로그인하지 않아도 볼 수 있도록 설정 (admin/index에 바로 접근 가능)
         log.info("==========================configure==============================");
 
         http.formLogin().loginPage("/member/login") //POST방식 처리 역시 같은 경로로 스프링 시큐리티 내부에서 처리됨 / security에서 post방식도 처리함
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/")
+                .failureHandler(failureHandler) //로그인 실패 핸들러
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
-                .logoutSuccessUrl("/index")                                                 // 로그아웃 성공시 이동할 URL
-                .invalidateHttpSession(true)                                                // 로그아웃 이후 세션 전체 삭제 여부
+                .logoutSuccessUrl("/member/login")                                     // 로그아웃 성공시 이동할 URL
+                .invalidateHttpSession(true)                                           // 로그아웃 이후 세션 전체 삭제 여부
                 .deleteCookies("JSESSIONID");
+
         //로그인 진행한다는 설정
         //UserDetailsService : 실제로 인증을 처리 인터페이스
         //loadUserByUsername : 실제 인증을 처리할 때 호출 되는 부분
