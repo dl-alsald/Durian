@@ -19,4 +19,8 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     @EntityGraph(attributePaths = "roleSet")
     Member findByMid(String mid);
+
+    boolean existsByMemail(String memail);
+
+    boolean existsByMid(String mid);
 }

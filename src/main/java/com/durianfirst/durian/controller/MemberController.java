@@ -4,19 +4,24 @@ import com.durianfirst.durian.dto.MemberJoinDTO;
 import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.service.MemberService;
+import com.durianfirst.durian.validator.CheckValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 /*@RequestMapping("/member")*/
@@ -26,6 +31,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MemberRepository memberRepository;
+    private final CheckValidator checkValidator;
 
     @GetMapping("/member/login")
     public String login(@RequestParam(value = "error", required = false)String error, @RequestParam(value = "exception", required = false)String exception, String logout, Model model){
@@ -42,19 +48,41 @@ public class MemberController {
         return "member/login";
     }
 
+
+    //유효성 검사
+    @InitBinder
+    public void validatorBinder(WebDataBinder binder) {
+        binder.addValidators(checkValidator);
+    }
+
     @GetMapping("/member/register")
     public void register(){
         log.info("==================register get=====================");
     }
 
     @PostMapping("/member/register")
-    public String registerPost(MemberJoinDTO memberJoinDTO, RedirectAttributes redirectAttributes){
+    public String registerPost(MemberJoinDTO memberJoinDTO, Errors errors, RedirectAttributes redirectAttributes,Model model){
 
         log.info("========================register post============================");
         log.info(memberJoinDTO);
 
         try{
             memberService.register(memberJoinDTO);
+
+            if (errors.hasErrors()) {
+                /* 회원가입 실패 시 입력 데이터 유지 */
+                model.addAttribute("dto", memberJoinDTO);
+
+                /* 유효성 검사를 통과하지 못한 필드와 메세지 핸들링 */
+                Map<String, String> validatorResult = memberService.validateHandling(errors);
+                for (String key : validatorResult.keySet()) {
+                    model.addAttribute(key, validatorResult.get(key));
+                }
+
+                /* 회원가입 페이지로 리턴 */
+                return "/member/register";
+            }
+
         }catch(MemberService.MidExistException e){
             redirectAttributes.addFlashAttribute("error", "mid");
             return "redirect:/member/register"; //MidExistException 발생 시 /member/register로 redirect
