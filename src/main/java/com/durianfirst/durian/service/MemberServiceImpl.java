@@ -1,5 +1,6 @@
 package com.durianfirst.durian.service;
 
+import com.durianfirst.durian.DataNotFoundException;
 import com.durianfirst.durian.constant.MemberRole;
 import com.durianfirst.durian.dto.MemberJoinDTO;
 import com.durianfirst.durian.entity.Member;
@@ -10,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Log4j2
 @Service
@@ -72,6 +75,16 @@ public class MemberServiceImpl implements MemberService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    @Override
+    public Member getUser(String mid) {
+        Optional<Member> siteUser = this.memberRepository.getWithRoles(mid);
+        if (siteUser.isPresent()) {
+            return siteUser.get();
+        } else {
+            throw new DataNotFoundException("siteuser not found");
         }
     }
 

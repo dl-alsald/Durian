@@ -2,6 +2,7 @@ package com.durianfirst.durian.service;
 
 
 import com.durianfirst.durian.dto.MemberJoinDTO;
+import com.durianfirst.durian.entity.Member;
 
 public interface MemberService {
 
@@ -12,4 +13,6 @@ public interface MemberService {
     String updateMember(MemberJoinDTO memberJoinDTO);
 
     boolean deleteMember(String mid, String mpw);
+
+    Member getUser(String mid);
 }
