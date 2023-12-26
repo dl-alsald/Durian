@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,15 +44,21 @@ public class MemberController {
     }
 
     @GetMapping("/member/register")
-    public void register(){
+    public void register(Model model){
         log.info("==================register get=====================");
+        model.addAttribute("memberJoinDTO", new MemberJoinDTO());
     }
 
     @PostMapping("/member/register")
-    public String registerPost(MemberJoinDTO memberJoinDTO, RedirectAttributes redirectAttributes){
+    public String registerPost(@Valid MemberJoinDTO memberJoinDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model){
 
         log.info("========================register post============================");
         log.info(memberJoinDTO);
+
+        if(bindingResult.hasErrors()){
+            log.info("Validation errors: {}", bindingResult.getAllErrors());
+            return "member/register";
+        }
 
         try{
             memberService.register(memberJoinDTO);
