@@ -1,7 +1,7 @@
 package com.durianfirst.durian.service;
 
 import com.durianfirst.durian.DataNotFoundException;
-import com.durianfirst.durian.constant.MemberRole;
+import com.durianfirst.durian.constaint.MemberRole;
 import com.durianfirst.durian.dto.MemberJoinDTO;
 import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.repository.MemberRepository;

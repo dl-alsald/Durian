@@ -20,6 +20,7 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.inject.Qualifier;
 import javax.sql.DataSource;
 
 @Log4j2
@@ -28,6 +29,7 @@ import javax.sql.DataSource;
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomSecurityConfig {
+
 
     private final DataSource dataSource;
     private final CustomUserDetailsService userDetailsService;
@@ -48,11 +50,19 @@ public class CustomSecurityConfig {
                 .defaultSuccessUrl("/")
                 .failureHandler(failureHandler) //로그인 실패 핸들러
                 .and()
+
+                .rememberMe()       //자동로그인
+                .key("NaMu")       //쿠키에 사용되는 값을 암호화하기 위한 키(key)값
+                .tokenRepository(persistentTokenRepository())   //DataSource 추가
+                .tokenValiditySeconds(604800)   //토큰 유지 시간(초단위) - 일주일
+                .and()
+
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
-                .logoutSuccessUrl("/member/login")                                     // 로그아웃 성공시 이동할 URL
+                .logoutSuccessUrl("/")                                     // 로그아웃 성공시 이동할 URL
                 .invalidateHttpSession(true)                                           // 로그아웃 이후 세션 전체 삭제 여부
-                .deleteCookies("JSESSIONID");
+                .deleteCookies("JSESSIONID","remember-me");
+
 
         //로그인 진행한다는 설정
         //UserDetailsService : 실제로 인증을 처리 인터페이스
@@ -61,14 +71,6 @@ public class CustomSecurityConfig {
 
         http.csrf().disable(); //CSRF 비활성화하면 username,password라는 파라미터만으로 로그인이 가능해짐
         //csrf토큰이 비활성화 되어있으면 get방식으로도 로그아웃이 가능함
-
-        /* 자동 로그인 */
-        http.rememberMe()
-                .key("12345678") //쿠키의 값을 인코딩하기 위한 키값
-                .tokenRepository(persistentTokenRepository()) //필요한 정보를 저장
-                .userDetailsService(userDetailsService)
-                .tokenValiditySeconds(60*60*24*30);
-
 
         return http.build();
     }
