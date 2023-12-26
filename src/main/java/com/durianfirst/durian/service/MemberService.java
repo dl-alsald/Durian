@@ -2,9 +2,7 @@ package com.durianfirst.durian.service;
 
 
 import com.durianfirst.durian.dto.MemberJoinDTO;
-import org.springframework.validation.Errors;
-
-import java.util.Map;
+import com.durianfirst.durian.entity.Member;
 
 public interface MemberService {
 
@@ -16,5 +14,5 @@ public interface MemberService {
 
     boolean deleteMember(String mid, String mpw);
 
-    Map<String, String> validateHandling(Errors errors);
+    Member getUser(String mid);
 }

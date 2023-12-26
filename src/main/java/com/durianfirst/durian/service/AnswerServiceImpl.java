@@ -3,6 +3,7 @@ package com.durianfirst.durian.service;
 import com.durianfirst.durian.DataNotFoundException;
 import com.durianfirst.durian.dto.QuestionDTO;
 import com.durianfirst.durian.entity.Answer;
+import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.entity.Question;
 import com.durianfirst.durian.repository.AnswerRepository;
 import com.durianfirst.durian.repository.QuestionRepository;
@@ -40,12 +41,16 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public void createa(Question question, String acontent) {
+    public Answer createa(Question question, String acontent, Member member) {
         Answer answer = new Answer();
         answer.setAcontent(acontent);
         answer.setRegTime(LocalDateTime.now());
         answer.setAquestion(question);
+        answer.setMember(member);
+
         this.answerRepository.save(answer);
+
+        return answer;
     }
 
 
@@ -80,6 +85,11 @@ public class AnswerServiceImpl implements AnswerService {
     public void delete(Long ano) {
 
         answerRepository.deleteById(ano);
+    }
+
+    @Override
+    public void delete(Answer answer) {
+        this.answerRepository.delete(answer);
     }
 }
 
