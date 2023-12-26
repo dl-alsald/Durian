@@ -13,10 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -56,12 +53,13 @@ public class MemberController {
     }
 
     @GetMapping("/member/register")
-    public void register(){
+    public void register(Model model, MemberJoinDTO memberJoinDTO){
         log.info("==================register get=====================");
+        model.addAttribute("memberJoinDTO",memberJoinDTO);
     }
 
     @PostMapping("/member/register")
-    public String registerPost(MemberJoinDTO memberJoinDTO, Errors errors, RedirectAttributes redirectAttributes,Model model){
+    public String registerPost(@Valid @ModelAttribute("memberJoinDTO") MemberJoinDTO memberJoinDTO, Errors errors, RedirectAttributes redirectAttributes, Model model){
 
         log.info("========================register post============================");
         log.info(memberJoinDTO);
@@ -69,27 +67,25 @@ public class MemberController {
         try{
             memberService.register(memberJoinDTO);
 
+            MemberJoinDTO memberJoinDto = new MemberJoinDTO();
+
             if (errors.hasErrors()) {
                 /* 회원가입 실패 시 입력 데이터 유지 */
-                model.addAttribute("dto", memberJoinDTO);
-
                 /* 유효성 검사를 통과하지 못한 필드와 메세지 핸들링 */
                 Map<String, String> validatorResult = memberService.validateHandling(errors);
                 for (String key : validatorResult.keySet()) {
                     model.addAttribute(key, validatorResult.get(key));
                 }
+                model.addAttribute("memberJoinDTO", memberJoinDTO);
 
                 /* 회원가입 페이지로 리턴 */
                 return "/member/register";
             }
-
         }catch(MemberService.MidExistException e){
             redirectAttributes.addFlashAttribute("error", "mid");
             return "redirect:/member/register"; //MidExistException 발생 시 /member/register로 redirect
         }
-
         redirectAttributes.addFlashAttribute("result", "success");
-
         return "redirect:/member/login"; //회원가입 후 로그인
     }
 

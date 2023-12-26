@@ -18,13 +18,16 @@
                         <h1 class="auth-title">Sign Up</h1>
                         <p class="auth-subtitle mb-5">Input your data to register to our website.</p>
 
-                        <form th:action="@{/member/register}" id="registerForm" th:method="post">
+                        <form th:action="@{/member/register}" role="form" th:method="post" th:object="${memberJoinDTO}">
+
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="mid" placeholder="Id">
+                                <input  type="input" class="form-control form-control-xl"  placeholder="아이디를 입력해주세요">
+                                <p th:if="${#fields.hasErrors('mid')}" th:errors="*{mid}" class="fieldError">Incorrect data</p>
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
                             </div>
+
                             <div class="form-group position-relative has-icon-left mb-4">
                                 <input type="text" class="form-control form-control-xl" name="memail" placeholder="Email">
                                 <div class="form-control-icon">
@@ -110,6 +113,22 @@
                 compare_result = false;
                 $s_result.text("비밀번호가 일치하지 않습니다.");
             }
+
+
+
+                /* 회원 가입이 실패했다면 에러 메시지를 경고창으로 보여줌 */
+                $(document).ready(function () {
+
+                var errorMessage = "[[${errorMessage}]]";
+
+                console.log(errorMessage);
+
+                if (errorMessage !== "null" && errorMessage !== "") {
+                alert(errorMessage);
+            }
+            });
+
+
         </script>
     </th:block>
 </th:block>
