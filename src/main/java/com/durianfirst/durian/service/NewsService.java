@@ -19,7 +19,7 @@ public class NewsService {
 
     @PostConstruct
     public List<News> getNewsDatas() throws IOException {
-        List<News> newsList = new ArrayList<>();
+        /*List<News> newsList = new ArrayList<>();
         Document document = Jsoup.connect(News_URL).get();
 
         Elements contents = document.select("section ul.type2 li");
@@ -31,8 +31,8 @@ public class NewsService {
                     .url(content.select("a").attr("abs:href"))		// 링크
                     .build();
             newsList.add(news);
-        }
+        }*/
 
-        return newsList;
+        return /*newsList*/null;
     }
 }

@@ -50,7 +50,7 @@
         </div><!--end card-body-->
         <!--목록,수정,답변버튼-->
         <div class="my-4">
-          <div class="float-end" th:with="link = ${pageRequestedDTO.getLink()}">
+          <div class="float-end" th:with="link = ${pageRequestedDTO}">
             <a th:href="|@{/question/list3}?${link}|" class="text-decoration-none">
               <button type="button" class="btn btn-outline-success">목록</button>
             </a>

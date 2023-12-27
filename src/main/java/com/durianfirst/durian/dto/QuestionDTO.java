@@ -1,5 +1,6 @@
 package com.durianfirst.durian.dto;
 
+import com.durianfirst.durian.entity.Answer;
 import com.durianfirst.durian.entity.Member;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,6 +9,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -40,6 +42,8 @@ public class QuestionDTO {
     private String password; //비밀글 비밀번호
 
     private Boolean secret; //비밀글 유무
+
+    private List<Answer> answerList;
 
     public Boolean getSecret(){
         return secret != null && secret; //secret 체크를하지 않았을 경우 false/ 이외 true

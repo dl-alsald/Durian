@@ -39,7 +39,8 @@ public class Question extends BaseEntity {
     @JoinColumn(name = "mid")
     private Member member;
 
-    @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE)
+
+    @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Answer> answerList;
 
     private String password; //비밀글 비밀번호

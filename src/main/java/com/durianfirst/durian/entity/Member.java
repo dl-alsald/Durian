@@ -16,7 +16,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "roleSet")
+@ToString(exclude = {"roleSet","question","answers"})
 public class Member extends BaseEntity {
 
     /* 회원 정보 */
