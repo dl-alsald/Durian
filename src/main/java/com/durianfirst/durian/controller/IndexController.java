@@ -81,13 +81,5 @@ public class IndexController {
 
     }
 
-    @GetMapping("/services")
-    public void services(PageRequestedDTO pageRequestDTO, Model model) {
-        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
-
-        log.info(responseDTO);
-
-        model.addAttribute("responseDTO", responseDTO);
-
-    }
+    /* services -> question/qna 변경 => questionController */
 }

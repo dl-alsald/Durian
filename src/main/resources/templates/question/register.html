@@ -1,83 +1,112 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/basic.html}">
-<!--레이아웃용-->
-<head>
-    <title>질문 등록</title>
-</head>
-<div layout:fragment="content">
-    <div class="row mt-3">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">
-                    질문 등록
+<th:block th:replace="~{layout/header :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <div class="hero page-inner overlay" style="background-image: url('/images/hero_bg_1.jpg')">
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-9 text-center mt-5">
+                        <h1 class="heading" data-aos="fade-up">Contact Us</h1>
+
+                        <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+                            <ol class="breadcrumb text-center justify-content-center">
+                                <li class="breadcrumb-item">Home</a></li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">
+                                    Contact
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form action="/question/register" method="post"> <!--form을 이용한 입력가능 부분구현-->
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">제목</span>
-                            <input type="text" name="qtitle" class="form-control" placeholder="제목을 입력하세요">
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+                        <div class="contact-info">
+                            <div class="address mt-2">
+                                <i class="icon-room"></i>
+                                <h4 class="mb-2">Location:</h4>
+                                <p>
+                                    43 Raymouth Rd. Baltemoer,<br/>
+                                    London 3910
+                                </p>
+                            </div>
+
+                            <div class="open-hours mt-4">
+                                <i class="icon-clock-o"></i>
+                                <h4 class="mb-2">Open Hours:</h4>
+                                <p>
+                                    Sunday-Friday:<br/>
+                                    11:00 AM - 2300 PM
+                                </p>
+                            </div>
+
+                            <div class="email mt-4">
+                                <i class="icon-envelope"></i>
+                                <h4 class="mb-2">Email:</h4>
+                                <p>info@Untree.co</p>
+                            </div>
+
+                            <div class="phone mt-4">
+                                <i class="icon-phone"></i>
+                                <h4 class="mb-2">Call:</h4>
+                                <p>+1 1234 55488 55</p>
+                            </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <label for="qcate">카테고리 선택:</label>
-                            <select id="qcate" name="qcate">
-                                <option value="option1">배송</option>
-                                <option value="option1">포인트</option>
-                                <option value="option2">신고</option>
-                                <option value="option3">기타</option>
-                                <!-- 다른 카테고리 옵션들을 추가할 수 있습니다 -->
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">내용</span>
-                            <textarea class="form-control col-sm-5" rows="5" name="qcontent"></textarea>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">작성자</span>
-                            <input type="text" name="member" class="form-control" placeholder="작성자"
-                                   th:value="${#authentication.principal.username}" readonly>
-                            <div class="col-sm-6 mb-1">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">비밀글</span>
-                                    <input class="form-check-input" type="checkbox" value="true" name="secret"
-                                           aria-label="Checkbox for following text input">
+                    </div>
+                    <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+                        <form th:action="@{/question/register}" method="post"> <!--form을 이용한 입력가능 부분구현-->
+                            <div class="row">
+                                <!-- 제목 -->
+                                <div class="col-9 mb-3">
+                                    <input type="text" name="qtitle" class="form-control" placeholder="제목을 입력하세요"/>
                                 </div>
-                                <input type="text" class="form-control" name="password" aria-label="Text input with checkbox">
+                                <div class="col-3 mb-3">
+                                    <fieldset class="form-group">
+                                        <select class="form-select" id="qcate" name="qcate">
+                                            <option value="option1">배송</option>
+                                            <option value="option2">포인트</option>
+                                            <option value="option3">신고</option>
+                                            <option value="option4">기타</option>
+                                        </select>
+                                    </fieldset>
+                                </div>
+                                <!-- 내용 -->
+                                <div class="col-12 mb-3">
+                                    <textarea name="qcontent" id="" cols="30" rows="7" class="form-control"
+                                              placeholder="Message"></textarea>
+                                </div>
+                                <!-- 작성자 -->
+                                <div class="col-6 mb-3">
+                                    <input type="text" name="member" class="form-control" th:value="${#authentication.principal.username}" readonly/>
+                                </div>
+                                <!-- 비밀글 여부 -->
+                                <div class="col-6 mb-3">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-text"> 비밀글 &nbsp;
+                                                <input class="form-check-input" type="checkbox" value="true" name="secret"
+                                                       aria-label="Checkbox for following text input">
+                                            </div>
+                                            <input type="text" class="form-control" name="password"
+                                                   aria-label="Text input with checkbox">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 등록 버튼 -->
+                                <div class="col-12">
+                                    <input type="submit" value="Send Message" class="btn btn-primary"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="my-4">
-                            <div class="float-end">
-                                <button type="submit" class="btn btn-success">등록</button>
-                                <!--<button type="reset" class="btn btn-outline-success">Reset</button>-->
-                            </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.untree_co-section -->
 
-                </div><!--end card body-->
-            </div><!--end card-->
-        </div><!--end col-->
-    </div><!--end row-->
-</div>
-
-<script layout:fragment="script" th:inline="javascript">
-
-    const auth = [[${#authentication}]]
-
-    //@Valid를 통한 검증에 실패시 앞의 화면으로 이동
-    //이떄 addFlashAttribute()를 통해 'error'라는 이름으로 에러메세지 전송(js로처리)
-    const errors = [[${errors}]]
-    console.log(errors)
-
-    let errorMsg = ''
-
-    if (errors) {
-        for (let i = 0; i < errors.length; i++) {
-            errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
-        }
-        alert(errorMsg)
-    }
-</script>
-
-</html>
+    </th:block>
+</th:block>

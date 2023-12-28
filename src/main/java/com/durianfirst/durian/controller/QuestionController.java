@@ -137,11 +137,11 @@ public class QuestionController {
 
         redirectAttributes.addFlashAttribute("result", "remove");
 
-        return "redirect:/question/list";
+        return "redirect:/question/qna";
     }
 
     /*-----------------답변*/
-    @GetMapping("/question/list3")
+    @GetMapping("/question/qna")
     public void list3(PageRequestedDTO pageRequestDTO, Model model) {
 
         PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
@@ -156,7 +156,6 @@ public class QuestionController {
 
         Question question = this.answerService.getQuestion(qno);
         model.addAttribute("question", question);
-        model.addAttribute("question", question);
 
         QuestionDTO questionDTO = answerService.create(qno);
         model.addAttribute("dto", questionDTO);
@@ -165,11 +164,40 @@ public class QuestionController {
         if (questionDTO.getSecret() && questionDTO.getPassword() != null) {
             //비밀번호가 입력되지 않았거나, 입력된 비밀번호가 일치하지 않으면
             if (password == null || !questionDTO.isPasswordValid(password, passwordEncoder)) {
+                question = this.answerService.getQuestion(qno);
+                model.addAttribute("question", question);
+
+                questionDTO = answerService.create(qno);
+                model.addAttribute("dto", questionDTO);
                 //비밀번호 입력 폼으로 이동
                 return "question/passwordForm";
             }
         }
         //일치하거나, 비밀번호가 없는경우에는 답변 페이지로 이동
+        return "question/answer";
+    }
+
+    @PostMapping("/question/checkPassword")
+    public String checkPassword(@RequestParam Long qno, @RequestParam String password, Model model, RedirectAttributes redirectAttributes) {
+        QuestionDTO questionDTO = answerService.create(qno);
+
+        // 질문이 비밀글이고, 비밀번호가 설정되어 있으면
+        if (questionDTO.getSecret() && questionDTO.getPassword() != null) {
+            Question question = this.answerService.getQuestion(qno);
+            model.addAttribute("question", question);
+
+            questionDTO = answerService.create(qno);
+            model.addAttribute("dto", questionDTO);
+            // 입력된 비밀번호가 일치하지 않으면
+            if (!questionDTO.isPasswordValid(password, passwordEncoder)) {
+                model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+                return "question/passwordForm";
+            }
+        }
+
+        // 비밀번호가 일치하거나, 비밀번호가 없는 경우에는 답변 페이지로 이동
+        model.addAttribute("question", questionDTO);
+        model.addAttribute("dto", answerService.create(qno));
         return "question/answer";
     }
 
@@ -184,7 +212,5 @@ public class QuestionController {
         return "/member/modify";
     }
 
+
 }
-
-
-
