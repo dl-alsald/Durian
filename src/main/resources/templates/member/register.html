@@ -25,8 +25,8 @@
                                    th:errors="${memberJoinDTO.mid}"></small>
                             <div class="form-group position-relative has-icon-left mb-4"
                                  th:classappend="${#fields.hasErrors('mid')} ? 'has-error' : ''">
-                                <input type="text" class="form-control form-control-xl" th:field="${memberJoinDTO.mid}"
-                                       name="mid" placeholder="Id">
+                                <input type="text" class="form-control form-control-xl" name="mid" th:field="${memberJoinDTO.mid}"
+                                        placeholder="Id">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
@@ -35,7 +35,7 @@
                             <small class="text-danger" th:if="${#fields.hasErrors('memail')}"
                                    th:errors="${memberJoinDTO.memail}"></small>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="memail"
+                                <input type="text" class="form-control form-control-xl" name="memail" th:field="${memberJoinDTO.memail}"
                                        placeholder="Email">
                                 <div class="form-control-icon">
                                     <i class="bi bi-envelope"></i>
@@ -45,7 +45,7 @@
                             <small class="text-danger" th:if="${#fields.hasErrors('mname')}"
                                    th:errors="${memberJoinDTO.mname}"></small>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="mname"
+                                <input type="text" class="form-control form-control-xl" name="mname" th:field="${memberJoinDTO.mname}"
                                        placeholder="Username">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
@@ -73,7 +73,7 @@
                             <small class="text-danger" th:if="${#fields.hasErrors('mbirthday')}"
                                    th:errors="${memberJoinDTO.mbirthday}"></small>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="mbirthday"
+                                <input type="text" class="form-control form-control-xl" name="mbirthday" th:field="${memberJoinDTO.mbirthday}"
                                        placeholder="Birthday(only number)">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
@@ -81,7 +81,7 @@
                             </div>
                             <!-- 주소 -->
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="maddress"
+                                <input type="text" class="form-control form-control-xl" name="maddress" th:field="${memberJoinDTO.maddress}"
                                        placeholder="Address">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
@@ -91,7 +91,7 @@
                             <small class="text-danger" th:if="${#fields.hasErrors('mphone')}"
                                    th:errors="${memberJoinDTO.mphone}"></small>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="mphone"
+                                <input type="text" class="form-control form-control-xl" name="mphone" th:field="${memberJoinDTO.mphone}"
                                        placeholder="Phone">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
@@ -117,9 +117,9 @@
         <script th:inline="javascript">
             function pwCheck() {
                 if ($('#mpw1').val() == $('#mpw2').val()) {
-                    $('#pwConfirm').text('비밀번호 일치').css({'color': 'green', 'padding': "30px"});
+                    $('#pwConfirm').text('비밀번호 일치').addClass('text-success').removeClass('text-danger');
                 } else {
-                    $('#pwConfirm').text('비밀번호 불일치').css({'color': 'red', 'padding': "30px"});
+                    $('#pwConfirm').text('비밀번호 불일치').addClass('text-danger').removeClass('text-success');
                 }
             }
 

@@ -35,24 +35,31 @@ public class CustomSecurityConfig {
     private final AuthenticationFailureHandler failureHandler;
 
     @Bean
-    public PasswordEncoder passwordEncoder(){ //CustomUserDetailsService가 정상적으로 동작하려면 CustomSecurityConfig에 주입해야함
+    public PasswordEncoder passwordEncoder() { //CustomUserDetailsService가 정상적으로 동작하려면 CustomSecurityConfig에 주입해야함
         return new BCryptPasswordEncoder();
         //BCryptPasswordEncoder : 해시 알고리즘으르 암호화 처리되는데 같은 문자열이라고 해도 매번 해서 처리된 결과가 다름
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ //로그인하지 않아도 볼 수 있도록 설정 (admin/index에 바로 접근 가능)
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { //로그인하지 않아도 볼 수 있도록 설정 (admin/index에 바로 접근 가능)
         log.info("==========================configure==============================");
 
-        http.formLogin().loginPage("/member/login") //POST방식 처리 역시 같은 경로로 스프링 시큐리티 내부에서 처리됨 / security에서 post방식도 처리함
+        http.formLogin()
+                .loginPage("/member/login") //POST방식 처리 역시 같은 경로로 스프링 시큐리티 내부에서 처리됨 / security에서 post방식도 처리함
                 .defaultSuccessUrl("/")
                 .failureHandler(failureHandler) //로그인 실패 핸들러
                 .and()
-                .logout()
+            .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
                 .logoutSuccessUrl("/member/login")                                     // 로그아웃 성공시 이동할 URL
                 .invalidateHttpSession(true)                                           // 로그아웃 이후 세션 전체 삭제 여부
-                .deleteCookies("JSESSIONID");
+                .deleteCookies("JSESSIONID")
+                .and()
+            .authorizeRequests()
+                .antMatchers("/admin/*").hasAnyAuthority("ROLE_ADMIN") //admin 권한이 있어야지 접근 가능
+                .and()
+            .exceptionHandling()
+                .accessDeniedPage("/error/accessDenied");
 
         //로그인 진행한다는 설정
         //UserDetailsService : 실제로 인증을 처리 인터페이스
@@ -67,8 +74,7 @@ public class CustomSecurityConfig {
                 .key("12345678") //쿠키의 값을 인코딩하기 위한 키값
                 .tokenRepository(persistentTokenRepository()) //필요한 정보를 저장
                 .userDetailsService(userDetailsService)
-                .tokenValiditySeconds(60*60*24*30);
-
+                .tokenValiditySeconds(60 * 60 * 24 * 30);
 
         return http.build();
     }
@@ -79,13 +85,13 @@ public class CustomSecurityConfig {
     }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer(){ //정적 자원 제외
+    public WebSecurityCustomizer webSecurityCustomizer() { //정적 자원 제외
         log.info("============================web configure========================");
         return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Bean
-    public PersistentTokenRepository persistentTokenRepository(){
+    public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
         repo.setDataSource(dataSource);
         return repo;

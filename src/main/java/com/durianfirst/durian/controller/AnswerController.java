@@ -34,7 +34,7 @@ public class AnswerController {
     private final MemberService memberService;
 
     @GetMapping("/answer/create")
-    public void create(Long qno, PageRequestedDTO pageRequestedDTO, Model model) {
+    public void create(Long qno, @ModelAttribute PageRequestedDTO pageRequestedDTO, Model model) {
 
         Question question = this.answerService.getQuestion(qno);
         model.addAttribute("question", question);

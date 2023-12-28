@@ -56,7 +56,11 @@ public class MemberController {
         log.info(memberJoinDTO);
 
         if(bindingResult.hasErrors()){
+
             log.info("Validation errors: {}", bindingResult.getAllErrors());
+
+            //회원가입 실패시 입력 데이터 값을 유지
+            model.addAttribute("memberJoinDTO",memberJoinDTO);
             return "member/register";
         }
 
