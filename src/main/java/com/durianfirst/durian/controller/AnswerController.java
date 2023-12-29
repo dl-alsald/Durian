@@ -87,8 +87,7 @@ public class AnswerController {
         this.answerService.delete(answer);
 
 
-        /* return String.format("redirect:/asnwer/create/%s", answer.getAquestion().getQno());*/
-        return "redirect:/answer/list";
+        return String.format("redirect:/answer/create?qno=%s", answer.getAquestion().getQno());
 
     }
 

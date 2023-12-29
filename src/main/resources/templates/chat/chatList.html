@@ -220,7 +220,7 @@
 
                                                                         <!-- chat list start -->
                                                                         <div class="chatList-user-list list-group ps ps--active-y" th:each="room : ${roomList}">
-                                                                            <ul class="users-list-wrapper media-list" style="margin-top: 16px;">
+                                                                            <ul class="users-list-wrapper media-list" style="padding-left: 9px;">
                                                                                 <a th:href="@{chatRoom(roomId=${room.roomId})}">
                                                                                 <li class="media">
                                                                                     <div class="user-action">
@@ -250,7 +250,7 @@
                                                                                     <div class="media-body">
                                                                                         <div class="user-details">
                                                                                             <div class="mail-items">
-                                                                                                <span class="list-group-item-text text-truncate" th:text="${room.name}"></span>
+                                                                                                <span class="list-group-item-text text-truncate" th:text="${room.getMid()}"></span>
                                                                                             </div>
                                                                                             <div class="mail-meta-item">
                                                                                                  <span class="float-right">

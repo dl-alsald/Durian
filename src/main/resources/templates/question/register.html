@@ -6,14 +6,13 @@
             <div class="container">
                 <div class="row justify-content-center align-items-center">
                     <div class="col-lg-9 text-center mt-5">
-                        <h1 class="heading" data-aos="fade-up">Contact Us</h1>
+                        <h1 class="heading" data-aos="fade-up">Register</h1>
 
                         <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
                             <ol class="breadcrumb text-center justify-content-center">
-                                <li class="breadcrumb-item">Home</a></li>
-                                <li class="breadcrumb-item active text-white-50" aria-current="page">
-                                    Contact
-                                </li>
+                                <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                                <li class="breadcrumb-item"><a th:href="@{/question/qna}">QnA</a></li>
+                                <li class="breadcrumb-item active text-white-50" aria-current="page">Register</li>
                             </ol>
                         </nav>
                     </div>
@@ -88,7 +87,7 @@
                                     <div class="input-group mb-3">
                                         <div class="input-group mb-3">
                                             <div class="input-group-text"> 비밀글 &nbsp;
-                                                <input class="form-check-input" type="checkbox" value="true" name="secret"
+                                                <input class="form-check-input form-check-success" type="checkbox" value="true" name="secret"
                                                        aria-label="Checkbox for following text input">
                                             </div>
                                             <input type="text" class="form-control" name="password"

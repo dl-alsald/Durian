@@ -13858,7 +13858,7 @@ textarea {
 }
 
 .hero.page-inner, .hero.page-inner > .container > .row {
-    height: 70vh;
+    height: 50vh;
     min-height: 300px;
 }
 

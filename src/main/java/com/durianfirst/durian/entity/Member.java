@@ -13,25 +13,31 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "roleSet")
+@ToString(exclude = {"roleSet","question","answers"})
 public class Member extends BaseEntity {
 
     /* 회원 정보 */
 
     @Id
+    @Column(nullable = false, unique = true)
     private String mid; //아이디
 
+    @Column(nullable = false)
     private String mpw; //비밀번호
 
+    @Column(nullable = false)
     private String mname; //이름
 
+    @Column(nullable = false)
     private String memail; //이메일
 
+    @Column(nullable = false)
     private String mbirthday; //생년월일
 
-    private String maddress; //주소
-
+    @Column(nullable = false)
     private String mphone; //전화번호
+
+    private String maddress; //주소
 
     private boolean msocial; //소셜로그인 여부
 

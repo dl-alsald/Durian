@@ -16,22 +16,6 @@
                     </a>
                 </header>
                 <div class="page-heading">
-                    <div class="page-title">
-                        <div class="row">
-                            <div class="col-12 col-md-6 order-md-1 order-last">
-                                <h3>Chatbox</h3>
-                                <!--<p class="text-subtitle text-muted">For user to check they list</p>-->
-                            </div>
-                            <div class="col-12 col-md-6 order-md-2 order-first">
-                                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                                    <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a th:href="@{/admin/index}">Dashboard</a></li>
-                                        <li class="breadcrumb-item active" aria-current="page">Chatbox</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
                     <section class="section">
                         <div class="row">
                             <div class="col-md-6">
@@ -89,13 +73,15 @@
                 var enterMsg = {"type": "ENTER", "roomId": [[${room.roomId}]], "sender": "chee", "msg": ""}; //sender는  글쓸때 수정하자.
 
                 socket.send(JSON.stringify(enterMsg));
-
             }
 
             socket.onopen = function (e) {
-                console.log('open server!')
+                console.log('open server!');
+                setTimeout(function (){
                 enterRoom(socket);
+                }, 1000); //적절한 대기 시간 설정
             };
+
             socket.onclose = function (e) {
                 console.log('disconnet');
             }
@@ -103,8 +89,6 @@
             socket.onerror = function (e) {
                 console.log(e);
             }
-
-
 
             //메세지 수신했을 때 이벤트.
             socket.onmessage = function (e) {
@@ -182,9 +166,12 @@
                         "</div>" +
                         "</div>")
 
-                    var chatAreaHeight = $("#chatArea").height();
-                    var maxScroll = $("#chatMessageArea").height() - chatAreaHeight;
-                    $("#chatArea").scrollTop(maxScroll);
+                    // 마지막으로 추가된 메시지가 화면에 표시되도록 스크롤을 아래로 이동
+                    var chatMessageArea = $("#chatMessageArea");
+                    chatMessageArea.scrollTop(chatMessageArea.prop("scrollHeight"));
+
+                    // 입력창에 포커스를 설정
+                    $("#chatMessageArea .form-control").focus();
                 }
             }
 

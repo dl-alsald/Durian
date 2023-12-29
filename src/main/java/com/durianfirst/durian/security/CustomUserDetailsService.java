@@ -21,12 +21,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
-    /*private PasswordEncoder passwordEncoder;
-
-    public CustomUserDetailsService(){
-        this.passwordEncoder = new BCryptPasswordEncoder();
-    }*/
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         log.info("loadUserByUsername : " + username);
@@ -55,17 +49,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.info(memberSecurityDTO);
 
         return memberSecurityDTO;
-
-       /* UserDetails userDetails = User.builder()
-                .username("user1")
-                //.password("1111")
-                //.password(passwordEncoder.encode("1111"))
-                .authorities("ROLE_USER")
-                .build();
-                //[Username=user1, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, credentialsNonExpired=true, AccountNonLocked=true,
-                //Granted Authorities=[ROLE_USER]], Credentials=[PROTECTED], Authenticated=true, Details=WebAuthenticationDetails [RemoteIpAddress=0:0:0:0:0:0:0:1,
-                //SessionId=7169B6E2C4C890204477C1BFE622DBC9], Granted Authorities=[ROLE_USER]]]
-        return userDetails;*/
     }
 
 

@@ -51,12 +51,12 @@ public class CustomSecurityConfig {
                 .and()
             .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
-                .logoutSuccessUrl("/member/login")                                     // 로그아웃 성공시 이동할 URL
+                .logoutSuccessUrl("/index")                                     // 로그아웃 성공시 이동할 URL
                 .invalidateHttpSession(true)                                           // 로그아웃 이후 세션 전체 삭제 여부
                 .deleteCookies("JSESSIONID")
                 .and()
             .authorizeRequests()
-                .antMatchers("/admin/*").hasAnyAuthority("ROLE_ADMIN") //admin 권한이 있어야지 접근 가능
+                .antMatchers("/admin/*","/answer/*").hasAnyAuthority("ROLE_ADMIN") //admin 권한이 있어야지 접근 가능
                 .and()
             .exceptionHandling()
                 .accessDeniedPage("/error/accessDenied");
@@ -74,7 +74,7 @@ public class CustomSecurityConfig {
                 .key("12345678") //쿠키의 값을 인코딩하기 위한 키값
                 .tokenRepository(persistentTokenRepository()) //필요한 정보를 저장
                 .userDetailsService(userDetailsService)
-                .tokenValiditySeconds(60 * 60 * 24 * 30);
+                .tokenValiditySeconds(86400);
 
         return http.build();
     }
