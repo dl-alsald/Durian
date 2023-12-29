@@ -11,6 +11,7 @@ import com.durianfirst.durian.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -74,20 +75,30 @@ public class AnswerController {
         log.info(responseDTO);
 
         model.addAttribute("responseDTO", responseDTO);
-
-
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/answer/delete/{ano}")
-    public String answerDelete(Principal principal, @PathVariable("ano") Long ano, @PathVariable("qno") Long qno) {
+    public String answerDelete(Principal principal, @PathVariable("ano") Long ano) {
         Answer answer = this.answerService.getAnswer(ano);
         if (!answer.getMember().getMid().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.answerService.delete(answer);
 
+
         /* return String.format("redirect:/asnwer/create/%s", answer.getAquestion().getQno());*/
-        return "redirect:/answer/create?qno=" + qno;
+        return "redirect:/answer/list";
+
+    }
+
+    @GetMapping("/answer/list")
+    public void list(PageRequestedDTO pageRequestedDTO, Model model){
+        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestedDTO);
+
+        log.info(responseDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
     }
 
 }
