@@ -31,34 +31,29 @@
             </div>
         </div>
 
-        <div class="section bg-light"  >
+        <div class="section bg-light">
             <div class="container">
                 <div class="row">
                     <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300" th:each="dto : ${nresult.dtoList}">
-                        <div class="box-feature mb-4" >
+                        <div class="box-feature mb-4">
                             <span class="flaticon-house mb-4 d-block"></span>
                             <h3 class="text-black mb-3 font-weight-bold">
                                 [[${dto.ntitle}]]
                             </h3>
+
                             <p class="text-black-50">
                                 [[${dto.ncontent}]]
                             </p>
+
+                            <!-- 추가: ndto.regDate 표시 -->
+                            <p class="text-black-50">
+                              [[${#temporals.format(dto.regDate, 'yyyy/MM/dd HH:mm:ss')}]]
+                            </p>
+
                             <p><a th:href="@{/noticeread(nno=${dto.nno})}" class="learn-more">Read more</a></p>
                         </div>
                     </div>
-                    <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
-                        <div class="box-feature mb-4">
-                            <span class="flaticon-house-2 mb-4 d-block-3"></span>
-                            <h3 class="text-black mb-3 font-weight-bold">Top Rated Agent</h3>
-                            <p class="text-black-50">
-                                Far far away, behind the word mountains, far from the countries
-                                Vokalia and Consonantia, there live the blind texts.
-                            </p>
-                            <p><a href="#" class="learn-more">Read more</a></p>
-                        </div>
-                    </div>
-
-
+                    <!-- ... (이하 생략) -->
                 </div>
             </div>
         </div>

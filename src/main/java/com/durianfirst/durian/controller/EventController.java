@@ -2,6 +2,7 @@ package com.durianfirst.durian.controller;
 
 
 import com.durianfirst.durian.dto.EventDTO;
+import com.durianfirst.durian.dto.ItemDTO;
 import com.durianfirst.durian.dto.PageRequestDTO;
 import com.durianfirst.durian.service.EventService;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,8 @@ public class EventController {
 
     }
     @GetMapping({"/event/read", "/event/modify"})
-    public void read(long eno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
+    public void read(
+            Long eno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
 
         log.info("eno : "+eno);
 
@@ -56,10 +58,18 @@ public class EventController {
         model.addAttribute("edto", eventDTO);
     }
 
+    @PostMapping("/event/modify")
+    public String modify(EventDTO eventDTO, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
+        log.info("post modify..........");
+        log.info("dto: " + eventDTO);
+
+        eventService.modify(eventDTO);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("eno", eventDTO.getEno());
+
+        return "redirect:/event/read";
 
 
-
-
-
-
+    }
 }
