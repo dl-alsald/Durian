@@ -1,9 +1,9 @@
 package com.durianfirst.durian.service;
 
 import com.durianfirst.durian.dto.PageRequestedDTO;
-import com.durianfirst.durian.dto.PageResponseDTO;
 import com.durianfirst.durian.dto.PageResponsedDTO;
 import com.durianfirst.durian.dto.QuestionDTO;
+import com.durianfirst.durian.entity.Question;
 import com.durianfirst.durian.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.durianfirst.durian.entity.Question;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -27,6 +26,14 @@ public class QuestionServiceImpl implements QuestionService {
     private final ModelMapper modelMapper;
 
     private final QuestionRepository questionRepository;
+
+
+    /* 조회수 증가 로직 */
+    @Override
+    @Transactional
+    public int updateView(Long qno) {
+        return questionRepository.updateView(qno);
+    }
 
     @Override
     public List<Question> getList() {
@@ -75,11 +82,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageResponsedDTO<QuestionDTO> list(PageRequestedDTO pageRequestDTO) {
+    public PageResponsedDTO<QuestionDTO> list(PageRequestedDTO pageRequestedDTO) {
 
-        String[] types = pageRequestDTO.getTypes();
-        String keyword = pageRequestDTO.getKeyword();
-        Pageable pageable = pageRequestDTO.getPageable("qno");
+        String[] types = pageRequestedDTO.getTypes();
+        String keyword = pageRequestedDTO.getKeyword();
+        Pageable pageable = pageRequestedDTO.getPageable("qno");
 
         Page<Question> result = questionRepository.searchAll(types, keyword, pageable);
 
@@ -88,7 +95,7 @@ public class QuestionServiceImpl implements QuestionService {
 
 
         return PageResponsedDTO.<QuestionDTO>withAll()
-                .pageRequestDTO(pageRequestDTO)
+                .pageRequestDTO(pageRequestedDTO)
                 .dtoList(dtoList)
                 .total((int) result.getTotalElements())
                 .build();

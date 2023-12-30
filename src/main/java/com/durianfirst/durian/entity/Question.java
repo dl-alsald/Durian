@@ -35,16 +35,22 @@ public class Question extends BaseEntity {
 
     //여러개의질문이 한명의 사용자에게 작성될수 있으므로 ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member; //작성자
+    @JoinColumn(name = "mid") // 외래 키 이름을 변경
+    private Member member;
+
+    private int view;
 
     @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
 
-    public void change(String qtitle, String qcontent){ //수정가능한것 제목/내용
+    public void change(String qtitle, String qcontent) { //수정가능한것 제목/내용
         this.qtitle = qtitle;
         this.qcontent = qcontent;
     }
+
+
 }
+
 /*@NotNull : Null 값 체크
 
 @NotEmpty : Null, "" 체크

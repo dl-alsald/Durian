@@ -1,5 +1,6 @@
 package com.durianfirst.durian.service;
 
+import com.durianfirst.durian.DataNotFoundException;
 import com.durianfirst.durian.constaint.MemberRole;
 import com.durianfirst.durian.dto.MemberJoinDTO;
 import com.durianfirst.durian.entity.Member;
@@ -10,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Log4j2
 @Service
@@ -22,6 +25,15 @@ public class MemberServiceImpl implements MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
+    @Override
+    public Member getUser(String mid) {
+        Optional<Member> siteUser = this.memberRepository.getWithRoles(mid);
+        if (siteUser.isPresent()) {
+            return siteUser.get();
+        } else {
+            throw new DataNotFoundException("siteuser not found");
+        }
+    }
     @Override
     public void register(MemberJoinDTO memberJoinDTO) throws MidExistException{ //mid가 존재하는 경우 MidExistException을 발생
         String mid = memberJoinDTO.getMid();

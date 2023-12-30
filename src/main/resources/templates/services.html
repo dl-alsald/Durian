@@ -1,10 +1,10 @@
-<th:block th:replace="~{layout/header :: setContent(~{this::content} )}">
+<th:block th:replace="~{layout/header :: setContent(~{this::content} )}" xmlns="http://www.w3.org/1999/html">
 
   <th:block th:fragment="content">
 
     <div
-      class="hero page-inner overlay"
-      style="background-image: url('images/hero_bg_1.jpg')"
+            class="hero page-inner overlay"
+            style="background-image: url('images/hero_bg_1.jpg')"
     >
       <div class="container">
         <div class="row justify-content-center align-items-center">
@@ -12,15 +12,15 @@
             <h1 class="heading" data-aos="fade-up">Services</h1>
 
             <nav
-              aria-label="breadcrumb"
-              data-aos="fade-up"
-              data-aos-delay="200"
+                    aria-label="breadcrumb"
+                    data-aos="fade-up"
+                    data-aos-delay="200"
             >
               <ol class="breadcrumb text-center justify-content-center">
                 <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
                 <li
-                  class="breadcrumb-item active text-white-50"
-                  aria-current="page"
+                        class="breadcrumb-item active text-white-50"
+                        aria-current="page"
                 >
                   Services
                 </li>
@@ -30,7 +30,11 @@
         </div>
       </div>
     </div>
-
+    <!-- 여기에 버튼 추가 -->
+    <div class="col-12 text-start">
+      <a th:href="@{/question/register}" class="btn btn-outline-success">질문등록</a>
+      <a th:href="@{/question/list3}" class="btn btn-outline-success">답변보기</a>
+    </div>
     <div class="section bg-light" >
       <div class="container">
         <div class="row">
@@ -43,7 +47,11 @@
               <p class="text-black-50">
                 [[${dto.qcontent}]]
               </p>
-              <p><a href="#" class="learn-more">Read more</a></p>
+              <!--<p><a href="#" class="learn-more">Read more</a></p>-->
+              <p><a th:href="|@{/question/read(qno =${dto.qno})}&${link}|" class="learn-more">
+                <span style="display:none;">${dto.qtitle}</span>
+                Read more
+              </a></p>
             </div>
           </div>
           <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
@@ -159,9 +167,9 @@
             <div class="item">
               <div class="testimonial">
                 <img
-                  src="images/person_1-min.jpg"
-                  alt="Image"
-                  class="img-fluid rounded-circle w-25 mb-4"
+                        src="images/person_1-min.jpg"
+                        alt="Image"
+                        class="img-fluid rounded-circle w-25 mb-4"
                 />
                 <div class="rate">
                   <span class="icon-star text-warning"></span>
@@ -186,9 +194,9 @@
             <div class="item">
               <div class="testimonial">
                 <img
-                  src="images/person_2-min.jpg"
-                  alt="Image"
-                  class="img-fluid rounded-circle w-25 mb-4"
+                        src="images/person_2-min.jpg"
+                        alt="Image"
+                        class="img-fluid rounded-circle w-25 mb-4"
                 />
                 <div class="rate">
                   <span class="icon-star text-warning"></span>
@@ -213,9 +221,9 @@
             <div class="item">
               <div class="testimonial">
                 <img
-                  src="images/person_3-min.jpg"
-                  alt="Image"
-                  class="img-fluid rounded-circle w-25 mb-4"
+                        src="images/person_3-min.jpg"
+                        alt="Image"
+                        class="img-fluid rounded-circle w-25 mb-4"
                 />
                 <div class="rate">
                   <span class="icon-star text-warning"></span>
@@ -240,9 +248,9 @@
             <div class="item">
               <div class="testimonial">
                 <img
-                  src="images/person_4-min.jpg"
-                  alt="Image"
-                  class="img-fluid rounded-circle w-25 mb-4"
+                        src="images/person_4-min.jpg"
+                        alt="Image"
+                        class="img-fluid rounded-circle w-25 mb-4"
                 />
                 <div class="rate">
                   <span class="icon-star text-warning"></span>
@@ -268,5 +276,5 @@
       </div>
     </div>
 
-    </th:block>
-    </th:block>
+  </th:block>
+</th:block>

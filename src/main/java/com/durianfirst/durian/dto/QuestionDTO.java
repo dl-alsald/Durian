@@ -35,8 +35,12 @@ public class QuestionDTO {
 
     private String qmember;
 
-    private LocalDateTime regTime;
+    private int view;
 
-    private LocalDateTime updateTime;
+    private LocalDateTime regDate;
+
+    private LocalDateTime modDate;
+
 }
+
 

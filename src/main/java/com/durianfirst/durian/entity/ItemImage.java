@@ -19,10 +19,7 @@ public class ItemImage {
     private String uuid;
 
     private String imgName;
-
     private String path;
-
-    private String iimgrep; //대표 이미지 여부
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "item_ino")
@@ -33,6 +30,5 @@ public class ItemImage {
         this.uuid = uuid;
         this.imgName = imgName;
         this.path = path;
-
     }
 }

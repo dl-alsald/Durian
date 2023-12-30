@@ -3,12 +3,17 @@ package com.durianfirst.durian.service;
 import com.durianfirst.durian.DataNotFoundException;
 import com.durianfirst.durian.dto.QuestionDTO;
 import com.durianfirst.durian.entity.Answer;
+import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.entity.Question;
 import com.durianfirst.durian.repository.AnswerRepository;
+import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.repository.QuestionRepository;
+import com.sun.jna.platform.linux.Mman;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,16 +42,26 @@ public class AnswerServiceImpl implements AnswerService {
         QuestionDTO questionDTO = modelMapper.map(question, QuestionDTO.class);
 
         return questionDTO;
-    }
 
+    }
+    @Transactional
     @Override
-    public void createa(Question question, String acontent) {
+    public Answer createa(Question question, String acontent, Member member) {
+
+
+        // Answer 엔터티를 생성합니다.
         Answer answer = new Answer();
         answer.setAcontent(acontent);
-        answer.setRegTime(LocalDateTime.now());
+        answer.setRegDate(LocalDateTime.now());
         answer.setAquestion(question);
+        // Answer 엔터티에 Member 객체를 설정합니다.
+        answer.setMember(member);
+
+        // 회원 정보를 포함하여 답변을 저장합니다.
         this.answerRepository.save(answer);
+        return answer;
     }
+
 
 
     @Override
@@ -72,14 +87,13 @@ public class AnswerServiceImpl implements AnswerService {
     @Override//답변의 내용으로 답변을 수정
     public void modify(Answer answer, String acontent) {
         answer.setAcontent(acontent);
-        answer.setUpdateTime(LocalDateTime.now());
+        answer.setModDate(LocalDateTime.now());
         this.answerRepository.save(answer);
     }
 
     @Override
-    public void delete(Long ano) {
-
-        answerRepository.deleteById(ano);
+    public void delete(Answer answer) {
+        this.answerRepository.delete(answer);
     }
 }
 
