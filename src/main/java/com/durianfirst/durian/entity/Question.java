@@ -1,6 +1,7 @@
 package com.durianfirst.durian.entity;
 
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -35,15 +36,28 @@ public class Question extends BaseEntity {
 
     //여러개의질문이 한명의 사용자에게 작성될수 있으므로 ManyToOne
     @ManyToOne(fetch = FetchType.LAZY)
-    private Member member; //작성자
+    @JoinColumn(name = "mid")
+    private Member member;
 
-    @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Answer> answerList;
+
+    private String password; //비밀글 비밀번호
+
+    private boolean secret; //비밀글 유무 체크
 
     public void change(String qtitle, String qcontent){ //수정가능한것 제목/내용
         this.qtitle = qtitle;
         this.qcontent = qcontent;
     }
+
+    public void encryptPassword(PasswordEncoder passwordEncoder){ //암호화 로직 추가
+        if(this.password != null){
+            this.password = passwordEncoder.encode(this.password);
+        }
+
+    }
+
 }
 /*@NotNull : Null 값 체크
 

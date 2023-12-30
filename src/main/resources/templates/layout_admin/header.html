@@ -10,6 +10,9 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
               rel="stylesheet">
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+
 
         <!-- CSS -->
         <!-- common -->
@@ -19,33 +22,29 @@
         <link rel="stylesheet" th:href="@{/assets/css/app.css}">
         <link rel="shortcut icon" th:href="@{/assets/images/favicon.svg}" type="image/x-icon">
 
-               <!-- application-email -->
-               <link rel="stylesheet" th:href="@{/assets/css/pages/email.css}">
-               <!-- extra-component-rating -->
-               <link rel="stylesheet" th:href="@{/assets/vendors/rater-js/style.css}">
-               <!-- extra-component-sweetalert -->
-               <link rel="stylesheet" th:href="@{/assets/vendors/sweetalert2/sweetalert2.min.css}">
-               <!-- extra-component-toastify -->
-               <link rel="stylesheet" th:href="@{/assets/vendors/toastify/toastify.css}">
-               <!-- form-editor-quill -->
-               <link rel="stylesheet" th:href="@{/assets/vendors/quill/quill.bubble.css}">
-               <link rel="stylesheet" th:href="@{/assets/vendors/quill/quill.snow.css}">
-               <!-- form-editor-summernote -->
-               <link rel="stylesheet" th:href="@{/assets/vendors/summernote/summernote-lite.min.css}">
-
+        <!-- application-email -->
+        <link rel="stylesheet" th:href="@{/assets/css/pages/email.css}">
+        <!-- extra-component-rating -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/rater-js/style.css}">
+        <!-- extra-component-sweetalert -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/sweetalert2/sweetalert2.min.css}">
+        <!-- extra-component-toastify / ui-file-uploader -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/toastify/toastify.css}">
+        <!-- form-editor-quill -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/quill/quill.bubble.css}">
+        <link rel="stylesheet" th:href="@{/assets/vendors/quill/quill.snow.css}">
+        <!-- form-editor-summernote -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/summernote/summernote-lite.min.css}">
         <!-- index -->
         <link rel="stylesheet" th:href="@{/assets/vendors/iconly/bold.css}">
-
-
         <!-- ui-widgets-chatbox -->
         <link rel="stylesheet" th:href="@{/assets/css/widgets/chat.css}">
         <!-- ui-widgets-todolist -->
         <link rel="stylesheet" th:href="@{/assets/vendors/dragula/dragula.min.css}">
         <!-- ui-chart-chartjs -->
         <link rel="stylesheet" th:href="@{/assets/vendors/chartjs/Chart.min.css}">
-
-
-
+        <!-- chatList -->
+        <link rel="stylesheet" th:href="@{/assets/css/pages/chatList.css}">
     </head>
     <body>
 
@@ -69,43 +68,50 @@
 
                         <li class="sidebar-item  ">
                             <a th:href="@{/admin/index}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
+                                <i class="bi bi-house"></i>
+                                <span>Home(Admin)</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
                             <a th:href="@{/index}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Home</span>
+                                <i class="bi bi-house-fill"></i>
+                                <span>Home(User)</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
                             <a th:href="@{/notice/list}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
+                                <i class="bi bi-bell"></i>
                                 <span>공지사항 관리</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
                             <a th:href="@{/event/list}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
+                                <i class="bi bi-puzzle"></i>
                                 <span>이벤트 관리</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
                             <a th:href="@{/item/list}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
+                                <i class="bi bi-box-seam"></i>
                                 <span>중고물품 관리</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/question/list}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
+                            <a th:href="@{/answer/list}" class='sidebar-link'>
+                                <i class="bi bi-clipboard-check"></i>
                                 <span>질문 관리</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a th:href="@{/chat/chatList}" class='sidebar-link'>
+                                <i class="bi bi-chat-dots"></i>
+                                <span>채팅</span>
                             </a>
                         </li>
 
@@ -124,7 +130,7 @@
                                     <a th:href="@{/component/component-badge}">Badge</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/component/component-breadcrumb}">Breadcrumb</a>
+                                    <a th:href="@{/component/component-breadcrumb}">Breadcrumb(경로)</a>
                                 </li>
                                 <li class="submenu-item ">
                                     <a th:href="@{/component/component-button}">Button</a>
@@ -414,7 +420,7 @@
                                     <a th:href="@{/admin/error-404}">404</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/error-500}">500</a>
+                                    <a th:href="@{/admin/error-500}">500</a>
                                 </li>
                             </ul>
                         </li>
@@ -450,11 +456,7 @@
         </div>
 
 
-
-
-            <th:block th:replace="${content}"></th:block>
-
-
+        <th:block th:replace="${content}"></th:block>
 
 
         <div id="main">

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{layout_admin/header :: setContent(~{this::content} )}">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>List Group - Mazer Admin Dashboard</title>
+    </head>
+
+    <th:block th:fragment="content">
+        <div id="app">
+            <div id="main">
+                <header class="mb-3">
+                    <a href="#" class="burger-btn d-block d-xl-none">
+                        <i class="bi bi-justify fs-3"></i>
+                    </a>
+                </header>
+
+                <!-- content header  -->
+                <div class="page-heading chatList-application">
+                    <div class="page-title">
+                        <div class="row">
+                            <div class="col-12 col-md-6 order-md-1 order-last">
+                                <h3>Chat List</h3>
+                                <p class="text-subtitle text-muted">
+                                    Please chat with the counselor about your inquiry
+                                </p>
+                            </div>
+                            <div class="col-12 col-md-6 order-md-2 order-first">
+                                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="../admin/index.html">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Chat List</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /content header  -->
+
+                    <!-- content : list group button & badge start-->
+                    <section class="list-group-button-badge">
+                        <div class="row match-height">
+                            <div class="col-md-12">
+                                <div class="card">
+
+                                    <!-- 채팅방 이름 & NEW 버튼 -->
+                                    <div class="card-header">
+                                        <div class="buttons">
+                                            <form action="/chat/createRoom" method="post">
+                                               <!-- <input type="text" class="form-select-chat" name="name" placeholder="Set Room Name">-->
+                                                <button type="submit" class="btn btn-success rounded-pill">Neeeew</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- /채팅방 이름 & NEW 버튼 -->
+
+                                    <!-- 채팅방 목록 -->
+                                    <div class="card-content">
+                                        <div class="card-body"><!-- padding -->
+                                            <div class="list-group">
+
+                                                <!-- Email copy -->
+                                                <div class="content-right">
+                                                    <!--<div class="content-overlay"></div>-->
+                                                    <div class="content-wrapper">
+                                                        <!--<div class="content-header row"></div>-->
+                                                        <div class="content-body">
+                                                            <div class="app-content-overlay"></div>
+                                                            <div class="email-app-area">
+
+                                                                <!--  Chat List Header : Chat list Area -->
+                                                                <div class="chatList-app-list-wrapper">
+                                                                    <div class="chatList-app-list">
+                                                                        <div class="chatList-action" style="margin-left: 7px;">
+                                                                            <!-- Chat List Header Up-->
+                                                                            <div class="action-left d-flex align-items-center-chat">
+                                                                                <!-- select All checkbox -->
+                                                                                <div class="checkbox checkbox-shadow checkbox-sm selectAll me-3">
+                                                                                    <input type="checkbox"
+                                                                                           id="checkboxsmall"
+                                                                                           class='form-check-input'>
+                                                                                    <label for="checkboxsmall"></label>
+                                                                                </div>
+                                                                                <!-- Chat List Header Button : delete unread dropdown -->
+                                                                                <ul class="list-inline m-0 d-flex">
+                                                                                    <li class="list-inline-item mail-delete">
+                                                                                        <button type="button"
+                                                                                                class="btn btn-icon action-icon"
+                                                                                                data-toggle="tooltip">
+                                                                                        <span class="fonticon-wrap">
+                                                                                            <svg class="bi"
+                                                                                                 width="1.5em"
+                                                                                                 height="1.5em"
+                                                                                                 fill="currentColor">
+                                                                                                <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#trash}"/>
+                                                                                            </svg>
+                                                                                        </span>
+                                                                                        </button>
+                                                                                    </li>
+                                                                                    <li class="list-inline-item mail-unread">
+                                                                                        <button type="button"
+                                                                                                class="btn btn-icon action-icon">
+                                                                                       <span class="fonticon-wrap d-inline">
+                                                                                          <svg class="bi"
+                                                                                               width="1.5em"
+                                                                                               height="1.5em"
+                                                                                               fill="currentColor">
+                                                                                                     <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#envelope}"/>
+                                                                                          </svg>
+                                                                                       </span>
+                                                                                        </button>
+                                                                                    </li>
+                                                                                    <li class="list-inline-item">
+                                                                                        <div class="dropdown">
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-icon action-icon"
+                                                                                                    id="folder"
+                                                                                                    data-toggle="dropdown"
+                                                                                                    aria-haspopup="true"
+                                                                                                    aria-expanded="false">
+                                                                                                    <span class="fonticon-wrap">
+                                                                                                        <svg class="bi"
+                                                                                                             width="1.5em"
+                                                                                                             height="1.5em"
+                                                                                                             fill="currentColor">
+                                                                                                            <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#folder}"/>
+                                                                                                        </svg>
+                                                                                                    </span>
+                                                                                            </button>
+                                                                                            <div class="dropdown-menu dropdown-menu-right"
+                                                                                                 aria-labelledby="folder">
+                                                                                                <a class="dropdown-item"
+                                                                                                   href="#"><i
+                                                                                                        class="bx bx-edit"></i>
+                                                                                                    Draft</a>
+                                                                                                <a class="dropdown-item"
+                                                                                                   href="#"><i
+                                                                                                        class="bx bx-info-circle"></i>Spam</a>
+                                                                                                <a class="dropdown-item"
+                                                                                                   href="#"><i
+                                                                                                        class="bx bx-trash"></i>Trash</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                    <li class="list-inline-item">
+                                                                                        <div class="dropdown">
+                                                                                            <button type="button"
+                                                                                                    class="btn btn-icon action-icon"
+                                                                                                    id="tag"
+                                                                                                    data-toggle="dropdown"
+                                                                                                    aria-haspopup="true"
+                                                                                                    aria-expanded="false">
+                                                                                                    <span class="fonticon-wrap">
+
+                                                                                                        <svg class="bi"
+                                                                                                             width="1.5em"
+                                                                                                             height="1.5em"
+                                                                                                             fill="currentColor">
+                                                                                                            <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#tag}"/>
+                                                                                                        </svg>
+                                                                                                    </span>
+                                                                                            </button>
+                                                                                            <div class="dropdown-menu dropdown-menu-right"
+                                                                                                 aria-labelledby="tag">
+                                                                                                <a href="#"
+                                                                                                   class="dropdown-item align-items-center">
+                                                                                                    <span class="bullet bullet-success bullet-sm"></span>
+                                                                                                    <span>Product</span>
+                                                                                                </a>
+                                                                                                <a href="#"
+                                                                                                   class="dropdown-item align-items-center">
+                                                                                                    <span class="bullet bullet-primary bullet-sm"></span>
+                                                                                                    <span>Work</span>
+                                                                                                </a>
+                                                                                                <a href="#"
+                                                                                                   class="dropdown-item align-items-center">
+                                                                                                    <span class="bullet bullet-warning bullet-sm"></span>
+                                                                                                    <span>Misc</span>
+                                                                                                </a>
+                                                                                                <a href="#"
+                                                                                                   class="dropdown-item align-items-center">
+                                                                                                    <span class="bullet bullet-danger bullet-sm"></span>
+                                                                                                    <span>Family</span>
+                                                                                                </a>
+                                                                                                <a href="#"
+                                                                                                   class="dropdown-item align-items-center">
+                                                                                                    <span class="bullet bullet-info bullet-sm"></span>
+                                                                                                    <span> Design</span>
+                                                                                                </a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </ul>
+                                                                                <!-- /Chat List Header Button : delete unread dropdown -->
+
+                                                                                <!-- search bar  -->
+                                                                                <div class="email-fixed-search flex-grow-1">
+                                                                                    <div class="sidebar-toggle d-block d-lg-none">
+                                                                                        <i class="bx bx-menu"></i>
+                                                                                    </div>
+
+                                                                                    <div class="form-group position-relative  mb-0 has-icon-left">
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               placeholder="Search">
+                                                                                        <div class="form-control-icon">
+                                                                                            <svg class="bi"
+                                                                                                 width="1.5em"
+                                                                                                 height="1.5em"
+                                                                                                 fill="currentColor">
+                                                                                                <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#search}"/>
+                                                                                            </svg>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- /search bar  -->
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- chat list start -->
+                                                                        <div class="chatList-user-list list-group ps ps--active-y" th:each="room : ${roomList}">
+                                                                            <ul class="users-list-wrapper media-list" style="padding-left: 9px;">
+                                                                                <a th:href="@{chatRoom(roomId=${room.roomId})}">
+                                                                                <li class="media">
+                                                                                    <div class="user-action">
+                                                                                        <div class="checkbox-con me-3">
+                                                                                            <div class="checkbox checkbox-shadow checkbox-sm">
+                                                                                                <input type="checkbox"
+                                                                                                       id="checkboxsmall1"
+                                                                                                       class='form-check-input'>
+                                                                                                <label for="checkboxsmall1"></label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <span class="favorite text-warning">
+                                                                                            <svg class="bi"
+                                                                                                 width="1.5em"
+                                                                                                 height="1.5em"
+                                                                                                 fill="currentColor">
+                                                                                                    <use th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.svg#star-fill}"/>
+                                                                                            </svg>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="pr-50">
+                                                                                        <div class="avatar">
+                                                                                            <img th:src="@{/assets/images/faces/1.jpg}"
+                                                                                                 alt="avtar img holder">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="media-body">
+                                                                                        <div class="user-details">
+                                                                                            <div class="mail-items">
+                                                                                                <span class="list-group-item-text text-truncate" th:text="${room.getMid()}"></span>
+                                                                                            </div>
+                                                                                            <div class="mail-meta-item">
+                                                                                                 <span class="float-right">
+                                                                                                    <span class="chat-date" th:text="${room.regDate}"></span>
+                                                                                                 </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="mail-message">
+                                                                                            <p class="list-group-item-text truncate mb-0"></p>
+                                                                                            <div class="mail-meta-item">
+                                                                                                <span class="float-right">
+                                                                                                    <span class="bullet bullet-success bullet-sm"></span>
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </li>
+                                                                                </a>
+                                                                            </ul>
+                                                                            <!-- email user list end -->
+
+                                                                            <div class="ps__rail-x"
+                                                                                 style="left: 0px; bottom: 0px;">
+                                                                                <div class="ps__thumb-x" tabindex="0"
+                                                                                     style="left: 0px; width: 0px;"></div>
+                                                                            </div>
+                                                                            <div class="ps__rail-y"
+                                                                                 style="top: 0px; height: 733px; right: 0px;">
+                                                                                <!-- 스크롤 관련인 것 같음 -->
+                                                                                <div class="ps__thumb-y" tabindex="0"
+                                                                                     style="top: 0px; height: 567px;"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--/ Email list Area -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /email -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- list group button & badge ends -->
+            </div>
+        </div>
+        </div>
+    </th:block>
+</th:block>
+</html>

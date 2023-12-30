@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <th:block th:replace="~{layout_admin/header :: setContent(~{this::content} )}">
 
     <th:block th:fragment="content">
@@ -38,8 +37,9 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">No</th>
                 <th scope="col">picture</th>
+                <th scope="col">name</th>
                 <th scope="col">price</th>
                 <th scope="col">location</th>
                 <th scope="col">Regdate</th>
@@ -51,8 +51,12 @@
                 <th scope="row">
                     <a th:href="@{/item/read(ino = ${dto.ino}, page= ${result.page})}">
                         [[${dto.ino}]]</a></th>
-                <td><img th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0].path != null}"
-                         th:src="|/display?fileName=${dto.imageDTOList[0].getThumbnailURL()}|" >[[${dto.iname}]]</td>
+                <td ><img style="width: 150px; height: 150px;"
+                        th:if="${dto.imageDTOList.size() > 0 && dto.imageDTOList[0].path != null}"
+                         th:src="|/display?fileName=${dto.imageDTOList[0].getThumbnailURL()}|" ></td>
+                <td>
+                    [[${dto.iname}]]
+                </td>
                 <td>[[${dto.iprice}]]</td>
                 <td>[[${dto.ilocation}]]</td>
                 <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
@@ -60,12 +64,14 @@
             </tbody>
         </table>
 
+
+
         <ul class="pagination h-100 justify-content-center align-items-center">
 
             <li class="page-item " th:if="${result.prev}">
                 <a class="page-link" th:href="@{/item/list(page= ${result.start -1},
                     type=${pageRequestDTO.type} ,
-                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">Previous</a>
+                    keyword = ${pageRequestDTO.keyword} ) }" tabindex="-1">Prev</a>
             </li>
 
             <li th:class=" 'page-item ' + ${result.page == page?'active':''} " th:each="page: ${result.pageList}">

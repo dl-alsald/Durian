@@ -2,10 +2,7 @@ package com.durianfirst.durian.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -19,8 +16,18 @@ public class Heart extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long hno;
 
-    private int pno;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Item item;
 
-    private String mid;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member;
+
+    /*private int pno;
+    private String mid;*/
+
+    public Heart(Item item, Member member){
+        this.item = item;
+        this.member = member;
+    }
 
 }

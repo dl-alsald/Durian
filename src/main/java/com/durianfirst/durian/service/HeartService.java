@@ -2,21 +2,31 @@ package com.durianfirst.durian.service;
 
 import com.durianfirst.durian.dto.HeartDTO;
 import com.durianfirst.durian.entity.Heart;
+import com.durianfirst.durian.entity.Member;
+
+import java.util.List;
 
 public interface HeartService {
 
-    Long register(HeartDTO heartDTO);
+    boolean addHeart(Member member, Long ino);
+    void cancelHeart(Member member,Long ino);
+    List<String> count(Long ino, Member loginMember);
 
-    HeartDTO read(Long hno);
+
+
+
+    /*Long register(HeartDTO heartDTO);*/
+
+    /*HeartDTO read(Long hno);
 
     void remove(Long hno);
 
-//    void modify(HeartDTO dto);
+    void modify(HeartDTO dto);
 
     default Heart dtoToEntity(HeartDTO heartDTO) {
         Heart entity = Heart.builder()
                 .hno(heartDTO.getHno())
-                .pno(heartDTO.getPno())
+                .item(heartDTO.getIno())
                 .mid(heartDTO.getMid())
                 .build();
         return entity;
@@ -33,5 +43,5 @@ public interface HeartService {
                 .build();
 
         return heartDTO;
-    }
+    }*/
 }

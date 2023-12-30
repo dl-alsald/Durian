@@ -3,11 +3,15 @@ package com.durianfirst.durian.controller;
 import com.durianfirst.durian.dto.PageRequestedDTO;
 import com.durianfirst.durian.dto.PageResponsedDTO;
 import com.durianfirst.durian.dto.QuestionDTO;
+import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.entity.Question;
+import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.service.AnswerService;
 import com.durianfirst.durian.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,42 +19,33 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
-@RequestMapping("/")
+/*@RequestMapping("/")*/
 @Log4j2
 @RequiredArgsConstructor
 public class QuestionController {
 
     private final QuestionService questionService;
-
     private final AnswerService answerService;
-
-    @GetMapping("/question/list")
-    public void list(PageRequestedDTO pageRequestDTO, Model model) {
-
-        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
-
-        log.info(responseDTO);
-
-        model.addAttribute("responseDTO", responseDTO);
-
-    }
-
-    @GetMapping("/question/list2")
-    public void list2(PageRequestedDTO pageRequestDTO, Model model) {
-
-        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
-
-        log.info(responseDTO);
-
-        model.addAttribute("responseDTO", responseDTO);
-
-    }
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/question/register") //등록처리
-    public void registerGET() {
+    public String registerGET(Principal principal) {
 
+        if (principal != null) {
+
+            String mid = principal.getName();
+            Member member = memberRepository.findByMid(mid);
+
+            log.info("유저 아이디 : " + principal.getName());
+
+        } else {
+            return "member/login";
+        }
+        return "question/register";
     }
 
     @PostMapping("/question/register")
@@ -66,20 +61,11 @@ public class QuestionController {
 
         redirectAttributes.addFlashAttribute("result", qno);
 
-        return "redirect:/question/list";
+        return "redirect:/question/qna";
 
     }
 
-    @GetMapping({"/question/read", "/question/modify"})
-    public void read(Long qno, PageRequestedDTO pageRequestDTO, Model model) {
-
-        QuestionDTO questionDTO = questionService.readOne(qno);
-
-        log.info(questionDTO);
-
-        model.addAttribute("dto", questionDTO);
-    }
-
+    @PreAuthorize("principal.username == #questionDTO.member.mid")
     @PostMapping("/question/modify")
     public String modify(PageRequestedDTO pageRequestDTO,
                          @Valid QuestionDTO questionDTO,
@@ -118,10 +104,11 @@ public class QuestionController {
 
         redirectAttributes.addFlashAttribute("result", "remove");
 
-        return "redirect:/question/list";
+        return "redirect:/question/qna";
     }
+
     /*-----------------답변*/
-    @GetMapping("/question/list3")
+    @GetMapping("/question/qna")
     public void list3(PageRequestedDTO pageRequestDTO, Model model) {
 
         PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
@@ -130,20 +117,86 @@ public class QuestionController {
 
         model.addAttribute("responseDTO", responseDTO);
     }
+
     @GetMapping("/question/answer")
-    public void answer(Long qno, PageRequestedDTO pageRequestDTO, Model model) {
+    public String answer(Long qno, @RequestParam(required = false) String password, Model model) {
 
         Question question = this.answerService.getQuestion(qno);
         model.addAttribute("question", question);
 
         QuestionDTO questionDTO = answerService.create(qno);
-
-        log.info(questionDTO);
-
         model.addAttribute("dto", questionDTO);
 
+        //질문이 비밀글이고, 비밀번호가 설정되어 있으면
+        if (questionDTO.getSecret() && questionDTO.getPassword() != null) {
+            //비밀번호가 입력되지 않았거나, 입력된 비밀번호가 일치하지 않으면
+            if (password == null || !questionDTO.isPasswordValid(password, passwordEncoder)) {
+                model.addAttribute("question", question);
+                model.addAttribute("dto", questionDTO);
+                //비밀번호 입력 폼으로 이동
+                return "question/passwordForm";
+            }
+        }
+        //일치하거나, 비밀번호가 없는경우에는 답변 페이지로 이동
+        return "question/answer";
     }
+
+    @PostMapping("/question/checkPassword")
+    public String checkPassword(@RequestParam Long qno, @RequestParam String password, Model model, RedirectAttributes redirectAttributes) {
+        QuestionDTO questionDTO = answerService.create(qno);
+        Question question = this.answerService.getQuestion(qno);
+
+        // 질문이 비밀글이고, 비밀번호가 설정되어 있으면
+        if (questionDTO.getSecret() && questionDTO.getPassword() != null) {
+            model.addAttribute("dto", questionDTO);
+            model.addAttribute("question", question);
+            log.info("question",qno);
+            // 입력된 비밀번호가 일치하지 않으면
+            if (!questionDTO.isPasswordValid(password, passwordEncoder)) {
+                model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
+                return "question/passwordForm";
+            }
+        }
+        // 비밀번호가 일치하거나, 비밀번호가 없는 경우에는 답변 페이지로 이동
+        model.addAttribute("question", question);
+        model.addAttribute("dto", questionDTO);
+        log.info("question",qno);
+        return "question/answer";
+    }
+
+    @GetMapping("/modify")
+    public String modify(Principal principal, Model model) {
+
+        String mid = principal.getName();
+        Member member = memberRepository.findByMid(mid);
+
+        model.addAttribute("member", member);
+
+        return "/member/modify";
+    }
+
+    /* 지금 사용 안함 */
+    @GetMapping("/question/list")
+    public void list(PageRequestedDTO pageRequestDTO, Model model) {
+
+        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
+
+        log.info(responseDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
+
+    }
+
+    @GetMapping("/question/list2")
+    public void list2(PageRequestedDTO pageRequestDTO, Model model) {
+
+        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
+
+        log.info(responseDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
+
     }
 
 
-
+}
