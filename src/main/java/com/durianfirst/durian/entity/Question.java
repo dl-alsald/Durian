@@ -42,6 +42,8 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Answer> answerList;
 
+    private int view; //조회수 
+
     private String password; //비밀글 비밀번호
 
     private boolean secret; //비밀글 유무 체크

@@ -11,5 +11,6 @@ public interface AnswerRepository extends JpaRepository<Answer,Long> {//<Answer,
     Page<Answer> findAll(Pageable pageable);
 
     Answer findByAcontent(String acontent);//제목으로 테이블조회
+
     List<Answer> findByAcontentLike(String acontent);//제목에 특정문자열포함 데이터조회
 }

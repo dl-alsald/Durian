@@ -39,11 +39,14 @@ public class QuestionDTO {
 
     private LocalDateTime modDate;
 
+    private List<Answer> answerList;
+
+    private int view; //조회수
+
     private String password; //비밀글 비밀번호
 
     private Boolean secret; //비밀글 유무
 
-    private List<Answer> answerList;
 
     public Boolean getSecret(){
         return secret != null && secret; //secret 체크를하지 않았을 경우 false/ 이외 true

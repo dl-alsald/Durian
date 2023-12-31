@@ -68,15 +68,6 @@ public class AnswerController {
                 answer.getAquestion().getQno(), answer.getAno());
     }
 
-    @GetMapping("/answer/list2")
-    public void list2(PageRequestedDTO pageRequestedDTO, Model model) {
-
-        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestedDTO);
-
-        log.info(responseDTO);
-
-        model.addAttribute("responseDTO", responseDTO);
-    }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/answer/delete/{ano}")
@@ -101,4 +92,14 @@ public class AnswerController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
+    /* 사용 안함 */
+    @GetMapping("/answer/list2")
+    public void list2(PageRequestedDTO pageRequestedDTO, Model model) {
+
+        PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestedDTO);
+
+        log.info(responseDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
+    }
 }

@@ -125,7 +125,13 @@ public class QuestionController {
         model.addAttribute("question", question);
 
         QuestionDTO questionDTO = answerService.create(qno);
+        questionService.updateView(qno);
+
+        log.info(questionDTO);
         model.addAttribute("dto", questionDTO);
+
+        PageRequestedDTO pageRequestedDTO = new PageRequestedDTO();
+        model.addAttribute("pageRequestedDTO", pageRequestedDTO);
 
         //질문이 비밀글이고, 비밀번호가 설정되어 있으면
         if (questionDTO.getSecret() && questionDTO.getPassword() != null) {
@@ -146,6 +152,10 @@ public class QuestionController {
         QuestionDTO questionDTO = answerService.create(qno);
         Question question = this.answerService.getQuestion(qno);
 
+        // 아래 두 줄을 추가하여 pageRequestedDTO를 생성하고 모델에 추가합니다.
+        PageRequestedDTO pageRequestedDTO = new PageRequestedDTO();
+        model.addAttribute("pageRequestedDTO", pageRequestedDTO);
+
         // 질문이 비밀글이고, 비밀번호가 설정되어 있으면
         if (questionDTO.getSecret() && questionDTO.getPassword() != null) {
             model.addAttribute("dto", questionDTO);
@@ -164,7 +174,10 @@ public class QuestionController {
         return "question/answer";
     }
 
-    @GetMapping("/modify")
+    @GetMapping("/question/passwordForm")
+    public void password(){}
+
+    @GetMapping("/question/modify")
     public String modify(Principal principal, Model model) {
 
         String mid = principal.getName();

@@ -41,6 +41,13 @@ public class QuestionServiceImpl implements QuestionService {
         return question != null && question.getPassword().equals(password);
     }
 
+    /* 조회수 */
+    @Override
+    @Transactional
+    public int updateView(Long qno) {
+        return questionRepository.updateView(qno);
+    }
+
     @Override
     public Long register(QuestionDTO questionDTO) {
         //DTO에서 엔티티로 변환

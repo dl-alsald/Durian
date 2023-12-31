@@ -8,10 +8,11 @@ import java.util.List;
 
 public interface QuestionService {
 
+    int updateView(Long qno);
+
     Long register(QuestionDTO questionDTO);
 
     QuestionDTO readOne(Long qno);
-
 
     void modify(QuestionDTO questionDTO);
 

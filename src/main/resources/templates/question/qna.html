@@ -54,21 +54,21 @@
                     <!--검색조건 선택화면 끝-->
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title"> 목록</h5>
-
+                            <div class="card-body"></div>
                             <table class="table">
                                 <thead><!--상단에 보여질 번호/제목/작성자/등록시간-->
                                 <tr>
-                                    <th scope="col">번호</th>
-                                    <th scope="col">제목</th>
-                                    <th scope="col">작성자</th>
-                                    <th scope="col">등록시간</th>
+                                    <th class="text-center" scope="col">번호</th>
+                                    <th class="text-center" scope="col">제목</th>
+                                    <th class="text-center" scope="col">작성자</th>
+                                    <th class="text-center" scope="col">등록시간</th>
+                                    <th class="text-center" scope="col">조회수</th>
                                 </tr>
                                 </thead>
                                 <tbody th:with="link = ${pageRequestedDTO.getLink()}"><!--화면에 보여질 내용물,반복문-->
                                 <tr th:each="dto:${responseDTO.dtoList}">
-                                    <th scope="row">[[${dto.qno}]]</th>
-                                    <td>
+                                    <th class="text-center" scope="row">[[${dto.qno}]]</th>
+                                    <td class="text-center">
                                         <a th:if="${dto.secret}"
                                            th:href="|@{/question/answer(qno =${dto.qno})}|">
                                             <span>[[${dto.qtitle}]]</span>
@@ -84,8 +84,9 @@
                                             <span>[[${dto.qtitle}]]</span>
                                         </a>
                                     </td>
-                                    <td><span th:if="${dto.member != null}" th:text="${dto.member.mid}"></span></td>
-                                    <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
+                                    <td class="text-center"><span th:if="${dto.member != null}" th:text="${dto.member.mid}"></span></td>
+                                    <td class="text-center">[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>
+                                    <td class="text-center"><span th:text="${dto.view}" ></span></td>
                                 </tr>
                                 </tbody>
                             </table>
