@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard - Mazer Admin Dashboard</title>
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+              rel="stylesheet">
+        <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+              rel="stylesheet">
+
+        <!-- CSS -->
+        <!-- common -->
+        <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}">
+        <link rel="stylesheet" th:href="@{/assets/vendors/perfect-scrollbar/perfect-scrollbar.css}">
+        <link rel="stylesheet" th:href="@{/assets/vendors/bootstrap-icons/bootstrap-icons.css}">
+        <link rel="stylesheet" th:href="@{/assets/css/app.css}">
+        <link rel="shortcut icon" th:href="@{/assets/images/favicon.svg}" type="image/x-icon">
+
+        <!-- application-email -->
+        <link rel="stylesheet" th:href="@{/assets/css/pages/email.css}">
+        <!-- extra-component-rating -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/rater-js/style.css}">
+        <!-- extra-component-sweetalert -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/sweetalert2/sweetalert2.min.css}">
+        <!-- extra-component-toastify / ui-file-uploader -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/toastify/toastify.css}">
+        <!-- form-editor-quill -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/quill/quill.bubble.css}">
+        <link rel="stylesheet" th:href="@{/assets/vendors/quill/quill.snow.css}">
+        <!-- form-editor-summernote -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/summernote/summernote-lite.min.css}">
+        <!-- index -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/iconly/bold.css}">
+        <!-- ui-widgets-chatbox -->
+        <link rel="stylesheet" th:href="@{/assets/css/widgets/chat.css}">
+        <!-- ui-widgets-todolist -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/dragula/dragula.min.css}">
+        <!-- ui-chart-chartjs -->
+        <link rel="stylesheet" th:href="@{/assets/vendors/chartjs/Chart.min.css}">
+        <!-- chatList -->
+        <link rel="stylesheet" th:href="@{/assets/css/pages/chatList.css}">
+    </head>
+    <body>
+
+    <div id="app">
+
+        <th:block th:replace="${content}"></th:block>
+
+        <div id="main">
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2021 &copy; Mazer</p>
+                    </div>
+                    <div class="float-end">
+                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
+                                href="http://ahmadsaugi.com">A. Saugi</a></p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- SCRIPT(body안에 넣어야함) -->
+    <!-- common -->
+    <script th:src="@{/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+    <!-- header 반응 -->
+    <script th:src="@{/assets/js/main.js}"></script>
+
+    <!-- extra-component-sweetalert : rating과 같이 두면 BasicExample에 별이 들어감-->
+    <script th:src="@{/assets/js/extensions/sweetalert2.js}"></script>
+    <script th:src="@{/assets/vendors/sweetalert2/sweetalert2.all.min.js}"></script>
+    <!-- extra-component-toastify -->
+    <script th:src="@{/assets/vendors/toastify/toastify.js}"></script>
+    <script th:src="@{/assets/js/extensions/toastify.js}"></script>
+    <!-- form-editor-quill-->
+    <script th:src="@{/assets/vendors/quill/quill.min.js}"></script>
+    <script th:src="@{/assets/js/pages/form-editor.js}"></script>
+
+    </body>
+</th:block>
+</html>

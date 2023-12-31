@@ -703,6 +703,20 @@ progress {
     margin-left: calc(-.5 * var(--bs-gutter-x));
 }
 
+.row-c {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+    justify-content: center;
+}
+
 .row > * {
     -ms-flex-negative: 0;
     flex-shrink: 0;
@@ -5456,6 +5470,24 @@ fieldset:disabled .btn {
     border-radius: 0.25rem;
 }
 
+.card-p {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    justify-content: center; /* 가로로 가운데 정렬 */
+}
+
 .card > hr {
     margin-right: 0;
     margin-left: 0;
@@ -8557,7 +8589,7 @@ fieldset:disabled .btn {
 .align-items-center {
     -webkit-box-align: center !important;
     -ms-flex-align: center !important;
-    align-items: center !important;
+    align-items: end !important;
 }
 
 .align-items-baseline {
@@ -8803,6 +8835,11 @@ fieldset:disabled .btn {
 
 .mt-5 {
     margin-top: 3rem !important;
+}
+
+.mt-5-q {
+    margin-top: 3rem !important;
+    margin-bottom: 3rem !important;
 }
 
 .mt-auto {
@@ -13858,7 +13895,7 @@ textarea {
 }
 
 .hero.page-inner, .hero.page-inner > .container > .row {
-    height: 50vh;
+    height: 10vh;
     min-height: 300px;
 }
 
@@ -13950,6 +13987,7 @@ textarea {
 .section {
     padding-top: 4rem;
     padding-bottom: 4rem;
+
 }
 
 .section .heading {

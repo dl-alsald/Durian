@@ -45,6 +45,7 @@ public class AnswerController {
         log.info(questionDTO);
 
         model.addAttribute("dto", questionDTO);
+        model.addAttribute("pageRequestedDTO", pageRequestedDTO);
     }
 
 

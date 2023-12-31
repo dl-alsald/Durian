@@ -176,7 +176,7 @@ public class QuestionController {
     }
 
     /* 지금 사용 안함 */
-    @GetMapping("/question/list")
+    /*@GetMapping("/question/list")
     public void list(PageRequestedDTO pageRequestDTO, Model model) {
 
         PageResponsedDTO<QuestionDTO> responseDTO = questionService.list(pageRequestDTO);
@@ -196,7 +196,7 @@ public class QuestionController {
 
         model.addAttribute("responseDTO", responseDTO);
 
-    }
+    }*/
 
 
 }
