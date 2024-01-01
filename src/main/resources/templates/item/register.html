@@ -10,7 +10,7 @@
         <!-- Bootstrap core JavaScript -->
         <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
         <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-        <link th:href="@{/crud/styles.css}" rel="stylesheet" />
+        <link th:href="@{/crud/styles.css}" rel="stylesheet"/>
 
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -18,107 +18,105 @@
         <script th:src="@{/curd/scripts.js}"></script>
         <div id="app">
             <div id="main">
-        <h1 class="mt-4">Item Register Page</h1>
+                <h1 class="mt-4">Item Register Page</h1>
 
-        <form th:action="@{/item/register}" th:method="post">
-            <div class="form-group">
-                <label >Item Name</label>
-                <input type="text" class="form-control" name="iname" placeholder="Enter Name">
-            </div>
-            <div class="form-group">
-                <label >Item Price</label>
-                <input type="text" class="form-control" name="iprice" placeholder="Enter Price">
-            </div>
-            <div class="form-group">
-                <label >Item Dealway</label>
-                <input type="text" class="form-control" name="idealway" placeholder="Enter dealway">
-            </div>
-            <div class="form-group">
-                <label >Item Location</label>
-                <input type="text" class="form-control" name="ilocation" placeholder="Enter Location">
-            </div>
-            <div class="form-group">
-                <label >Item Category</label>
-                <input type="text" class="form-control" name="icategory" placeholder="Enter Category">
-            </div>
-            <div class="form-group">
-                <label >Item Condition</label>
-                <input type="text" class="form-control" name="icondition" placeholder="Enter Condition">
-            </div>
-            <div class="form-group">
-                <label >Item description</label>
-                <textarea class="form-control" rows="5" name="idesccription"></textarea>
-            </div>
-            <div class="form-group fileForm">
-                <label >이미지</label>
-                <div class="custom-file">
-                    <input type="file"  class="custom-file-input files" id="fileInput" multiple>
-                    <label class="custom-file-label" data-browse="Browse"></label>
-                </div>
-            </div>
+                <form th:action="@{/item/register}" th:method="post">
+                    <div class="form-group">
+                        <label>Item Name</label>
+                        <input type="text" class="form-control" name="iname" placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Item Price</label>
+                        <input type="text" class="form-control" name="iprice" placeholder="Enter Price">
+                    </div>
+                    <div class="form-group">
+                        <label>Item Dealway</label>
+                        <input type="text" class="form-control" name="idealway" placeholder="Enter dealway">
+                    </div>
+                    <div class="form-group">
+                        <label>Item Location</label>
+                        <input type="text" class="form-control" name="ilocation" placeholder="Enter Location">
+                    </div>
+                    <div class="form-group">
+                        <label>Item Category</label>
+                        <input type="text" class="form-control" name="icategory" placeholder="Enter Category">
+                    </div>
+                    <div class="form-group">
+                        <label>Item Condition</label>
+                        <input type="text" class="form-control" name="icondition" placeholder="Enter Condition">
+                    </div>
+                    <div class="form-group">
+                        <label>Item description</label>
+                        <textarea class="form-control" rows="5" name="idesccription"></textarea>
+                    </div>
+                    <div class="form-group fileForm">
+                        <label>이미지</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input files" id="fileInput" multiple>
+                            <label class="custom-file-label" data-browse="Browse"></label>
+                        </div>
+                    </div>
 
-            <div class="box">
+                    <div class="box">
 
-            </div>
+                    </div>
 
-            <style>
-                .uploadResult {
-                    width: 100%;
-                    background-color: rgba(128, 128, 128, 1);
-                    margin-top: 10px;
-                }
+                    <style>
+                        .uploadResult {
+                            width: 100%;
+                            background-color: rgba(128, 128, 128, 1);
+                            margin-top: 10px;
+                        }
 
-                .uploadResult ul {
-                    display: flex;
-                    flex-flow: row;
-                    justify-content: center;
-                    align-items: center;
-                    vertical-align: top;
-                    overflow: auto;
-                }
+                        .uploadResult ul {
+                            display: flex;
+                            flex-flow: row;
+                            justify-content: center;
+                            align-items: center;
+                            vertical-align: top;
+                            overflow: auto;
+                        }
 
-                .uploadResult ul li {
-                    list-style: none;
-                    padding: 10px;
-                    margin-left: 2em;
-                }
+                        .uploadResult ul li {
+                            list-style: none;
+                            padding: 10px;
+                            margin-left: 2em;
+                        }
 
-                .uploadResult ul li img {
-                    width: 100px;
-                }
-            </style>
+                        .uploadResult ul li img {
+                            width: 100px;
+                        }
+                    </style>
 
-            <div class="uploadResult">
-                <ul>
-
-                </ul>
-            </div>
-            <button type="submit" class="btn btn-primary">등록하기</button>
-        </form>
+                    <div class="uploadResult">
+                        <ul></ul>
+                    </div>
+                    <button type="submit" class="btn btn-primary">등록하기</button>
+                </form>
             </div>
         </div>
 
         <script>
-            $(document).ready(function(e) {
+            $(document).ready(function (e) {
 
                 var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
                 var maxSize = 10485760; //10MB
 
-                function checkExtension(fileName, fileSize){
+                function checkExtension(fileName, fileSize) {
 
-                    if(fileSize >= maxSize){
+                    if (fileSize >= maxSize) {
                         alert("파일 사이즈 초과");
                         return false;
                     }
 
-                    if(regex.test(fileName)){
+                    if (regex.test(fileName)) {
                         alert("해당 종류의 파일은 업로드할 수 없습니다.");
                         return false;
                     }
                     return true;
                 }
 
-                $(".custom-file-input").on("change", function() {
+                $(".custom-file-input").on("change", function () {
 
                     var fileName = $(this).val().split("\\").pop();
                     $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -133,7 +131,7 @@
 
                     for (var i = 0; i < files.length; i++) {
 
-                        if(!checkExtension(files[i].name, files[i].size) ){
+                        if (!checkExtension(files[i].name, files[i].size)) {
                             return false;
                         }
 
@@ -143,7 +141,9 @@
                     }
 
                     //upload를 하지 않는다.
-                    if (!appended) {return;}
+                    if (!appended) {
+                        return;
+                    }
 
                     for (var value of formData.values()) {
                         console.log(value);
@@ -157,27 +157,27 @@
                         contentType: false,
                         data: formData,
                         type: 'POST',
-                        dataType:'json',
-                        success: function(result){
+                        dataType: 'json',
+                        success: function (result) {
                             console.log(result);
                             showResult(result);
                         },
-                        error: function(jqXHR, textStatus, errorThrown){
+                        error: function (jqXHR, textStatus, errorThrown) {
                             console.log(textStatus);
                         }
                     }); //$.ajax
                 }); //end change event
 
 
-                function showResult(uploadResultArr){
+                function showResult(uploadResultArr) {
 
                     var uploadUL = $(".uploadResult ul");
 
-                    var str ="";
+                    var str = "";
 
-                    $(uploadResultArr).each(function(i, obj) {
+                    $(uploadResultArr).each(function (i, obj) {
 
-                        str += "<li data-name='" + obj.fileName + "' data-path='"+obj.folderPath+"' data-uuid='"+obj.uuid+"'>";
+                        str += "<li data-name='" + obj.fileName + "' data-path='" + obj.folderPath + "' data-uuid='" + obj.uuid + "'>";
                         str + " <div>";
                         str += "<button type='button' data-file=\'" + obj.imageURL + "\' "
                         str += "class='btn-warning btn-sm'>X</button><br>";
@@ -189,7 +189,7 @@
                     uploadUL.append(str);
                 }
 
-                $(".uploadResult ").on("click", "li button", function(e){
+                $(".uploadResult ").on("click", "li button", function (e) {
 
                     console.log("delete file");
 
@@ -200,9 +200,9 @@
                     $.ajax({
                         url: '/removeFile',
                         data: {fileName: targetFile},
-                        dataType:'text',
+                        dataType: 'text',
                         type: 'POST',
-                        success: function(result){
+                        success: function (result) {
                             alert(result);
 
                             targetLi.remove();
@@ -212,19 +212,19 @@
 
 
                 //prevent submit
-                $(".btn-primary").on("click", function(e) {
+                $(".btn-primary").on("click", function (e) {
                     e.preventDefault();
 
                     var str = "";
 
-                    $(".uploadResult li").each(function(i,obj){
+                    $(".uploadResult li").each(function (i, obj) {
                         var target = $(obj);
 
-                        str += "<input type='hidden' name='imageDTOList["+i+"].imgName' value='"+target.data('name') +"'>";
+                        str += "<input type='hidden' name='imageDTOList[" + i + "].imgName' value='" + target.data('name') + "'>";
 
-                        str += "<input type='hidden' name='imageDTOList["+i+"].path' value='"+target.data('path')+"'>";
+                        str += "<input type='hidden' name='imageDTOList[" + i + "].path' value='" + target.data('path') + "'>";
 
-                        str += "<input type='hidden' name='imageDTOList["+i+"].uuid' value='"+target.data('uuid')+"'>";
+                        str += "<input type='hidden' name='imageDTOList[" + i + "].uuid' value='" + target.data('uuid') + "'>";
 
                     });
 
@@ -234,7 +234,6 @@
                     $("form").submit();
 
                 });
-
 
 
             }); //document ready
