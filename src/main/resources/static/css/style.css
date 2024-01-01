@@ -8592,6 +8592,12 @@ fieldset:disabled .btn {
     align-items: end !important;
 }
 
+.align-items-center-i {
+    -webkit-box-align: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+
 .align-items-baseline {
     -webkit-box-align: baseline !important;
     -ms-flex-align: baseline !important;
@@ -13818,10 +13824,11 @@ a {
 
 .form-control {
     font-size: 16px;
-    height: 52px;
-    padding-left: 15px;
+    /*height: 52px;
+    padding-left: 15px;*/
     padding-right: 15px;
 }
+
 
 .form-control:hover, .form-control:active, .form-control:focus {
     outline: none;
