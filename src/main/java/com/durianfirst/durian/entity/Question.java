@@ -22,15 +22,12 @@ public class Question extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에 위임
     private Long qno; //질문 번호(pk)
 
-    @NotEmpty(message = "제목은 필수항목입니다.") /*Null허용치않음*/
-    @Column(nullable = false)
+    @Column(nullable = false)/*Null허용치않음*/
     private String qtitle; //질문제목
 
-    @NotEmpty(message = "질문내용은 필수항목입니다.")
-    @Column(nullable = false, length = 5000)
+    @Column(nullable = false)
     private String qcontent; //질문내용
 
-    @NotBlank(message = "카테고리선택은 필수항목입니다.")
     @Column(nullable = false)
     private String qcate; //카테고리
 
@@ -42,7 +39,7 @@ public class Question extends BaseEntity {
     @OneToMany(mappedBy = "aquestion", cascade = CascadeType.REMOVE , fetch = FetchType.LAZY)
     private List<Answer> answerList;
 
-    private int view; //조회수 
+    private int view; //조회수
 
     private String password; //비밀글 비밀번호
 

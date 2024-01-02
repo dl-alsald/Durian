@@ -33,36 +33,34 @@ public class QuestionController {
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/question/register") //등록처리
-    public String registerGET(Principal principal) {
+    public String registerGET(Principal principal, Model model) {
 
         if (principal != null) {
-
             String mid = principal.getName();
             Member member = memberRepository.findByMid(mid);
 
             log.info("유저 아이디 : " + principal.getName());
-
         } else {
             return "member/login";
         }
+        model.addAttribute("questionDTO", new QuestionDTO());
         return "question/register";
     }
 
     @PostMapping("/question/register")
-    public String registerPost(@Valid QuestionDTO questionDTO, BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) {
+    public String registerPost(@Valid QuestionDTO questionDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 
         if (bindingResult.hasErrors()) { //@Valid에서 문제 시 모든 에러를 errors 이름으로 redirectAttributes.addAttribute에 추가, 전송
-            log.info("has errors.......");
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            log.info("Validation errors: {}", bindingResult.getAllErrors());
+            model.addAttribute("questionDTO", questionDTO);
             return "redirect:/question/register";
         }
+
         Long qno = questionService.register(questionDTO);
 
         redirectAttributes.addFlashAttribute("result", qno);
 
         return "redirect:/question/qna";
-
     }
 
     @PreAuthorize("principal.username == #questionDTO.member.mid")
@@ -160,7 +158,7 @@ public class QuestionController {
         if (questionDTO.getSecret() && questionDTO.getPassword() != null) {
             model.addAttribute("dto", questionDTO);
             model.addAttribute("question", question);
-            log.info("question",qno);
+            log.info("question", qno);
             // 입력된 비밀번호가 일치하지 않으면
             if (!questionDTO.isPasswordValid(password, passwordEncoder)) {
                 model.addAttribute("error", "비밀번호가 일치하지 않습니다.");
@@ -170,7 +168,7 @@ public class QuestionController {
         // 비밀번호가 일치하거나, 비밀번호가 없는 경우에는 답변 페이지로 이동
         model.addAttribute("question", question);
         model.addAttribute("dto", questionDTO);
-        log.info("question",qno);
+        log.info("question", qno);
         return "question/answer";
     }
 

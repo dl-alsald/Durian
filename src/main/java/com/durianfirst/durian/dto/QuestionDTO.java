@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class QuestionDTO {
 
     private Long qno; //질문 번호(pk)
@@ -27,7 +27,6 @@ public class QuestionDTO {
     @Column(nullable = false, length = 5000)
     private String qcontent; //질문내용
 
-    @NotBlank(message = "카테고리선택은 필수항목입니다.")
     @Column(nullable = false)
     private String qcate; //카테고리
 
@@ -41,7 +40,7 @@ public class QuestionDTO {
 
     private List<Answer> answerList;
 
-    private int view; //조회수
+    private Integer view; //조회수
 
     private String password; //비밀글 비밀번호
 
