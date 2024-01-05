@@ -49,7 +49,7 @@ public class AnswerController {
     }
 
 
-    @PostMapping("/answer/createa/{qno}")
+    @PostMapping("/answer/create/{qno}")
     public String createAnswer(Model model, @PathVariable("qno") Long qno, @Valid AnswerForm answerForm,
                                BindingResult bindingResult, Principal principal) {
 

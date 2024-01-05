@@ -11,7 +11,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
               rel="stylesheet">
         <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
-        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+        <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+              rel="stylesheet">
 
 
         <!-- CSS -->
@@ -54,11 +55,13 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <a th:href="@{/admin/index}"><img th:src="@{/assets/images/logo/logo.png}" alt="Logo"
-                                                              srcset=""></a>
+                            <a th:href="@{/admin/index}"><img th:src="@{/assets/images/logo/logo.png}"
+                                                              alt="Logo" srcset=""></a>
                         </div>
                         <div class="toggler">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                            <a href="#" class="sidebar-hide d-xl-none d-block">
+                                <i class="bi bi-x bi-middle"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -81,7 +84,7 @@
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/notice/list}" class='sidebar-link'>
+                            <a th:href="@{/admin/notice/list}" class='sidebar-link'>
                                 <i class="bi bi-bell"></i>
                                 <span>공지사항 관리</span>
                             </a>
@@ -114,8 +117,6 @@
                                 <span>채팅</span>
                             </a>
                         </li>
-
-
 
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
@@ -175,19 +176,19 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/extra-component-avatar}">Avatar</a>
+                                    <a th:href="@{/adminTemplate/extra-component-avatar}">Avatar</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/extra-component-sweetalert}">Sweet Alert</a>
+                                    <a th:href="@{/adminTemplate/extra-component-sweetalert}">Sweet Alert</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/extra-component-toastify}">Toastify</a>
+                                    <a th:href="@{/adminTemplate/extra-component-toastify}">Toastify</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/extra-component-rating}">Rating</a>
+                                    <a th:href="@{/adminTemplate/extra-component-rating}">Rating</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/extra-component-divider}">Divider</a>
+                                    <a th:href="@{/adminTemplate/extra-component-divider}">Divider</a>
                                 </li>
                             </ul>
                         </li>
@@ -199,16 +200,16 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/layout-default}">Default Layout</a>
+                                    <a th:href="@{/adminTemplate/layout-default}">Default Layout</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/layout-vertical-1-column}">1 Column</a>
+                                    <a th:href="@{/adminTemplate/layout-vertical-1-column}">1 Column</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/layout-vertical-navbar}">Vertical with Navbar</a>
+                                    <a th:href="@{/adminTemplate/layout-vertical-navbar}">Vertical with Navbar</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/layout-horizontal}">Horizontal Menu</a>
+                                    <a th:href="@{/adminTemplate/layout-horizontal}">Horizontal Menu</a>
                                 </li>
                             </ul>
                         </li>
@@ -222,28 +223,28 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-element-input}">Input</a>
+                                    <a th:href="@{/adminTemplate/form-element-input}">Input</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-element-input-group}">Input Group</a>
+                                    <a th:href="@{/adminTemplate/form-element-input-group}">Input Group</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-element-select}">Select</a>
+                                    <a th:href="@{/adminTemplate/form-element-select}">Select</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-element-radio}">Radio</a>
+                                    <a th:href="@{/adminTemplate/form-element-radio}">Radio</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-element-checkbox}">Checkbox</a>
+                                    <a th:href="@{/adminTemplate/form-element-checkbox}">Checkbox</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-element-textarea}">Textarea</a>
+                                    <a th:href="@{/adminTemplate/form-element-textarea}">Textarea</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/admin/form-layout}" class='sidebar-link'>
+                            <a th:href="@{/adminTemplate/form-layout}" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-medical-fill"></i>
                                 <span>Form Layout</span>
                             </a>
@@ -256,29 +257,29 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-editor-quill}">Quill</a>
+                                    <a th:href="@{/adminTemplate/form-editor-quill}">Quill</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-editor-ckeditor}">CKEditor</a>
+                                    <a th:href="@{/adminTemplate/form-editor-ckeditor}">CKEditor</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-editor-summernote}">Summernote</a>
+                                    <a th:href="@{/adminTemplate/form-editor-summernote}">Summernote</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/form-editor-tinymce}">TinyMCE</a>
+                                    <a th:href="@{/adminTemplate/form-editor-tinymce}">TinyMCE</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/admin/table}" class='sidebar-link'>
+                            <a th:href="@{/adminTemplate/table}" class='sidebar-link'>
                                 <i class="bi bi-grid-1x2-fill"></i>
                                 <span>Table</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/admin/table-datatable}" class='sidebar-link'>
+                            <a th:href="@{/adminTemplate/table-datatable}" class='sidebar-link'>
                                 <i class="bi bi-file-earmark-spreadsheet-fill"></i>
                                 <span>Datatable</span>
                             </a>
@@ -293,13 +294,13 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-widgets-chatbox}">Chatbox</a>
+                                    <a th:href="@{/adminTemplate/ui-widgets-chatbox}">Chatbox</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-widgets-pricing}">Pricing</a>
+                                    <a th:href="@{/adminTemplate/ui-widgets-pricing}">Pricing</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-widgets-todolist}">To-do List</a>
+                                    <a th:href="@{/adminTemplate/ui-widgets-todolist}">To-do List</a>
                                 </li>
                             </ul>
                         </li>
@@ -311,13 +312,13 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-icons-bootstrap-icons}">Bootstrap Icons </a>
+                                    <a th:href="@{/adminTemplate/ui-icons-bootstrap-icons}">Bootstrap Icons </a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-icons-fontawesome}">Fontawesome</a>
+                                    <a th:href="@{/adminTemplate/ui-icons-fontawesome}">Fontawesome</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-icons-dripicons}">Dripicons</a>
+                                    <a th:href="@{/adminTemplate/ui-icons-dripicons}">Dripicons</a>
                                 </li>
                             </ul>
                         </li>
@@ -329,16 +330,16 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-chart-chartjs}">ChartJS</a>
+                                    <a th:href="@{/adminTemplate/ui-chart-chartjs}">ChartJS</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-chart-apexcharts}">Apexcharts</a>
+                                    <a th:href="@{/adminTemplate/ui-chart-apexcharts}">Apexcharts</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/admin/ui-file-uploader}" class='sidebar-link'>
+                            <a th:href="@{/adminTemplate/ui-file-uploader}" class='sidebar-link'>
                                 <i class="bi bi-cloud-arrow-up-fill"></i>
                                 <span>File Uploader</span>
                             </a>
@@ -351,10 +352,10 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-map-google-map}">Google Map</a>
+                                    <a th:href="@{/adminTemplate/ui-map-google-map}">Google Map</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/ui-map-jsvectormap}">JS Vector Map</a>
+                                    <a th:href="@{/adminTemplate/ui-map-jsvectormap}">JS Vector Map</a>
                                 </li>
                             </ul>
                         </li>
@@ -362,28 +363,28 @@
                         <li class="sidebar-title">Pages</li>
 
                         <li class="sidebar-item">
-                            <a th:href="@{/admin/application-email}" class='sidebar-link'>
+                            <a th:href="@{/adminTemplate/application-email}" class='sidebar-link'>
                                 <i class="bi bi-envelope-fill"></i>
                                 <span>Email Application</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/admin/ui-widgets-chatbox}" class='sidebar-link'>
+                            <a th:href="@{/adminTemplate/application-chat}" class='sidebar-link'>
                                 <i class="bi bi-chat-dots-fill"></i>
                                 <span>Chat Application</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/admin/application-gallery}" class='sidebar-link'>
+                            <a th:href="@{/adminTemplate/application-gallery}" class='sidebar-link'>
                                 <i class="bi bi-image-fill"></i>
                                 <span>Photo Gallery</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/admin/application-checkout}" class='sidebar-link'>
+                            <a th:href="@{/adminTemplate/application-checkout}" class='sidebar-link'>
                                 <i class="bi bi-basket-fill"></i>
                                 <span>Checkout Page</span>
                             </a>
@@ -396,13 +397,13 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/auth-login}">Login</a>
+                                    <a th:href="@{/member/login}">Login</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/auth-register}">Register</a>
+                                    <a th:href="@{/member/register}">Register</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/auth-forgot-password}">Forgot Password</a>
+                                    <a th:href="@{/adminTemplate/auth-forgot-password}">Forgot Password</a>
                                 </li>
                             </ul>
                         </li>
@@ -414,13 +415,13 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/error-403}">403</a>
+                                    <a th:href="@{/error/error-403}">403</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/error-404}">404</a>
+                                    <a th:href="@{/error/error-404}">404</a>
                                 </li>
                                 <li class="submenu-item ">
-                                    <a th:href="@{/admin/error-500}">500</a>
+                                    <a th:href="@{/error/error-500}">500</a>
                                 </li>
                             </ul>
                         </li>
@@ -455,9 +456,7 @@
             </div>
         </div>
 
-
         <th:block th:replace="${content}"></th:block>
-
 
         <div id="main">
             <footer>
@@ -490,8 +489,6 @@
     <!-- form-editor-quill-->
     <script th:src="@{/assets/vendors/quill/quill.min.js}"></script>
     <script th:src="@{/assets/js/pages/form-editor.js}"></script>
-
-
     </body>
 </th:block>
 </html>
