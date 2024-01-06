@@ -23,7 +23,7 @@ import java.security.Principal;
 
 
 @Controller
-/*@RequestMapping("/")*/
+@RequestMapping("/admin")
 @Log4j2
 @RequiredArgsConstructor
 public class AnswerController {
@@ -59,12 +59,12 @@ public class AnswerController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("question", question);
-            return "answer/create";
+            return "admin/answer/create";
         }
 
         Answer answer = this.answerService.createa(question, answerForm.getAcontent(), member);
 
-        return String.format("redirect:/answer/create?qno=" + qno,
+        return String.format("redirect:/admin/answer/create?qno=" + qno,
                 answer.getAquestion().getQno(), answer.getAno());
     }
 
@@ -79,7 +79,7 @@ public class AnswerController {
         this.answerService.delete(answer);
 
 
-        return String.format("redirect:/answer/create?qno=%s", answer.getAquestion().getQno());
+        return String.format("redirect:/admin/answer/create?qno=%s", answer.getAquestion().getQno());
 
     }
 

@@ -44,7 +44,7 @@
                                     </div>
                                     <div class="card-content">
                                         <div class="card-body">
-                                            <form action="/member/modify" method="post">
+                                            <form th:action="@{/member/modify}" th:method="post">
                                                 <div class="form-body">
                                                     <div class="row">
                                                         <div class="col-md-4">
@@ -61,7 +61,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <!--<div class="col-md-4">
                                                             <label>Password</label>
                                                         </div>
                                                         <div class="col-md-8">
@@ -74,7 +74,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div>-->
                                                         <div class="col-md-4">
                                                             <label>Name</label>
                                                         </div>
@@ -150,7 +150,7 @@
                                                             <button type="submit"
                                                                     class="btn btn-primary me-1 mb-1">DONE
                                                             </button>
-                                                            <a th:href="@{/member/mypage}">
+                                                            <a th:href="@{/mypage}">
                                                             <button type="button"
                                                                     class="btn btn-light-secondary me-1 mb-1">BACK
                                                             </button>

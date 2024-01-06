@@ -51,7 +51,7 @@
                 <tr th:each="dto:${responseDTO.dtoList}">
                     <th scope="row">[[${dto.qno}]]</th>
                     <td> <!--제목 클릭시 보여질 주소-->
-                        <a th:href="|@{/answer/create(qno =${dto.qno})}&${link}|"> [[${dto.qtitle}]]</a>
+                        <a th:href="|@{/admin/answer/create(qno =${dto.qno})}&${link}|"> [[${dto.qtitle}]]</a>
                     </td>
                     <td><span th:if="${dto.member != null}" th:text="${dto.member.mid}"></span></td>
                     <td>[[${#temporals.format(dto.regDate, 'yyyy-MM-dd')}]]</td>

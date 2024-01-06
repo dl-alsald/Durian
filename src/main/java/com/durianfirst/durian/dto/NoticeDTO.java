@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
@@ -17,11 +18,12 @@ public class NoticeDTO {
 
     private Long nno;
 
-    @NotEmpty
+    @NotBlank(message = "제목을 입력해주세요")
     private String ntitle;
+
+    @NotBlank(message = "내용을 입력해주세요")
     private String ncontent;
+
     private LocalDateTime regDate, modDate;
-
-
 
 }

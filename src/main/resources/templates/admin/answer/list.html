@@ -82,7 +82,7 @@
                                                 <tr th:each="dto:${responseDTO.dtoList}">
                                                     <th class="text-center" scope="row">[[${dto.qno}]]</th>
                                                     <td class="text-center">
-                                                        <a th:href="@{/answer/create(qno =${dto.qno})}">
+                                                        <a th:href="@{/admin/answer/create(qno =${dto.qno})}">
                                                             [[${dto.qtitle}]]</a>
                                                     </td>
                                                     <td class="text-center">

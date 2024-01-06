@@ -37,6 +37,9 @@ public class DurianController {
     }
 
 
+    @GetMapping("/admin/index")
+    public void index(){}
+
 
 
 }

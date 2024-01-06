@@ -5,6 +5,8 @@ import com.durianfirst.durian.dto.PageRequestDTO;
 import com.durianfirst.durian.dto.PageResultDTO;
 import com.durianfirst.durian.entity.Notice;
 
+import java.time.LocalDateTime;
+
 public interface NoticeService {
     Long register(NoticeDTO dto);
 
@@ -19,6 +21,8 @@ public interface NoticeService {
                 .nno(dto.getNno())
                 .ntitle(dto.getNtitle())
                 .ncontent(dto.getNcontent())
+                .regDate(LocalDateTime.now())
+                .modDate(LocalDateTime.now())
                 .build();
         return entity;
     }

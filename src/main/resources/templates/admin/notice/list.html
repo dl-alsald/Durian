@@ -47,8 +47,7 @@
 
                             [[${dto.nno}]]
                         </th>
-                        <td><a th:href="@{(nno=${dto.nno}, page=${result.page} ,
-                    type=${pageRequestDTO.type} , keyword= ${pageRequestDTO.keyword})}">
+                        <td><a th:href="@{/admin/notice/read(nno=${dto.nno})}">
                             [[${dto.ntitle}]]</a></td>
 
                         <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
