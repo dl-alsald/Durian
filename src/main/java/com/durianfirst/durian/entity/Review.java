@@ -12,7 +12,7 @@ import javax.validation.constraints.Min;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = {"item","member","orders"})
+@ToString(exclude = {"item","member"})
 public class Review extends BaseEntity {
 
     @Id
@@ -32,7 +32,5 @@ public class Review extends BaseEntity {
     private Item item;
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
-    @OneToOne(fetch = FetchType.LAZY)
-    private Order order;
 
 }

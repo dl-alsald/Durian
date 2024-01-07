@@ -25,16 +25,12 @@
                         <h1 class="heading" data-aos="fade-up">
                             나무 중고 검색
                         </h1>
-                        <form
-                                action="#"
-                                class="narrow-w form-search d-flex align-items-stretch mb-3"
-                                data-aos="fade-up"
-                                data-aos-delay="200"
-                        >
+                        <form action="#" class="narrow-w form-search d-flex align-items-stretch mb-3"
+                              data-aos="fade-up" data-aos-delay="200">
                             <input
                                     type="text"
                                     class="form-control px-4"
-                                    placeholder="입력 하랑께"
+                                    placeholder="상품이름을 입력하세요."
                             />
                             <button type="submit" class="btn btn-primary">SEARCH</button>
                         </form>
@@ -54,13 +50,13 @@
                     <div class="col-lg-6 text-lg-end">
                         <p>
                             <a th:href="@{/}" target="_blank"
-                                    class="btn btn-primary text-white py-3 px-4">더보기</a>
+                               class="btn btn-primary text-white py-3 px-4">더보기</a>
                         </p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <div class="property-slider-wrap" >
+                        <div class="property-slider-wrap">
                             <div class="property-slider">
                                 <div class="property-item" th:each="dto : ${news}">
                                     <a th:href="@{/}" class="img">

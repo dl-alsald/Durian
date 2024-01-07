@@ -13186,7 +13186,7 @@ fieldset:disabled .btn {
 }
 
 .logo {
-    font-size: 24px;
+    font-size: 35px;
     color: rgba(255, 255, 255, 0.8) !important;
     font-weight: 500;
 }
@@ -13219,7 +13219,7 @@ fieldset:disabled .btn {
 }
 
 .site-nav .site-navigation .site-menu > li > a {
-    font-size: 14px;
+    font-size: 18px;
     padding: 10px 15px;
     display: inline-block;
     text-decoration: none !important;
