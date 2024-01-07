@@ -1,8 +1,6 @@
 package com.durianfirst.durian.security;
 
 import com.durianfirst.durian.entity.Member;
-
-
 import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.security.dto.MemberSecurityDTO;
 import lombok.RequiredArgsConstructor;

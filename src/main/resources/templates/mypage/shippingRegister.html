@@ -1,0 +1,144 @@
+<th:block th:replace="~{layout/header :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <div
+                class="hero page-inner overlay"
+                style="background-image: url('images/hero_bg_1.jpg')"
+        >
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-9 text-center mt-5">
+                        <h1 class="heading" data-aos="fade-up">배송</h1>
+
+                        <nav
+                                aria-label="breadcrumb"
+                                data-aos="fade-up"
+                                data-aos-delay="200"
+                        >
+                            <ol class="breadcrumb text-center justify-content-center">
+                                <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                                <li
+                                        class="breadcrumb-item active text-white-50"
+                                        aria-current="page"
+                                >
+                                    배송
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="page-heading">
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-1 order-last">
+                        <h3>배송</h3>
+                        <p class="text-subtitle text-muted"></p>
+                    </div>
+                    <div class="col-12 col-md-6 order-md-2 order-first">
+                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="adindex.html"></a></li>
+                                <li class="breadcrumb-item active" aria-current="page"></li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- Basic Horizontal form layout section start -->
+            <section id="basic-horizontal-layouts">
+                <div class="row match-height">
+                    <div class="col-md-6 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="card-title">배송지 입력 </h6>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <form class="form form-horizontal">
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label>배송지명</label>
+                                                </div>
+                                                <div class="col-md-8 form-group">
+                                                    <input type="text" id="배송지명" class="form-control"
+                                                           name="sname" placeholder="배송지명">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label>받는 분</label>
+                                                </div>
+                                                <div class="col-md-8 form-group">
+                                                    <input type="text" id="받는 분" class="form-control"
+                                                           name="sperson" placeholder="받는 분">
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label>휴대폰 번호</label>
+                                                </div>
+                                                <div class="col-md-8 form-group">
+                                                    <input type="text" id="휴대폰 번호" class="form-control"
+                                                           name="sphone" placeholder="휴대폰 번호">
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <label>주소</label>
+                                                </div>
+                                                <div class="col-md-8 form-group">
+                                                    <input type="text" id="주소" class="form-control"
+                                                           name="address" placeholder="주소">
+                                                </div>
+                                                    <div class="col-md-4">
+                                                        <label>상세주소</label>
+                                                    </div>
+                                                    <div class="col-md-8 form-group">
+                                                        <input type="text" id="상세주소" class="form-control"
+                                                               name="saddress" placeholder="상세주소">
+                                                    </div>
+
+                                                        <div class="col-md-4">
+                                                            <label>우편번호</label>
+                                                        </div>
+                                                        <div class="col-md-8 form-group">
+                                                            <input type="text" id="text" class="form-control"
+                                                                   name="szonecode" placeholder="우편번호">
+                                                </div>
+                                                <div class="col-12 col-md-8 offset-md-4 form-group">
+                                                    <div class='form-check'>
+                                                        <div class="checkbox">
+                                                            <input type="checkbox" id="checkbox1"
+                                                                   class='form-check-input' checked>
+                                                            <label for="checkbox1">Remember Me</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 d-flex justify-content-end">
+                                                    <button type="submit"
+                                                            class="btn btn-primary me-1 mb-1">Submit
+                                                    </button>
+                                                    <button type="reset"
+                                                            class="btn btn-light-secondary me-1 mb-1">Reset
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+</div>
+            </section>
+        </div>
+</th:block>
+</th:block>
+
+

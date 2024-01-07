@@ -53,7 +53,7 @@ public class QnARepositoryTests {
         Answer a = new Answer();
         a.setAcontent("질문에 대한 답변Test.");
         a.setAquestion(q);  // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
-        a.setRegDate(LocalDateTime.now()); //변경
+        a.setRegTime(LocalDateTime.now());
         this.answerRepository.save(a);
     }
 

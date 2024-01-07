@@ -43,7 +43,7 @@ public class AnswerServiceImpl implements AnswerService {
     public void createa(Question question, String acontent) {
         Answer answer = new Answer();
         answer.setAcontent(acontent);
-        answer.setRegDate(LocalDateTime.now()); //변경
+        answer.setRegTime(LocalDateTime.now());
         answer.setAquestion(question);
         this.answerRepository.save(answer);
     }
@@ -72,7 +72,7 @@ public class AnswerServiceImpl implements AnswerService {
     @Override//답변의 내용으로 답변을 수정
     public void modify(Answer answer, String acontent) {
         answer.setAcontent(acontent);
-        answer.setModDate(LocalDateTime.now()); //변경
+        answer.setUpdateTime(LocalDateTime.now());
         this.answerRepository.save(answer);
     }
 

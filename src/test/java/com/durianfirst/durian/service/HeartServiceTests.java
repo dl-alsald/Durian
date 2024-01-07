@@ -7,7 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Date;
 
 @SpringBootTest
 public class HeartServiceTests {

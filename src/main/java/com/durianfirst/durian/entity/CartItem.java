@@ -1,5 +1,6 @@
 package com.durianfirst.durian.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,15 +21,27 @@ public class CartItem extends BaseEntity {
     @JoinColumn(name="cid")
     private Cart cart;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pno")
+    @JoinColumn(name = "ino")
     private Item item;
 
-    public static CartItem createCartItem(Cart cart, Item item) {
+    @Column
+    private int count;
+
+    public static CartItem createCartItem(Cart cart, Item item,int count) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setItem(item);
+        cartItem.setCount(count);
         return cartItem;
     } // 장바구니에 담을 상품 엔티티 생성
+
+    public void addCount(int count){
+        this.count += count;
+    }
+
+    public void updateCount(int count){ this.count = count; }
+
 
 }

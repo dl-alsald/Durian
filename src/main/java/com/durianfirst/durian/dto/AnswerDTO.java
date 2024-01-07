@@ -23,10 +23,8 @@ public class AnswerDTO {
 
     private Question aquestion; //질문(질문 하나당 답변 1개)
 
-    /* private LocalDateTime regTime;
+    private LocalDateTime regTime;
 
     private LocalDateTime updateTime;
-    =>BaseEntity
-    */
 
     }

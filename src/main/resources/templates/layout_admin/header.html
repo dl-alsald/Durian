@@ -55,7 +55,7 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <a th:href="@{/admin/index}"><img th:src="@{/assets/images/logo/logo.png}" alt="Logo"
+                            <a th:href="@{/admin/adindex}"><img th:src="@{/assets/images/logo/logo.png}" alt="Logo"
                                                               srcset=""></a>
                         </div>
                         <div class="toggler">
@@ -68,7 +68,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item  ">
-                            <a th:href="@{/admin/index}" class='sidebar-link'>
+                            <a th:href="@{/admin/adindex}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -78,6 +78,13 @@
                             <a th:href="@{/index}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Home</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  ">
+                            <a th:href="@{/member/mypage}" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>마이페이지</span>
                             </a>
                         </li>
 

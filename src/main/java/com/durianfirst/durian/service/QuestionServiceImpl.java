@@ -1,7 +1,6 @@
 package com.durianfirst.durian.service;
 
 import com.durianfirst.durian.dto.PageRequestedDTO;
-import com.durianfirst.durian.dto.PageResponseDTO;
 import com.durianfirst.durian.dto.PageResponsedDTO;
 import com.durianfirst.durian.dto.QuestionDTO;
 import com.durianfirst.durian.repository.QuestionRepository;

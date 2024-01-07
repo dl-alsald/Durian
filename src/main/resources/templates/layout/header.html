@@ -66,10 +66,22 @@
                     <li><a th:href="@{/services}">Services</a></li>
                     <li><a th:href="@{/about}">About</a></li>
                     <li><a th:href="@{/contact}">중고등록하기</a></li>
+                    <li class="has-children">
+                        <a th:href="@{/mypage}">마이페이지</a>
+                        <ul class="dropdown">
+                            <li><a th:href="@{/}">카트</a></li>
+                            <li><a th:href="@{/}">결제</a></li>
+                            <li><a th:href="@{/mypage/shipping}">배송</a></li>
+                        </ul>
+                    </li>
+
+
                     <li><a th:href="@{/event}">이벤트</a></li>
                     <li><a th:href="@{/notice}">공지사항</a></li>
                     <li><a th:href="@{/chat/chatList}">채팅하기</a></li>
-                    <li><a th:href="@{/admin/index}">어드민</a></li>
+                    <li><a th:href="@{/admin/adindex}">어드민</a></li>
+                    <li><a th:href="@{/member/logout}" authorize="isAuthenticated()">로그아웃</a></li>
+
                 </ul>
 
                 <a

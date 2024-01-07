@@ -18,7 +18,7 @@ public class Cart extends BaseEntity {
     private Long cid;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="mno")
+    @JoinColumn(name="mid")
     private Member member;
 
     public static Cart createCart(Member member) {

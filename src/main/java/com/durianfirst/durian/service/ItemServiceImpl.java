@@ -2,7 +2,6 @@ package com.durianfirst.durian.service;
 
 
 import com.durianfirst.durian.dto.ItemDTO;
-import com.durianfirst.durian.dto.ItemImageDTO;
 import com.durianfirst.durian.dto.PageRequestDTO;
 import com.durianfirst.durian.dto.PageResultDTO;
 import com.durianfirst.durian.entity.Item;
@@ -11,7 +10,6 @@ import com.durianfirst.durian.repository.ItemImageRepository;
 import com.durianfirst.durian.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

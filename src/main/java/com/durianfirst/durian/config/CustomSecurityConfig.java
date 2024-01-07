@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -24,7 +25,7 @@ import javax.sql.DataSource;
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class CustomSecurityConfig {
+public class CustomSecurityConfig  {
 
     private final DataSource dataSource;
     private final CustomUserDetailsService userDetailsService;
@@ -35,12 +36,14 @@ public class CustomSecurityConfig {
         //BCryptPasswordEncoder : 해시 알고리즘으르 암호화 처리되는데 같은 문자열이라고 해도 매번 해서 처리된 결과가 다름
     }
 
+
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ //로그인하지 않아도 볼 수 있도록 설정 (admin/index에 바로 접근 가능)
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ //로그인하지 않아도 볼 수 있도록 설정 (admin/adindex에 바로 접근 가능)
         log.info("==========================configure==============================");
 
         http.formLogin().loginPage("/member/login") //POST방식 처리 역시 같은 경로로 스프링 시큐리티 내부에서 처리됨 / security에서 post방식도 처리함
-                .defaultSuccessUrl("/admin/index")
+                .defaultSuccessUrl("/index")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL

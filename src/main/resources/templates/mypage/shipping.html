@@ -1,0 +1,73 @@
+<th:block th:replace="~{layout/header :: setContent(~{this::content} )}">
+
+    <th:block th:fragment="content">
+
+        <div
+                class="hero page-inner overlay"
+                style="background-image: url('images/hero_bg_1.jpg')"
+        >
+            <div class="container">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-lg-9 text-center mt-5">
+                        <h1 class="heading" data-aos="fade-up">배송</h1>
+
+                        <nav
+                                aria-label="breadcrumb"
+                                data-aos="fade-up"
+                                data-aos-delay="200"
+                        >
+                            <ol class="breadcrumb text-center justify-content-center">
+                                <li class="breadcrumb-item"><a th:href="@{/index}">Home</a></li>
+                                <li
+                                        class="breadcrumb-item active text-white-50"
+                                        aria-current="page"
+                                >
+                                    배송
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--배송지 출력-->
+        <th:block th:each="ShippingDto : ${shippingDTO}">
+
+            <input type="hidden" name="sno" th:value="${ShippingDto.sno}">
+
+            <div class="row">
+                <div class="cell-4">
+                    <div class="content">
+                        <a class="text-22" th:href="@{/mypage/shipping/read(sno=${ShippingDto.sno})}">[[${ShippingDto.sname}]]</a>
+                    </div>
+                </div>
+                <div class="cell-5">
+                    <div class="content">
+                        <div class="text-2">[[${ShippingDto.sperson}]]</div>
+                    </div>
+                </div>
+                <div class="cell-6">
+                    <div class="content-2">
+                        <a class="text-2">[[${ShippingDto.address}]] [[${ShippingDto.saddress}]]
+                        </a>
+                    </div>
+                </div>
+                <div class="cell-7">
+                    <div class="content">
+                        <div class="text-2">[[${ShippingDto.zonecode}]]</div>
+                    </div>
+                </div>
+                <div class="cell-7">
+                    <div class="content">
+                        <div class="text-2" th:if="${ShippingDto.sdefault}">
+                            기본 배송지
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+</th:block>
+    </th:block>
+</th:block>
