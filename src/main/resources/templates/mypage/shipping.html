@@ -1,0 +1,208 @@
+<th:block  th:replace="~{layout/header :: setContent(~{this::content} )}">
+
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  </head>
+
+  <th:block th:fragment="content">
+
+    <div
+      class="hero page-inner overlay"
+      style="background-image: url('images/hero_bg_1.jpg');height: 350px;"
+    >
+      <div class="container">
+        <div class="row justify-content-center align-items-center" style="height: 350px;">
+          <div class="col-lg-9 text-center mt-5">
+            <h1 class="heading" data-aos="fade-up">My Page</h1>
+
+            <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
+              <ol class="breadcrumb text-center justify-content-center">
+                <li class="breadcrumb-item">articleHome</a></li>
+                <li class="breadcrumb-item active text-white-50" aria-current="page">
+                  Contact
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-lg-4 mb-5 mb-lg-0"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="contact-info">
+
+              <div class="address mt-2">
+                <!--<i class="icon-room"></i>-->
+                <h4 class="mb-2">My Page</h4>
+                </br>
+              </div>
+
+              <div class="address mt-2">
+                <!--<i class="icon-room"></i>-->
+                <h4 class="mb-2">내 정보</h4>
+              </div>
+
+              <div class="open-hours mt-4">
+                <!--<i class="icon-clock-o"></i>-->
+                <h4 class="mb-2">
+                  <a th:href="@{/chat/chatList}">채팅</a></h4>
+              </div>
+
+              <div class="email mt-4">
+                <!--<i class="icon-envelope"></i>-->
+                <h4 class="mb-2">구매내역</h4>
+              </div>
+
+              <div class="phone mt-4">
+                <!--<i class="icon-phone"></i>-->
+                <h4 class="mb-2">판매내역</h4>
+              </div>
+
+              <div class="phone mt-4">
+                <!--<i class="icon-phone"></i>-->
+                <h4 class="mb-2">상품등록</h4>
+              </div>
+
+              <div class="phone mt-4">
+                <!--<i class="icon-phone"></i>-->
+                <h4 class="mb-2">배송지관리</h4>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+            <form method="post" th:action="@{/mypage/shipping/register}" enctype="multipart/form-data" th:object="${shippingDTO}">
+            <form action="#">
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    th:field="*{sname}"
+                    placeholder="배송지명"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="기본배송지"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <input
+                          type="text"
+                          class="form-control"
+                          th:field="*{sperson}"
+                          placeholder="받는분"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <input
+                          type="text"
+                          class="form-control"
+                          th:field="*{sphone}"
+                          placeholder="받는분H.P"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <input
+                          type="text"
+                          class="form-control"
+                          id="sample6_postcode"
+                          th:field="*{szonecode}"
+                          placeholder="우편번호"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <input type="button" class="text-wrapper-14" onclick="openDaumPostcode()" value="우편번호 찾기">
+                </div>
+                <script>
+                  function openDaumPostcode() {
+                    new daum.Postcode({
+                      oncomplete: function (data) {
+                        var addr = '';
+                        var extraAddr = '';
+
+                        if (data.userSelectedType === 'R') {
+                          addr = data.roadAddress;
+                        } else {
+                          addr = data.jibunAddress;
+                        }
+
+                        if (data.userSelectedType === 'R') {
+                          if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                          }
+                          if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                          }
+                          if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                          }
+                          document.getElementById("sample6_extraAddress").value = extraAddr;
+                        } else {
+                          document.getElementById("sample6_extraAddress").value = '';
+                        }
+
+                        document.getElementById('sample6_postcode').value = data.zonecode;
+                        document.getElementById("sample6_address").value = addr;
+                        document.getElementById("sample6_detailAddress").focus();
+
+                        // 합쳐진 주소를 표시
+                        var combinedAddress = addr + extraAddr;
+                        document.getElementById("combinedAddress").value = combinedAddress;
+                      }
+                    }).open();
+                  }
+                </script>
+
+                <div class="col-6 mb-3">
+                  <input type="hidden" id="sample6_address" th:field="*{address}">
+                  <input type="hidden" id="sample6_extraAddress">
+                  <input
+                          type="text"
+                          class="form-control"
+                          id="combinedAddress" disabled
+                          placeholder="주소"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <input
+                          type="text"
+                          class="form-control"
+                          id="sample6_detailAddress" th:field="*{saddress}"
+                          placeholder="상세주소"
+                  />
+                </div>
+
+                <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
+                <div class="col-12">
+                  <input
+                    type="submit"
+                    value="작성하기"
+                    class="btn btn-primary"
+                  />
+                </div>
+              </div>
+            </form>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.untree_co-section -->
+
+    </th:block>
+    </th:block>
