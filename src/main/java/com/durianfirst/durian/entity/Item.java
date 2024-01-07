@@ -2,28 +2,28 @@ package com.durianfirst.durian.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = {"member"})
 public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ino; //물품번호
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Member member; //멤버 mid
+
     private String iname; //물품이름
 
     private int iprice;//물품가격
 
-    private String isaleStatus;
+    private String isaleStatus; //판매상태
 
     private String icategory;//카테고리
 

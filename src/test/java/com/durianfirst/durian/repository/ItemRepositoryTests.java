@@ -2,6 +2,7 @@ package com.durianfirst.durian.repository;
 
 import com.durianfirst.durian.entity.Item;
 import com.durianfirst.durian.entity.ItemImage;
+import com.durianfirst.durian.entity.Member;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +33,7 @@ public class ItemRepositoryTests {
                     .ilocation("거래위치" + i)
                     .idescription("설명" + i)
                     .icondition("물품"+i)
+                    .member(Member.builder().mid("member"+i).build())
                     .build();
 
             System.out.println("==============================");

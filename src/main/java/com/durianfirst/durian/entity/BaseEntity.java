@@ -1,5 +1,6 @@
 package com.durianfirst.durian.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,8 +13,8 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(value = { AuditingEntityListener.class })
-@Getter
-public abstract class BaseEntity extends BaseTimeEntity{
+@Data
+public abstract class BaseEntity{
 
     @CreatedDate
     @Column(name = "regdate", updatable = false)

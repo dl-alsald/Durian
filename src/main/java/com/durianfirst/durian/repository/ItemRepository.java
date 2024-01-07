@@ -19,5 +19,10 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             " where i.ino = :ino group by ii")
     List<Object[]> getItemWithAll(Long ino); //특정 제품 조회
 
+    @Query("select i, ii from Item i " +
+            " left outer join ItemImage ii on ii.item = i" +
+            " where i.member.mid = :mid group by ii")
+    List<Object[]> getMidWithAll(String mid); //특정 제품 조회
+
 
 }

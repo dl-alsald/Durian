@@ -110,6 +110,22 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    public ItemDTO getMid(String mid) { //해당 아이디로 조회
+        List<Object[]> result = itemRepository.getMidWithAll(mid);
+
+        Item item = (Item) result.get(0)[0];
+
+        List<ItemImage> itemImageList = new ArrayList<>();
+
+        result.forEach(arr -> {
+            ItemImage itemImage = (ItemImage)arr[1];
+            itemImageList.add(itemImage);
+        });
+
+        return entitiesDTO(item, itemImageList);
+    }
+
+    @Override
     public void modify(ItemDTO itemDTO) {
         Optional<Item> result = itemRepository.findById(itemDTO.getIno());
 

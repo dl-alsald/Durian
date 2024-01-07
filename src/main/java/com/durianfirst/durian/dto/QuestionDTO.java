@@ -1,20 +1,20 @@
 package com.durianfirst.durian.dto;
 
+import com.durianfirst.durian.entity.Answer;
 import com.durianfirst.durian.entity.Member;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuestionDTO {
 
     private Long qno; //질문 번호(pk)
@@ -35,8 +35,23 @@ public class QuestionDTO {
 
     private String qmember;
 
-    private LocalDateTime regTime;
+    private LocalDateTime regDate;
 
-    private LocalDateTime updateTime;
+    private LocalDateTime modDate;
+
+    private String password; //비밀글 비밀번호
+
+    private Boolean secret; //비밀글 유무
+
+    private List<Answer> answerList;
+
+    public Boolean getSecret(){
+        return secret != null && secret; //secret 체크를하지 않았을 경우 false/ 이외 true
     }
+
+    /* 비밀번호 검증 메소드 추가 */
+    public boolean isPasswordValid(String enteredPassword, PasswordEncoder passwordEncoder){
+        return passwordEncoder.matches(enteredPassword, this.password);
+    }
+}
 

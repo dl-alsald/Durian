@@ -47,13 +47,28 @@ public class EventController {
 
     }
     @GetMapping({"/event/read", "/event/modify"})
-    public void read(long eno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
+    public void read(Long eno, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
 
         log.info("eno : "+eno);
 
         EventDTO eventDTO = eventService.getEvent(eno);
 
         model.addAttribute("edto", eventDTO);
+    }
+
+    @PostMapping("/event/modify")
+    public String modify(EventDTO eventDTO, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes){
+        log.info("post modify..........");
+        log.info("dto: " + eventDTO);
+
+        eventService.modify(eventDTO);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("eno", eventDTO.getEno());
+
+        return "redirect:/event/read";
+
+
     }
 
 

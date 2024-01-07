@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="setContent(content)">
 <head>
     <meta charset="utf-8" />
@@ -63,14 +64,24 @@
                             </li>
                         </ul>
                     </li>
-                    <li><a th:href="@{/services}">Services</a></li>
+                    <li><a th:href="@{/question/qna}">QnA</a></li>
                     <li><a th:href="@{/about}">About</a></li>
                     <li><a th:href="@{/contact}">중고등록하기</a></li>
                     <li><a th:href="@{/event}">이벤트</a></li>
                     <li><a th:href="@{/notice}">공지사항</a></li>
                     <li><a th:href="@{/chat/chatList}">채팅하기</a></li>
-                    <li><a th:href="@{/admin/adindex}">어드민</a></li>
-                    <li><a th:href="@{/member/logout}" authorize="isAuthenticated()">로그아웃</a></li>
+                    <li><a th:href="@{/admin/adindex}" sec:authorize="isAnonymous()">어드민</a></li>
+                    <li class="has-children" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/member/mypage}" sec:authorize="isAuthenticated()">마이페이지</a>
+                        <ul class="dropdown">
+                            <li><a th:href="@{/member/mypage}" sec:authorize="isAuthenticated()">회원정보</a></li>
+                            <li><a th:href="@{/orderList}" sec:authorize="isAuthenticated()">결제관리</a></li>
+                            <li><a th:href="@{/mypage/shpping}" sec:authorize="isAuthenticated()">배송지관리</a></li>
+                            <li><a  sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a></li>
+                        </ul>
+                    </li>
+                    <li><a sec:authorize="isAnonymous()" th:href="@{/member/login}">로그인</a>
+                        <a  sec:authorize="isAuthenticated()" th:href="@{/member/logout}">로그아웃</a></li>
                 </ul>
 
                 <a

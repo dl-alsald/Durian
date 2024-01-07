@@ -32,11 +32,21 @@
     </div>
 
     <div class="page-heading">
-
       <section class="section">
         <div class="card">
           <div class="card-header">
             <h4 class="card-title">[[${ndto.ntitle}]]</h4>
+            <div class="form-group">
+              <label ></label>
+              <input type="text" class="small-text-box" name="regDate" th:value="${#temporals.format(ndto.regDate, 'yyyy/MM/dd HH:mm:ss')}" readonly>
+              <style>
+                .small-text-box {
+                  font-size: 12px; /* 원하는 크기로 조절하세요 */
+                  border: none; /* 테두리 제거 */
+                  background-color: transparent; /* 배경 색상을 투명하게 설정 */
+                }
+              </style>
+            </div>
           </div>
           <div class="card-body">
             [[${ndto.ncontent}]]

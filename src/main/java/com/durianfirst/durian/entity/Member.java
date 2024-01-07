@@ -2,11 +2,11 @@ package com.durianfirst.durian.entity;
 
 
 import com.durianfirst.durian.constaint.MemberRole;
-import com.durianfirst.durian.constaint.Role;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -39,7 +39,7 @@ public class Member extends BaseEntity {
 
     private String mphone; //전화번호
 
-    private boolean mnational; //내,외국인 구분
+    private String mnational; //내,외국인 구분
 
     private boolean msocial; //소셜로그인 여부
 
@@ -47,10 +47,15 @@ public class Member extends BaseEntity {
 
     private String mrecommend; //추천인 아이디
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<MemberImg> memberImgs;
+
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<MemberRole> roleSet = new HashSet<>();
 
+    /* 회원 정보 수정 */
+    public void changeName(String mname) { this.mname = mname; }
     public void changePassword(String mpw){
         this.mpw = mpw;
     }
@@ -58,6 +63,10 @@ public class Member extends BaseEntity {
     public void changeEmail(String memail){
         this.memail = memail;
     }
+
+    public void changePhone(String mphone) { this.mphone = mphone; }
+
+    public void changeAddress(String maddress) { this.maddress = maddress; }
 
     public void changeDel(boolean mdel){
         this.mdel = mdel;
@@ -75,12 +84,10 @@ public class Member extends BaseEntity {
         this.msocial = msocial;
     }
 
-    public void update(String mname, String memail, String mbirthday, String mphone, String mpw){
-        this.mname = mname;
-        this.memail = memail;
-        this.mbirthday = mbirthday;
-        this.mphone = mphone;
-        this.mpw = mpw;
-    }
+
+    @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "member_role", joinColumns = @JoinColumn(name = "mid"))
+    @Column(name = "role")
+    private List<String> roles;
 
 }

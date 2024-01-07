@@ -1,29 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="~{layout_admin/layout :: setContent(~{this::content} )}">
+<th:block th:replace="~{layout_admin/layout_member :: setContent(~{this::content} )}">
 
     <head>
         <meta charset="UTF-8">
         <title>Login - Mazer Admin Dashboard</title>
     </head>
-
-    <script>
-        var compare_result = false;
-        function fn_compare_pwd(){
-            var pwd1 = $("#mpw_1").val();
-            var pwd2 = $("#mpw_2").val();
-            var $s_result = $("#s_result");
-
-            if(pwd1 == pwd2){
-                compare_result = true;
-                $s_result.text("비밀번호가 일치합니다.");
-                return;
-            }
-
-            compare_result = false;
-            $s_result.text("비밀번호가 일치하지 않습니다.");
-        }
-    </script>
 
     <th:block th:fragment="content">
         <div id="auth">
@@ -31,72 +13,93 @@
                 <div class="col-lg-5 col-12">
                     <div id="auth-left">
                         <div class="auth-logo">
-                            <a th:href="@{/admin/adindex}"><img th:src="@{/assets/images/logo/logo.png}" alt="Logo"></a>
+                            <a th:href="@{/admin/index}"><img th:src="@{/assets/images/logo/logo.png}" alt="Logo"></a>
                         </div>
                         <h1 class="auth-title">Sign Up</h1>
                         <p class="auth-subtitle mb-5">Input your data to register to our website.</p>
 
-                        <form th:action="@{/member/register}" id="registerForm" th:method="post">
-                            <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="mid" placeholder="Id">
+                        <form th:action="@{/member/register}" th:object="${memberJoinDTO}" id="registerForm"
+                              th:method="post">
+                            <!-- 아이디 -->
+                            <small class="text-danger" th:if="${#fields.hasErrors('mid')}"
+                                   th:errors="${memberJoinDTO.mid}"></small>
+                            <div class="form-group position-relative has-icon-left mb-4"
+                                 th:classappend="${#fields.hasErrors('mid')} ? 'has-error' : ''">
+                                <input type="text" class="form-control form-control-xl" name="mid" th:field="${memberJoinDTO.mid}"
+                                        placeholder="Id">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
                             </div>
+                            <!-- 이메일 -->
+                            <small class="text-danger" th:if="${#fields.hasErrors('memail')}"
+                                   th:errors="${memberJoinDTO.memail}"></small>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="memail" placeholder="Email">
+                                <input type="text" class="form-control form-control-xl" name="memail" th:field="${memberJoinDTO.memail}"
+                                       placeholder="Email">
                                 <div class="form-control-icon">
                                     <i class="bi bi-envelope"></i>
                                 </div>
                             </div>
+                            <!-- 이름 -->
+                            <small class="text-danger" th:if="${#fields.hasErrors('mname')}"
+                                   th:errors="${memberJoinDTO.mname}"></small>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="mname" placeholder="Username">
+                                <input type="text" class="form-control form-control-xl" name="mname" th:field="${memberJoinDTO.mname}"
+                                       placeholder="Username">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
                             </div>
+                            <!-- 비밀번호 -->
+                            <small class="text-danger" th:if="${#fields.hasErrors('mpw')}"
+                                   th:errors="${memberJoinDTO.mpw}"></small>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="password" class="form-control form-control-xl" name="mpw" id="mpw_1" placeholder="Password">
+                                <input type="password" class="form-control form-control-xl" name="mpw" id="mpw1"
+                                       oninput="pwCheck()" placeholder="Password">
                                 <div class="form-control-icon">
                                     <i class="bi bi-shield-lock"></i>
                                 </div>
                             </div>
+                            <span id="pwConfirm"></span>
                             <div class="form-group position-relative has-icon-left mb-4">
-                                <input type="password" class="form-control form-control-xl" name="mpw_2" id="mpw_2"  onKeyUp="fn_compare_pwd();" placeholder="Confirm Password" >
+                                <input type="password" class="form-control form-control-xl" name="mpw2" id="mpw2"
+                                       oninput="pwCheck()" placeholder="Confirm Password">
                                 <div class="form-control-icon">
                                     <i class="bi bi-shield-lock"></i>
                                 </div>
                             </div>
                             <!-- 생일 -->
-                            <!--<div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="mbirthday" placeholder="Birthday(only number)">
+                            <small class="text-danger" th:if="${#fields.hasErrors('mbirthday')}"
+                                   th:errors="${memberJoinDTO.mbirthday}"></small>
+                            <div class="form-group position-relative has-icon-left mb-4">
+                                <input type="text" class="form-control form-control-xl" name="mbirthday" th:field="${memberJoinDTO.mbirthday}"
+                                       placeholder="Birthday(only number)">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
-                            </div>-->
+                            </div>
                             <!-- 주소 -->
-                            <!--<div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="madress" placeholder="Adress">
+                            <div class="form-group position-relative has-icon-left mb-4">
+                                <input type="text" class="form-control form-control-xl" name="maddress" th:field="${memberJoinDTO.maddress}"
+                                       placeholder="Address">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
-                            </div>-->
-                            <!-- 상세주소 -->
-                            <!--<div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="madress" placeholder="DetailAdress">
+                            </div>
+                            <!-- 핸드폰 -->
+                            <small class="text-danger" th:if="${#fields.hasErrors('mphone')}"
+                                   th:errors="${memberJoinDTO.mphone}"></small>
+                            <div class="form-group position-relative has-icon-left mb-4">
+                                <input type="text" class="form-control form-control-xl" name="mphone" th:field="${memberJoinDTO.mphone}"
+                                       placeholder="Phone">
                                 <div class="form-control-icon">
                                     <i class="bi bi-person"></i>
                                 </div>
-                            </div>-->
-                            <!-- 추천인 아이디 -->
-                            <!--<div class="form-group position-relative has-icon-left mb-4">
-                                <input type="text" class="form-control form-control-xl" name="merecommend" placeholder="RecommendID">
-                                <div class="form-control-icon">
-                                    <i class="bi bi-person"></i>
-                                </div>
-                            </div>-->
-
-                            <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit">Sign Up</button>
+                            </div>
+                            <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5" type="submit" id="success">
+                                Sign Up
+                            </button>
                         </form>
                         <div class="text-center mt-5 text-lg fs-4">
                             <p class='text-gray-600'>Already have an account?
@@ -110,6 +113,17 @@
                 </div>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script th:inline="javascript">
+            function pwCheck() {
+                if ($('#mpw1').val() == $('#mpw2').val()) {
+                    $('#pwConfirm').text('비밀번호 일치').addClass('text-success').removeClass('text-danger');
+                } else {
+                    $('#pwConfirm').text('비밀번호 불일치').addClass('text-danger').removeClass('text-success');
+                }
+            }
+
+        </script>
     </th:block>
 </th:block>
 </html>

@@ -14,23 +14,25 @@ import java.util.List;
 @Setter
 public class ItemDTO {
 
-    private Long ino;
+    private Long ino; //중고물품번호
 
-    private String iname;
+    private String iname; //중고제목
 
-    private int iprice;
+    private int iprice; //가격
 
-    private String isaleStatus;
+    private String isaleStatus; //제품상태
 
-    private String icategory;
+    private String icategory; //카테고리
 
-    private String idealway;
+    private String idealway; //거래방식
 
-    private String ilocation;
+    private String ilocation; //주소
 
-    private String idescription;
+    private String idescription; //상세설명
 
-    private String icondition;
+    private String icondition; //제품상태
+
+    private String mid; //회원번호
 
     private LocalDateTime regDate; //등록일
 

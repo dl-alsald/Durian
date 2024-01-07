@@ -6,6 +6,7 @@ import com.durianfirst.durian.dto.PageRequestDTO;
 import com.durianfirst.durian.dto.PageResultDTO;
 import com.durianfirst.durian.entity.Item;
 import com.durianfirst.durian.entity.ItemImage;
+import com.durianfirst.durian.entity.Member;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,8 @@ public interface ItemService {
 
     ItemDTO read(Long ino);
 
+    ItemDTO getMid(String mid);
+
     void modify(ItemDTO itemDTO);
 
     void remove(Long ino);
@@ -38,6 +41,7 @@ public interface ItemService {
                 .ilocation(item.getIlocation())
                 .idescription(item.getIdescription())
                 .icondition(item.getIcondition())
+                .mid(item.getMember().getMid())
                 .regDate(item.getRegDate())
                 .modDate(item.getModDate())
                 .build();
@@ -69,6 +73,7 @@ public interface ItemService {
                 .ilocation(itemDTO.getIlocation())
                 .idescription(itemDTO.getIdescription())
                 .icondition(itemDTO.getIcondition())
+                .member(Member.builder().mid(itemDTO.getMid()).build())
                 .build();
         entityMap.put("item", item);
 

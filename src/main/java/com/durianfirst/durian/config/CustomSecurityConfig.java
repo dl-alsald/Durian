@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -22,12 +24,15 @@ import javax.sql.DataSource;
 
 @Log4j2
 @Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class CustomSecurityConfig {
 
     private final DataSource dataSource;
     private final CustomUserDetailsService userDetailsService;
+    /* 로그인 실패 핸들러 의존성 주입 */
+    private final AuthenticationFailureHandler failureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){ //CustomUserDetailsService가 정상적으로 동작하려면 CustomSecurityConfig에 주입해야함
@@ -39,21 +44,42 @@ public class CustomSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{ //로그인하지 않아도 볼 수 있도록 설정 (admin/adindex에 바로 접근 가능)
         log.info("==========================configure==============================");
 
-        http.formLogin().loginPage("/member/login") //POST방식 처리 역시 같은 경로로 스프링 시큐리티 내부에서 처리됨 / security에서 post방식도 처리함
-                .defaultSuccessUrl("/index")
+        http.formLogin()
+                .loginPage("/member/login") //POST방식 처리 역시 같은 경로로 스프링 시큐리티 내부에서 처리됨 / security에서 post방식도 처리함
+                .defaultSuccessUrl("/")
+                .failureHandler(failureHandler) //로그인 실패 핸들러
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))   // 로그아웃 URL
-                .logoutSuccessUrl("/member/login")                                                 // 로그아웃 성공시 이동할 URL
-                .invalidateHttpSession(true)                                                // 로그아웃 이후 세션 전체 삭제 여부
-                .deleteCookies("JSESSIONID");
+                .logoutSuccessUrl("/index")                                     // 로그아웃 성공시 이동할 URL
+                .invalidateHttpSession(true)                                           // 로그아웃 이후 세션 전체 삭제 여부
+                .deleteCookies("JSESSIONID")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/admin/*","/answer/*").hasAnyAuthority("ROLE_ADMIN") //admin 권한이 있어야지 접근 가능
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/error/accessDenied");
         //로그인 진행한다는 설정
         //UserDetailsService : 실제로 인증을 처리 인터페이스
         //loadUserByUsername : 실제 인증을 처리할 때 호출 되는 부분
         //username = mid
 
         http.csrf().disable(); //CSRF 비활성화하면 username,password라는 파라미터만으로 로그인이 가능해짐
-        //csrf토큰이 비활성화 되어있으면 get방식으로도 로그아웃이 가능함
+//        //csrf토큰이 비활성화 되어있으면 get방식으로도 로그아웃이 가능함
+
+/*        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/", "/**").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/member/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();*/
 
         /* 자동 로그인 */
         http.rememberMe()

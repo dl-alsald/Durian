@@ -37,6 +37,7 @@ public class QnARepositoryTests {
                     .qtitle("질문제목" + i)
                     .qcate("카테고리" + i)
                     .qcontent("질문내용" + i)
+                    .password("1111")
                     .build();
 
             Question result = questionRepository.save(question);
@@ -53,7 +54,7 @@ public class QnARepositoryTests {
         Answer a = new Answer();
         a.setAcontent("질문에 대한 답변Test.");
         a.setAquestion(q);  // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
-        a.setRegTime(LocalDateTime.now());
+        a.setRegDate(LocalDateTime.now());
         this.answerRepository.save(a);
     }
 

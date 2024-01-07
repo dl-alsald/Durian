@@ -28,14 +28,14 @@ public class PageResponsedDTO<E> { //목록,시작,끝페이지처리
     //private List<E> dtoList;
 
     @Builder(builderMethodName = "withAll")
-    public PageResponsedDTO(PageRequestedDTO pageRequestDTO, List dtoList, int total){
+    public PageResponsedDTO(PageRequestedDTO pageRequestedDTO, List dtoList, int total){
 
         if (total <= 0){
             return;
         }
 
-        this.page = pageRequestDTO.getPage();
-        this.size = pageRequestDTO.getSize();
+        this.page = pageRequestedDTO.getPage();
+        this.size = pageRequestedDTO.getSize();
 
         this.total = total;
         this.dtoList = dtoList;

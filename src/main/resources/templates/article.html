@@ -1,6 +1,115 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="~{layout/header :: setContent(~{this::content} )}">
 
   <th:block th:fragment="content">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- 사용자 스크립트 추가 -->
+    <th:block layout:fragment="script">
+      <script th:inline="javascript">
+      $(document).ready(function () {
+
+        calculateTotalPrice();
+
+        $("#count").change(function () {
+          calculateTotalPrice();
+        });
+      });
+
+      function order() {
+
+        var username = [[${mdto.mid}]];
+        var userRole = [[${userRole}]];
+        var itemStatus = document.getElementById('itemStatus').value;
+
+        if (username == null) {
+          alert('로그인 후 이용해주세요');
+          location.href = '/member/login';
+        }
+
+        if (itemStatus === 'SOLD_OUT') {
+          alert('품절 상품입니다!');
+          return;
+        }
+
+        if (userRole === 'ADMIN') {
+          alert('권한이 없습니다!');
+          return;
+        }
+
+        var itemId = $("#itemId").val();
+        var count = $("#count").val();
+
+        var priceString = $("#price").text();
+        var price = parseInt(priceString.replace(/[^\d]/g, ''), 10); // 숫자만 남기고 나머지 제거
+
+        var itemNm = $("#itemNm").text();
+
+        var postData = {
+          itemId: itemId,
+          count: count,
+          price: price,
+          itemNm: itemNm
+        };
+        console.log('Order function called');
+        // 주문 페이지로 이동
+        window.location.href = "/detail/checkout?orderData=" + encodeURIComponent(JSON.stringify(postData));
+      }
+
+      function addCart() {
+
+        var username = [[${mdto.mid}]];
+        var userRole = [[${userRole}]];
+        var itemStatus = document.getElementById('itemStatus').value;
+
+        console.log(itemStatus);
+
+        if (itemStatus === 'SOLD_OUT') {
+          alert('품절 상품입니다!');
+          return;
+        }
+
+        if (userRole === 'ADMIN') {
+          alert('권한이 없습니다!');
+          return;
+        }
+
+        var url = "/cart";
+        var paramData = {
+          itemId: $("#itemId").val(),
+          count: $("#count").val()
+        };
+
+        var param = JSON.stringify(paramData);
+
+        $.ajax({
+          url: url,
+          type: "POST",
+          contentType: "application/json",
+          data: param,
+          dataType: "json",
+          cache: false,
+          success: function (result, status) {
+            alert("상품을 장바구니에 담았습니다.");
+            location.href = '/cart';
+          },
+          error: function (jqXHR, status, error) {
+
+            if (username == null) {
+              alert('로그인 후 이용해주세요');
+              location.href = '/member/login';
+            } else {
+              alert(jqXHR.responseText);
+            }
+
+          }
+        });
+
+        console.log('Cart function called');
+      }
+
+      </script>
+    </th:block>
     <div
       class="hero page-inner overlay"
       style="background-image: url('images/hero_bg_3.jpg')"
@@ -47,6 +156,7 @@
               </div>
             </div>
           </div>
+          <form th:action="@{/article}" th:method="post">
           <div class="col-lg-4">
             <h2 class="heading text-primary">[[${dto.iname}]]</h2>
             <p class="meta">[[${dto.iprice}]] 원</p>
@@ -56,23 +166,51 @@
             <p class="text-black-50">
               [[${dto.ilocation}]]
             </p>
+            <input type="hidden" name="mid" th:value="${mdto.mid}">
+            <input type="hidden" name="ino" id="itemId" th:value="${dto.ino}">
+            <input type="hidden" th:id="itemNm" th:value="${dto.iname}">
+            <input type="hidden" name="totalPrice" id="price" th:value="${dto.iprice}">
+            <input type="hidden" id="itemStatus" th:value="${dto.isaleStatus}" class="text-right">
+            <input type="hidden" name="count" th:id="count" class="div-pro-qty" value="1" min="1">
 
             <div class="d-block agent-box p-5">
               <div class="img mb-4">
                 <img
-                  src="images/person_2-min.jpg"
+                        th:src="@{/assets/images/faces/anonymous.jpg}"
                   alt="Image"
                   class="img-fluid"
                 />
               </div>
               <div class="text">
-                <h3 class="mb-0">Alicia Huston</h3>
-                <div class="meta mb-3">Real Estate</div>
+                <h3 class="mb-0">[[${mdto.mname}]]</h3>
+                <div class="meta mb-3">[[${mdto.mid}]]</div>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ratione laborum quo quos omnis sed magnam id ducimus saepe
+                  [[${mdto.memail}]]
                 </p>
                 <ul class="list-unstyled social dark-hover d-flex">
+<!--                  <li class="me-1">-->
+<!--                    <button type="button" onclick="addCart()">카트</button>-->
+<!--                  </li>-->
+<!--                  <li class="me-1">-->
+<!--                    <button type="button" onclick="order()">결제</button>-->
+<!--                  </li>-->
+<!--                  <li class="me-1">-->
+<!--                    <button type="button" th:onclick="|window.location.href='/article?ino+'|">찐결제</button>-->
+<!--                  </li>-->
+
+                  <li class="me-1">
+                    <button type="submit">결제</button>
+                  </li>
+
+<!--                  <li class="me-1">-->
+<!--                    <a th:href="@{/cart}" onclick="addCart()"><span>카트</span></a>-->
+<!--                  </li>-->
+<!--                  <li class="me-1">-->
+<!--                    <a th:href="@{/article(ino = ${dto.ino})}"><span>결제</span></a>-->
+<!--                  </li>-->
+                  <li class="me-1">
+                    <a th:href="@{/chat/chatList}"><span>채팅</span></a>
+                  </li>
                   <li class="me-1">
                     <a href="#"><span class="icon-instagram"></span></a>
                   </li>
@@ -89,6 +227,7 @@
               </div>
             </div>
           </div>
+          </form>
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,8 @@ public class IndexController {
 
     private final ItemService itemService;
 
+    private final OrderService orderService;
+
     private final QuestionService questionService;
 
     private final AnswerService answerService;
@@ -37,6 +40,8 @@ public class IndexController {
     private final EventService eventService;
 
     private final MemberRepository memberRepository;
+
+    private final MemberService memberService;
 
     private final NoticeService noticeService;
 
@@ -51,7 +56,7 @@ public class IndexController {
         return "redirect:/index";
     }
     @GetMapping("/index")
-    public String index(PageRequestDTO pageRequestDTO, Model model, Principal principal) throws Exception{
+    public String index(PageRequestDTO pageRequestDTO, Model model) throws Exception{
 
         log.info("pageRequestDTO: " + pageRequestDTO);
 
@@ -61,24 +66,25 @@ public class IndexController {
         List<Items> itemList = daangnService.getItemsDatas();
         model.addAttribute("news", itemList);
 
-        //principal로 로그인 정보 가져옴
-        // model로 index로 넘겨줌
-        if (principal != null) {
-
-            String mid = principal.getName();                   //mid에 로그인 정보를 받음
-            Member member = memberRepository.findBymid(mid);    //findbymid로 유저 정보 찾아서 member에 저장
-
-            log.info("유저 아이디 : " + principal.getName());
-
-            model.addAttribute("member",member);    //model로 member에 담긴 정보를 인덱스 프론트에 넘김
-
-            return "/index";
-        } else {
-            // 로그인이 안 된 경우 로그인 없는 뷰로 이동
-            return "/member/login";
-
-
-        }
+//        //principal로 로그인 정보 가져옴
+//        // model로 index로 넘겨줌
+//        if (principal != null) {
+//
+//            String mid = principal.getName();                   //mid에 로그인 정보를 받음
+//            Member member = memberRepository.findBymid(mid);    //findbymid로 유저 정보 찾아서 member에 저장
+//
+//            log.info("유저 아이디 : " + principal.getName());
+//
+//            model.addAttribute("member",member);    //model로 member에 담긴 정보를 인덱스 프론트에 넘김
+//
+//            return "/index";
+//        } else {
+//            // 로그인이 안 된 경우 로그인 없는 뷰로 이동
+//            return "/member/login";
+//
+//
+//        }
+        return "/index";
     }
 
     @GetMapping("/about")
@@ -87,18 +93,24 @@ public class IndexController {
     }
 
     @GetMapping("/contact")
-    public void contact() {
+    public void contact(Principal principal, Model model) {
+        String mid = principal.getName();
+        MemberJoinDTO memberJoinDTO = memberService.readOne(mid);
 
+        model.addAttribute("mdto", memberJoinDTO);
     }
 
     @PostMapping("/contact")
-    public String contactpost(ItemDTO itemDTO, RedirectAttributes redirectAttributes) {
+    public String contactpost(ItemDTO itemDTO, RedirectAttributes redirectAttributes,
+                              MemberJoinDTO memberJoinDTO, Model model) {
 
         log.info("dto..." +itemDTO);
 
         Long ino = itemService.register(itemDTO);
 
         redirectAttributes.addFlashAttribute("msg", ino);
+
+        model.addAttribute("mdto", memberJoinDTO);
 
         return "redirect:/index";
 
@@ -114,13 +126,45 @@ public class IndexController {
     }
 
     @GetMapping("/article")
-    public void propertysingle(long ino, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
+    public void propertysingle(Long ino, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model,MemberJoinDTO memberJoinDTO, Principal principal) {
         log.info("ino : "+ino);
 
         ItemDTO itemDTO = itemService.getItem(ino);
+//        String mid=itemDTO.getMid();
+//        Member member = memberRepository.findBymid(mid);
+
+        //principal로 로그인 정보 가져옴
+        // model로 index로 넘겨줌
+        if (principal != null) {
+            String mid = principal.getName();                   //mid에 로그인 정보를 받음
+            Member member = memberRepository.findByMid(mid);    //findbymid로 유저 정보 찾아서 member에 저장
+            model.addAttribute("mdto",member);
+        } else {
+            // 로그인이 안 된 경우 로그인 없는 뷰로 이동
+//            return "/member/login";
+        }
+
 
         model.addAttribute("dto", itemDTO);
+//        return "article?ino="+ino;
+    }
 
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/article")
+    public String order(Long ino, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model,OrderDTO orderDTO,
+                        MemberJoinDTO memberJoinDTO, RedirectAttributes redirectAttributes) {
+
+        Long ono = orderService.register(orderDTO);
+
+        ItemDTO itemDTO = itemService.getItem(ino);
+
+        redirectAttributes.addFlashAttribute("msg",ono);
+        model.addAttribute("idto", itemDTO);
+        model.addAttribute("odto", orderDTO);
+        model.addAttribute("mdto", memberJoinDTO);
+
+
+        return "redirect:/orderRead";
     }
 
     @GetMapping("/services")
@@ -170,5 +214,34 @@ public class IndexController {
         NoticeDTO dto = noticeService.read(nno);
 
         model.addAttribute("ndto", dto);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/orderRead")
+    public void orderRead(@ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model, Principal principal) {
+
+        log.info("나의 결제완료 페이지");
+
+        String mid = principal.getName();
+        MemberJoinDTO memberJoinDTO = memberService.readOne(mid);
+
+        model.addAttribute("mdto", memberJoinDTO);
+
+        OrderDTO orderDTO = orderService.getMid(mid);
+
+        model.addAttribute("odto", orderDTO);
+
+    }
+
+    @GetMapping("/orderList")
+    public void orderList(PageRequestDTO pageRequestDTO, Model model, Principal principal) {
+
+        log.info("나의 결제 목록");
+
+        String mid = principal.getName();
+        OrderDTO orderDTO = orderService.getMid(mid);
+
+        model.addAttribute("odto", orderDTO);
+
     }
 }

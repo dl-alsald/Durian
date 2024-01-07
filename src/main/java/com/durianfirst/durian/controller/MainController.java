@@ -160,7 +160,7 @@ public class MainController {
         if (principal != null) {
 
             String mid = principal.getName();                   //mid에 로그인 정보를 받음
-            Member member = memberRepository.findBymid(mid);    //findbymid로 유저 정보 찾아서 member에 저장
+            Member member = memberRepository.findByMid(mid);    //findbymid로 유저 정보 찾아서 member에 저장
 
             model.addAttribute("member",member);    //model로 member에 담긴 정보를 인덱스 프론트에 넘김
 
