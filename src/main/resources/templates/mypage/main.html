@@ -1,79 +1,9 @@
-<th:block th:replace="~{layout/header :: setContent(~{this::content} )}">
+<th:block th:replace="~{layout/mypageLayout :: setContent(~{this::content} )}">
 
   <th:block th:fragment="content">
 
-    <div
-      class="hero page-inner overlay"
-      style="background-image: url('images/hero_bg_1.jpg');height: 350px;"
-    >
-      <div class="container">
-        <div class="row justify-content-center align-items-center" style="height: 350px;">
-          <div class="col-lg-9 text-center mt-5">
-            <h1 class="heading" data-aos="fade-up">My Page</h1>
 
-            <nav aria-label="breadcrumb" data-aos="fade-up" data-aos-delay="200">
-              <ol class="breadcrumb text-center justify-content-center">
-                <li class="breadcrumb-item">articleHome</a></li>
-                <li class="breadcrumb-item active text-white-50" aria-current="page">
-                  Contact
-                </li>
-              </ol>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="section">
-      <div class="container">
-        <div class="row">
-          <div
-            class="col-lg-4 mb-5 mb-lg-0"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
-            <div class="contact-info">
-
-              <div class="address mt-2">
-                <!--<i class="icon-room"></i>-->
-                <h4 class="mb-2">My Page</h4>
-                </br>
-              </div>
-
-              <div class="address mt-2">
-                <!--<i class="icon-room"></i>-->
-                <h4 class="mb-2">내 정보</h4>
-              </div>
-
-              <div class="open-hours mt-4">
-                <!--<i class="icon-clock-o"></i>-->
-                <h4 class="mb-2">
-                  <a th:href="@{/chat/chatList}">채팅</a></h4>
-              </div>
-
-              <div class="email mt-4">
-                <!--<i class="icon-envelope"></i>-->
-                <h4 class="mb-2">구매내역</h4>
-              </div>
-
-              <div class="phone mt-4">
-                <!--<i class="icon-phone"></i>-->
-                <h4 class="mb-2">판매내역</h4>
-              </div>
-
-              <div class="phone mt-4">
-                <!--<i class="icon-phone"></i>-->
-                <h4 class="mb-2">상품등록</h4>
-              </div>
-
-              <div class="phone mt-4">
-                <!--<i class="icon-phone"></i>-->
-                <h4 class="mb-2">
-                  <a th:href="@{/mypage/shipping/register}">배송지관리</a></h4>
-              </div>
-
-            </div>
-          </div>
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
             <form action="#">
               <div class="row">
@@ -119,9 +49,6 @@
               </div>
             </form>
           </div>
-        </div>
-      </div>
-    </div>
     <!-- /.untree_co-section -->
 
     </th:block>

@@ -1,0 +1,177 @@
+<th:block th:replace="~{layout/mypageLayout :: setContent(~{this::content} )}">
+
+  <th:block th:fragment="content">
+
+
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+
+            <!-- Basic Horizontal form layout section start -->
+            <section id="basic-horizontal-layouts">
+              <div class="row match-height">
+                <div class="col-md-6 col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">내정보</h4>
+                    </div>
+                    <div class="card-content">
+                      <div class="card-body">
+                        <form class="form form-horizontal">
+                          <div class="form-body">
+                            <div class="row">
+                              <div class="col-md-4">
+                                <label>Id</label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="form-group has-icon-left">
+                                  <div class="position-relative">
+                                    <input type="text" class="form-control"
+                                           th:value="${member.mid}" readonly>
+                                    <div class="form-control-icon">
+                                      <i class="bi bi-person"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <label>Name</label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="form-group has-icon-left">
+                                  <div class="position-relative">
+                                    <input type="text" class="form-control"
+                                           th:value="${member.mname}" readonly>
+                                    <div class="form-control-icon">
+                                      <i class="bi bi-file-person"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <label>Email</label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="form-group has-icon-left">
+                                  <div class="position-relative">
+                                    <input type="email" class="form-control"
+                                           th:value="${member.memail}" readonly>
+                                    <div class="form-control-icon">
+                                      <i class="bi bi-envelope"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <label>Mobile</label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="form-group has-icon-left">
+                                  <div class="position-relative">
+                                    <input type="text" class="form-control"
+                                           th:value="${member.mphone}" readonly>
+                                    <div class="form-control-icon">
+                                      <i class="bi bi-phone"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <label>Address</label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="form-group has-icon-left">
+                                  <div class="position-relative">
+                                    <input type="text" class="form-control"
+                                           th:value="${member.maddress}" readonly>
+                                    <div class="form-control-icon">
+                                      <i class="bi bi-house-door"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <label>Birth Day</label>
+                              </div>
+                              <div class="col-md-8">
+                                <div class="form-group has-icon-left">
+                                  <div class="position-relative">
+                                    <input type="text" class="form-control"
+                                           th:value="${member.mbirthday}" readonly>
+                                    <div class="form-control-icon">
+                                      <i class="bi bi-bell"></i>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-12 d-flex justify-content-end">
+                                <a th:href="@{/mypage/myinfoModify}">
+                                  <button type="button"
+                                          class="btn btn-primary me-1 mb-1">Modify
+                                  </button>
+                                </a>
+                                <a th:href="@{/member/checkPassword}">
+                                  <button type="button"
+                                          class="btn btn-light-secondary me-1 mb-1">Delete
+                                  </button> <!-- 회원 탈퇴 -->
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- // Basic Horizontal form layout section end -->
+            <!--<form action="#">
+              <div class="row">
+                <div class="col-6 mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div class="col-6 mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Your Email"
+                  />
+                </div>
+                <div class="col-12 mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Subject"
+                  />
+                </div>
+                <div class="col-12 mb-3">
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="7"
+                    class="form-control"
+                    placeholder="Message"
+                  ></textarea>
+                </div>
+
+                <div class="col-12">
+                  <input
+                    type="submit"
+                    value="Send Message"
+                    class="btn btn-primary"
+                  />
+                </div>
+              </div>
+            </form>-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.untree_co-section -->
+
+    </th:block>
+    </th:block>

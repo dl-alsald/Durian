@@ -76,7 +76,7 @@ public class MemberController {
         return "redirect:/member/login"; //회원가입 후 로그인
     }
 
-    @GetMapping("/member/mypage")
+    @GetMapping("/mypage/myinfo")
     public String mypagedRead(Principal principal, Model model) {
 
         if(principal == null){
@@ -90,11 +90,11 @@ public class MemberController {
         log.info("유저 아이디 : " + principal.getName());
 
         model.addAttribute("member", member);    //model로 member에 담긴 정보를 인덱스 프론트에 넘김
-        return "member/mypage";
+        return "mypage/myinfo";
     }
 
 
-    @GetMapping("/member/modify")
+    @GetMapping("/mypage/myinfoModify")
     public String modify(Principal principal, Model model) {
 
         if(principal == null){
@@ -107,15 +107,15 @@ public class MemberController {
 
         model.addAttribute("member", member);
 
-        return "/member/modify";
+        return "/mypage/myinfoModify";
     }
 
-    @PostMapping("/member/modify")
+    @PostMapping("/mypage/myinfoModify")
     public String updateMember(@Valid MemberJoinDTO joinDTO, Model model) {
 
         model.addAttribute("member", joinDTO);
         memberService.updateMember(joinDTO);
-        return "redirect:/member/mypage";
+        return "redirect:/mypage/myinfo";
     }
 
     @GetMapping("/member/checkPassword")

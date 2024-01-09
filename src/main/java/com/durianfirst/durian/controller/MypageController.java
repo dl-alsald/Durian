@@ -1,8 +1,11 @@
 package com.durianfirst.durian.controller;
 
 import com.durianfirst.durian.dto.ShippingDTO;
+import com.durianfirst.durian.entity.ChatRoom;
+import com.durianfirst.durian.entity.Member;
 import com.durianfirst.durian.repository.MemberRepository;
 import com.durianfirst.durian.repository.ShippingRepository;
+import com.durianfirst.durian.service.ChatService;
 import com.durianfirst.durian.service.MemberService;
 import com.durianfirst.durian.service.ShippingService;
 import lombok.RequiredArgsConstructor;
@@ -15,11 +18,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -147,6 +152,61 @@ public class MypageController {
 
         return "shipping/shipping";
     }
+
+
+    /*chat 구현*/
+    private final ChatService chatService;
+
+    @RequestMapping("mypage/chatList")
+    public String chatList(Model model){
+        List<ChatRoom> roomList = chatService.findAllRoom();
+        model.addAttribute("roomList",roomList);
+        return "mypage/chatList";
+    }
+
+    @PostMapping("mypage/createRoom")
+    public String createRoom(Model model, String username, Principal principal) {
+        if (principal != null) {
+            String userId = principal.getName();
+            Member member = memberRepository.findByMid(userId);
+
+            log.info("유저 아이디: " + userId);
+
+            model.addAttribute("member", member);
+
+            // 사용자의 아이디를 사용하여 ChatService의 createRoom 메서드 호출
+            ChatRoom room = chatService.createRoom(userId);
+
+            model.addAttribute("room", room);
+            model.addAttribute("username", username);
+
+            return "mypage/chatRoom";  // 만든 사람이 채팅방 1빠로 들어가게 됩니다
+        } else {
+            return "member/login";
+        }
+    }
+
+    @GetMapping("mypage/chatRoom")
+    public String chatRoom(Model model, @RequestParam String roomId, Principal principal){
+
+        if(principal != null){
+
+            String mid = principal.getName();
+            Member member = memberRepository.findByMid(mid);
+
+            log.info("유저 아이디 : " + principal.getName());
+
+            model.addAttribute("member", member);
+        }else{
+            return "/member/login";
+        }
+
+        ChatRoom room = chatService.findRoomById(roomId);
+        model.addAttribute("room",room);//현재 방에 들어오기위해서 필요한데...... 접속자 수 등등은 실시간으로 보여줘야 돼서 여기서는 못함
+        return "mypage/chatRoom";
+    }
+
+
 
 
 }

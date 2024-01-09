@@ -26,18 +26,18 @@ public class HeartQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public Page<ItemDTO> findHeartItem(Member tartgetMember, Pageable pageable){
+    public Page<ItemDTO> findHeartItem(String mid, Pageable pageable){
         QHeart heart = QHeart.heart;
         QItem item = QItem.item;
         QMember member = QMember.member;
         QueryResults<ItemDTO> itemDTOQueryResults = jpaQueryFactory
                 .select(Projections.constructor(
-                        ItemDTO.class, item.ino, item.iname,item.idescription,
-                        item.isaleStatus,item.ilocation, member.mname))
+                        ItemDTO.class, item.ino, item.iname, item.iprice, item.isaleStatus, item.icategory, item.idealway ,item.idescription,
+                        item.ilocation, item.icondition, member.mid))
                 .from(heart)
                 .leftJoin(heart.item, item)
                 .leftJoin(heart.member, member)
-                .where(member.eq(tartgetMember))
+                .where(member.eq(member))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(heart.hno.desc())

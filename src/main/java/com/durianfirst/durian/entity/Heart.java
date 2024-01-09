@@ -16,10 +16,10 @@ public class Heart extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long hno;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Item item;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Member member;
 
     /*private int pno;

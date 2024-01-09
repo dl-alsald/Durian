@@ -61,13 +61,19 @@ public class IndexController {
 
     }
 
-    @GetMapping("/contact")
-    public void contact() {
+    @GetMapping("/item/myregister")
+    public void contact(Model model) {
+        model.addAttribute("itemDTO", new ItemDTO());
+
 
     }
 
     @GetMapping("/properties")
-    public void properties() {
+    public void properties(PageRequestDTO pageRequestDTO, Model model) {
+
+        log.info("list.....");
+
+        model.addAttribute("result", itemService.getList(pageRequestDTO));
 
     }
 
